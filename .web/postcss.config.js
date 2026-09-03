@@ -4,7 +4,6 @@ const noVendorPrefix = /^(1|true|y|yes)$/i.test(
 
 export default {
   plugins: {
-    "postcss-import": {},
-    autoprefixer: noVendorPrefix ? false : {},
+  "@tailwindcss/postcss": {},
   },
 };

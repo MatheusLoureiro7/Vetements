@@ -41,7 +41,7 @@ rules:
     - Identificar o que está fora do escopo quando necessário.
   specs:
     - Escrever requisitos verificáveis.
-    - Utilizar cenários para comportamentos relevantes (ex.: baixa de
+    - Utilizar cenários para comportamentos relevantes (ex. baixa de
       estoque, permissões por papel).
   tasks:
     - Dividir a implementação em tarefas pequenas e verificáveis.
@@ -50,7 +50,7 @@ rules:
 operations:
   apply:
     guidance:
-      - Executar verificações relevantes antes de concluir (ex.: conferir
+      - Executar verificações relevantes antes de concluir (ex. conferir
         que o estoque não fica negativo após uma venda).
   archive:
     guidance:

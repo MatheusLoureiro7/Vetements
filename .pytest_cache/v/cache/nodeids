@@ -1,0 +1,16 @@
+[
+  "tests/test_mock_data.py::test_authenticate_credenciais_invalidas",
+  "tests/test_mock_data.py::test_authenticate_credenciais_validas",
+  "tests/test_mock_data.py::test_create_customer_exige_telefone_ou_email",
+  "tests/test_mock_data.py::test_create_customer_valido",
+  "tests/test_mock_data.py::test_create_product_exige_categoria_valida",
+  "tests/test_mock_data.py::test_create_product_valido_aparece_na_listagem",
+  "tests/test_mock_data.py::test_create_sale_bloqueia_lista_vazia",
+  "tests/test_mock_data.py::test_create_sale_bloqueia_quantidade_acima_do_estoque",
+  "tests/test_mock_data.py::test_create_sale_confirma_e_da_baixa_no_estoque",
+  "tests/test_mock_data.py::test_create_sale_total_derivado_dos_itens",
+  "tests/test_mock_data.py::test_create_variant_associada_ao_produto",
+  "tests/test_mock_data.py::test_decrement_stock_ate_zero_nunca_abaixo",
+  "tests/test_mock_data.py::test_estoque_nunca_fica_negativo",
+  "tests/test_mock_data.py::test_list_products_busca_por_nome"
+]

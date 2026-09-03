@@ -1,0 +1,1 @@
+var e={PING:`http://localhost:3000/ping`,EVENT:`ws://localhost:3000/_event`,UPLOAD:`http://localhost:3000/_upload`,AUTH_CODESPACE:`http://localhost:3000/auth-codespace`,HEALTH:`http://localhost:3000/_health`,ALL_ROUTES:`http://localhost:3000/_all_routes`,TRANSPORT:`websocket`,TEST_MODE:!1};export{e as t};

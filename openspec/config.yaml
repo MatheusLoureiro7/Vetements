@@ -1,32 +1,58 @@
 schema: spec-driven
- # Que contexto e regras o OpenSpec deve fornecer aos seus workflows? 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+# Contexto enviado ao agente em praticamente todos os workflows do OpenSpec.
+context: |
+  Project: Vetements — ERP básico de moda.
 
-# Per-operation guidance (optional)
-# Add advisory guidance for how apply and archive work should be conducted.
-# This is separate from artifact rules above.
-# Example:
-#   operations:
-#     apply:
-#       guidance:
-#         - Keep test summaries concise
-#     archive:
-#       guidance:
-#         - Summarize the archive outcome before finishing
+  Domain: Sistema interno de gestão para uma loja de roupas, cobrindo
+  produtos (com variações de tamanho/cor), estoque, vendas e clientes.
+  Não inclui, por enquanto, loja online voltada ao cliente final.
+
+  Tech stack:
+    Reflex (Python) para a aplicação/frontend.
+    Xano para banco de dados, APIs REST e autenticação.
+    O Reflex consome a API do Xano; não acessa banco de dados diretamente.
+
+  Architecture:
+    Regras de negócio e de autorização (administrador vs. vendedor) devem
+    ser aplicadas no backend (Xano). O frontend não deve ser considerado
+    mecanismo de segurança.
+
+  Security:
+    Vendas não podem reduzir o estoque de uma variação para valor negativo.
+    Apenas administradores cadastram/editam produtos, categorias e usuários.
+
+  Development:
+    Projeto desenvolvido incrementalmente utilizando OpenSpec.
+    Escopo do MVP: produtos/catálogo, estoque, vendas/pedidos, clientes e
+    usuários. Funcionalidades fora desse escopo (loja online, pagamentos,
+    nota fiscal, financeiro, múltiplas lojas) devem ser propostas como
+    changes futuras, não implementadas antecipadamente.
+
+  Language:
+    Escrever a documentação do projeto e os artefatos OpenSpec em
+    português brasileiro.
+
+# Regras específicas por artefato (complementam as instruções padrão do
+# OpenSpec; não as substituem).
+rules:
+  proposal:
+    - Descrever claramente o problema, objetivo e escopo.
+    - Identificar o que está fora do escopo quando necessário.
+  specs:
+    - Escrever requisitos verificáveis.
+    - Utilizar cenários para comportamentos relevantes (ex.: baixa de
+      estoque, permissões por papel).
+  tasks:
+    - Dividir a implementação em tarefas pequenas e verificáveis.
+
+# Orientações para apply e archive.
+operations:
+  apply:
+    guidance:
+      - Executar verificações relevantes antes de concluir (ex.: conferir
+        que o estoque não fica negativo após uma venda).
+  archive:
+    guidance:
+      - Confirmar que a implementação corresponde à especificação antes de
+        arquivar a change.

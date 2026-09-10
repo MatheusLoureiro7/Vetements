@@ -9,9 +9,9 @@ table user {
     email? email filters=trim|lower
     password? password filters=min:8|minAlpha:1|minDigit:1
   
-    // The role of the user within their company (e.g., 'admin', 'member').
+    // Papel do usuário no Vetements: administrador ou vendedor.
     enum role? {
-      values = ["admin", "member"]
+      values = ["administrador", "vendedor"]
     }
   
     object password_reset? {
@@ -31,4 +31,15 @@ table user {
 
   tags = ["xano:quick-start"]
   guid = "dWyOvaQCMgnFVhQc-lvIKLhPiZI"
+  items = [
+    {
+      id            : 1
+      created_at    : 1788996035781
+      name          : "Teste QA"
+      email         : "teste-qa@vetements.local"
+      password      : "373055e4bb7668b0.c18cf259907ef059ad27837c179e7804cb8ef32b16c43d041ffbda4b3e3ad726"
+      role          : "administrador"
+      password_reset: {used: false, token: "", expiration: null}
+    }
+  ]
 }

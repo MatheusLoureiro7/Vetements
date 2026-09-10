@@ -1,14 +1,25 @@
 """Estado da tela de Clientes."""
 
+from dataclasses import dataclass
+
 import reflex as rx
 
-from vetements.state import mock_data
+from vetements import xano_client
 from vetements.state.auth import AuthState
+
+
+@dataclass
+class ClienteView:
+    id: int
+    nome: str
+    telefone: str
+    email: str
 
 
 class CustomersState(AuthState):
     search: str = ""
-    customers: list[mock_data.Cliente] = []
+    customers: list[ClienteView] = []
+    load_error: str = ""
 
     show_form: bool = False
     form_nome: str = ""
@@ -25,7 +36,18 @@ class CustomersState(AuthState):
         return None
 
     def refresh(self):
-        self.customers = mock_data.list_customers(self.search)
+        try:
+            clientes = xano_client.list_customers(self.auth_token, self.search)
+        except xano_client.XanoAPIError:
+            self.load_error = "Não foi possível carregar os clientes."
+            return
+        self.load_error = ""
+        self.customers = [
+            ClienteView(
+                id=c["id"], nome=c["nome"], telefone=c.get("telefone") or "", email=c.get("email") or ""
+            )
+            for c in clientes
+        ]
 
     @rx.event
     def set_search(self, value: str):
@@ -52,9 +74,11 @@ class CustomersState(AuthState):
     @rx.event
     def create_customer(self):
         try:
-            mock_data.create_customer(self.form_nome, self.form_telefone, self.form_email)
-        except mock_data.DomainError as erro:
-            self.form_error = str(erro)
+            xano_client.create_customer(
+                self.auth_token, self.form_nome, self.form_telefone, self.form_email
+            )
+        except xano_client.XanoAPIError as erro:
+            self.form_error = erro.message
             return None
         self.form_nome = ""
         self.form_telefone = ""

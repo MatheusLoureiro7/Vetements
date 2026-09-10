@@ -5,35 +5,36 @@ import reflex as rx
 from vetements.components import ui
 from vetements.components.shell import shell
 from vetements.state.customers import CustomersState
-from vetements.styles import BORDEAUX, INK_MUTED
+from vetements.styles import BORDEAUX, primary_button_style
 
 
 def _new_customer_form() -> rx.Component:
     return rx.cond(
         CustomersState.show_form,
-        rx.vstack(
-            rx.cond(
-                CustomersState.form_error != "",
-                rx.text(CustomersState.form_error, style={"color": BORDEAUX}, size="2"),
-            ),
-            rx.hstack(
-                ui.field("Nome", rx.input(value=CustomersState.form_nome, on_change=CustomersState.set_form_nome, width="100%")),
-                ui.field("Telefone", rx.input(value=CustomersState.form_telefone, on_change=CustomersState.set_form_telefone, width="100%")),
-                ui.field("E-mail", rx.input(value=CustomersState.form_email, on_change=CustomersState.set_form_email, width="100%")),
+        ui.card(
+            rx.vstack(
+                ui.card_title("Novo cliente"),
+                rx.cond(
+                    CustomersState.form_error != "",
+                    rx.text(CustomersState.form_error, style={"color": BORDEAUX}, size="2"),
+                ),
+                rx.hstack(
+                    ui.field("Nome", rx.input(value=CustomersState.form_nome, on_change=CustomersState.set_form_nome, width="100%")),
+                    ui.field("Telefone", rx.input(value=CustomersState.form_telefone, on_change=CustomersState.set_form_telefone, width="100%")),
+                    ui.field("E-mail", rx.input(value=CustomersState.form_email, on_change=CustomersState.set_form_email, width="100%")),
+                    spacing="3",
+                    width="100%",
+                    align_items="end",
+                ),
+                rx.button(
+                    "Salvar cliente",
+                    on_click=CustomersState.create_customer,
+                    style=primary_button_style(),
+                ),
                 spacing="3",
                 width="100%",
-                align_items="end",
             ),
-            rx.button(
-                "Salvar cliente",
-                on_click=CustomersState.create_customer,
-                style={"background_color": BORDEAUX, "color": "white"},
-            ),
-            spacing="3",
-            width="100%",
-            padding="1rem",
             margin_bottom="1.5rem",
-            style={"border": f"1px solid {INK_MUTED}"},
         ),
     )
 

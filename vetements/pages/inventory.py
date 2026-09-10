@@ -5,6 +5,7 @@ import reflex as rx
 from vetements.components import ui
 from vetements.components.shell import shell
 from vetements.state.inventory import InventoryState
+from vetements.styles import BORDEAUX
 
 
 def _inventory_table() -> rx.Component:
@@ -29,12 +30,21 @@ def _inventory_table() -> rx.Component:
 def inventory_page() -> rx.Component:
     return shell(
         ui.section_heading("Estoque"),
-        rx.input(
-            placeholder="Buscar por produto ou SKU...",
-            value=InventoryState.search,
-            on_change=InventoryState.set_search,
-            max_width="320px",
-            margin_bottom="1.5rem",
+        rx.cond(
+            InventoryState.load_error != "",
+            rx.text(InventoryState.load_error, style={"color": BORDEAUX}, size="2", margin_bottom="1rem"),
         ),
-        _inventory_table(),
+        rx.cond(
+            InventoryState.load_error == "",
+            rx.fragment(
+                rx.input(
+                    placeholder="Buscar por produto ou SKU...",
+                    value=InventoryState.search,
+                    on_change=InventoryState.set_search,
+                    max_width="320px",
+                    margin_bottom="1.5rem",
+                ),
+                _inventory_table(),
+            ),
+        ),
     )

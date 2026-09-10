@@ -5,73 +5,74 @@ import reflex as rx
 from vetements.components import ui
 from vetements.components.shell import shell
 from vetements.state.products import ProductsState
-from vetements.styles import BORDEAUX, INK_MUTED
+from vetements.styles import BORDEAUX, INK_MUTED, primary_button_style
 
 
 def _new_product_form() -> rx.Component:
     return rx.cond(
         ProductsState.show_form,
-        rx.vstack(
-            rx.cond(
-                ProductsState.form_error != "",
-                rx.text(ProductsState.form_error, style={"color": BORDEAUX}, size="2"),
-            ),
-            rx.hstack(
-                ui.field(
-                    "Nome",
-                    rx.input(
-                        value=ProductsState.form_nome,
-                        on_change=ProductsState.set_form_nome,
-                        width="100%",
-                    ),
+        ui.card(
+            rx.vstack(
+                ui.card_title("Novo produto"),
+                rx.cond(
+                    ProductsState.form_error != "",
+                    rx.text(ProductsState.form_error, style={"color": BORDEAUX}, size="2"),
                 ),
-                ui.field(
-                    "Categoria",
-                    rx.select.root(
-                        rx.select.trigger(placeholder="Selecione"),
-                        rx.select.content(
-                            rx.foreach(
-                                ProductsState.categories,
-                                lambda categoria: rx.select.item(
-                                    categoria.nome, value=categoria.id.to_string()
-                                ),
-                            )
+                rx.hstack(
+                    ui.field(
+                        "Nome",
+                        rx.input(
+                            value=ProductsState.form_nome,
+                            on_change=ProductsState.set_form_nome,
+                            width="100%",
                         ),
-                        value=ProductsState.form_categoria_id,
-                        on_change=ProductsState.set_form_categoria_id,
                     ),
+                    ui.field(
+                        "Categoria",
+                        rx.select.root(
+                            rx.select.trigger(placeholder="Selecione"),
+                            rx.select.content(
+                                rx.foreach(
+                                    ProductsState.categories,
+                                    lambda categoria: rx.select.item(
+                                        categoria.nome, value=categoria.id.to_string()
+                                    ),
+                                )
+                            ),
+                            value=ProductsState.form_categoria_id,
+                            on_change=ProductsState.set_form_categoria_id,
+                        ),
+                    ),
+                    ui.field(
+                        "Preço base",
+                        rx.input(
+                            value=ProductsState.form_preco,
+                            on_change=ProductsState.set_form_preco,
+                            placeholder="0,00",
+                            width="100%",
+                        ),
+                    ),
+                    spacing="3",
+                    width="100%",
+                    align_items="end",
                 ),
                 ui.field(
-                    "Preço base",
-                    rx.input(
-                        value=ProductsState.form_preco,
-                        on_change=ProductsState.set_form_preco,
-                        placeholder="0,00",
+                    "Descrição",
+                    rx.text_area(
+                        value=ProductsState.form_descricao,
+                        on_change=ProductsState.set_form_descricao,
                         width="100%",
                     ),
+                ),
+                rx.button(
+                    "Salvar produto",
+                    on_click=ProductsState.create_product,
+                    style=primary_button_style(),
                 ),
                 spacing="3",
                 width="100%",
-                align_items="end",
             ),
-            ui.field(
-                "Descrição",
-                rx.text_area(
-                    value=ProductsState.form_descricao,
-                    on_change=ProductsState.set_form_descricao,
-                    width="100%",
-                ),
-            ),
-            rx.button(
-                "Salvar produto",
-                on_click=ProductsState.create_product,
-                style={"background_color": BORDEAUX, "color": "white"},
-            ),
-            spacing="3",
-            width="100%",
-            padding="1rem",
             margin_bottom="1.5rem",
-            style={"border": f"1px solid {INK_MUTED}"},
         ),
     )
 
@@ -79,34 +80,34 @@ def _new_product_form() -> rx.Component:
 def _variant_form() -> rx.Component:
     return rx.cond(
         ProductsState.selected_product_id > 0,
-        rx.vstack(
-            rx.text("Nova variação", weight="medium", size="3"),
-            rx.cond(
-                ProductsState.variant_error != "",
-                rx.text(ProductsState.variant_error, style={"color": BORDEAUX}, size="2"),
-            ),
-            rx.hstack(
-                ui.field("Tamanho", rx.input(value=ProductsState.variant_tamanho, on_change=ProductsState.set_variant_tamanho)),
-                ui.field("Cor", rx.input(value=ProductsState.variant_cor, on_change=ProductsState.set_variant_cor)),
-                ui.field("SKU", rx.input(value=ProductsState.variant_sku, on_change=ProductsState.set_variant_sku)),
-                ui.field("Qtd. inicial", rx.input(value=ProductsState.variant_quantidade, on_change=ProductsState.set_variant_quantidade)),
-                rx.button("Adicionar", on_click=ProductsState.add_variant, align_self="end"),
-                spacing="3",
-                align_items="end",
-            ),
-            rx.foreach(
-                ProductsState.variants_of_selected,
-                lambda v: rx.text(
-                    f"{v.tamanho} · {v.cor} · SKU {v.sku} · estoque {v.quantidade}",
-                    size="2",
-                    style={"color": INK_MUTED},
+        ui.card(
+            rx.vstack(
+                ui.card_title("Nova variação"),
+                rx.cond(
+                    ProductsState.variant_error != "",
+                    rx.text(ProductsState.variant_error, style={"color": BORDEAUX}, size="2"),
                 ),
+                rx.hstack(
+                    ui.field("Tamanho", rx.input(value=ProductsState.variant_tamanho, on_change=ProductsState.set_variant_tamanho)),
+                    ui.field("Cor", rx.input(value=ProductsState.variant_cor, on_change=ProductsState.set_variant_cor)),
+                    ui.field("SKU", rx.input(value=ProductsState.variant_sku, on_change=ProductsState.set_variant_sku)),
+                    ui.field("Qtd. inicial", rx.input(value=ProductsState.variant_quantidade, on_change=ProductsState.set_variant_quantidade)),
+                    rx.button("Adicionar", on_click=ProductsState.add_variant, align_self="end"),
+                    spacing="3",
+                    align_items="end",
+                ),
+                rx.foreach(
+                    ProductsState.variants_of_selected,
+                    lambda v: rx.text(
+                        f"{v.tamanho} · {v.cor} · SKU {v.sku} · estoque {v.quantidade}",
+                        size="2",
+                        style={"color": INK_MUTED},
+                    ),
+                ),
+                spacing="2",
+                width="100%",
             ),
-            spacing="2",
-            width="100%",
-            padding="1rem",
             margin_bottom="1.5rem",
-            style={"border": f"1px solid {INK_MUTED}"},
         ),
     )
 
@@ -147,6 +148,10 @@ def products_page() -> rx.Component:
                 ProductsState.is_admin,
                 rx.button("+ Novo produto", on_click=ProductsState.toggle_form, size="2"),
             ),
+        ),
+        rx.cond(
+            ProductsState.load_error != "",
+            rx.text(ProductsState.load_error, style={"color": BORDEAUX}, size="2", margin_bottom="1rem"),
         ),
         rx.input(
             placeholder="Buscar por nome...",

@@ -44,8 +44,11 @@ class ProductsState(AuthState):
     form_categoria_id: str = ""
     form_preco: str = ""
     form_error: str = ""
+    product_success: str = ""
+    is_submitting_product: bool = False
 
     load_error: str = ""
+    is_loading_page: bool = True
 
     selected_product_id: int = 0
     variants_of_selected: list[VariacaoView] = []
@@ -54,6 +57,8 @@ class ProductsState(AuthState):
     variant_sku: str = ""
     variant_quantidade: str = ""
     variant_error: str = ""
+    variant_success: str = ""
+    is_submitting_variant: bool = False
 
     # Cache local dos produtos/variações crus (do Xano), para montar as
     # views sem repetir chamadas de rede a cada renderização.
@@ -73,9 +78,11 @@ class ProductsState(AuthState):
             self.load_error = "Não foi possível carregar produtos e categorias."
             self.products = []
             self.categories = []
+            self.is_loading_page = False
             return None
         self.categories = [CategoriaView(id=c["id"], nome=c["nome"]) for c in categorias]
         self.refresh_products()
+        self.is_loading_page = False
         return None
 
     def refresh_products(self):
@@ -105,6 +112,7 @@ class ProductsState(AuthState):
     def toggle_form(self):
         self.show_form = not self.show_form
         self.form_error = ""
+        self.product_success = ""
 
     @rx.event
     def set_form_nome(self, value: str):
@@ -124,15 +132,22 @@ class ProductsState(AuthState):
 
     @rx.event
     def create_product(self):
+        if self.is_submitting_product:
+            return None
+        self.is_submitting_product = True
+        self.product_success = ""
         if not self.is_admin:
+            self.is_submitting_product = False
             return None
         if not self.form_categoria_id:
             self.form_error = "Selecione uma categoria válida."
+            self.is_submitting_product = False
             return None
         try:
             preco = float(self.form_preco.strip().replace(",", "."))
         except ValueError:
             self.form_error = "Informe um preço válido."
+            self.is_submitting_product = False
             return None
         try:
             xano_client.create_product(
@@ -144,14 +159,17 @@ class ProductsState(AuthState):
             )
         except xano_client.XanoAPIError as erro:
             self.form_error = erro.message
+            self.is_submitting_product = False
             return None
         self.form_nome = ""
         self.form_descricao = ""
         self.form_categoria_id = ""
         self.form_preco = ""
         self.form_error = ""
+        self.product_success = "Produto cadastrado."
         self.show_form = False
         self.refresh_products()
+        self.is_submitting_product = False
         return None
 
     @rx.event
@@ -165,6 +183,7 @@ class ProductsState(AuthState):
             if v.get("produto_id") == produto_id
         ]
         self.variant_error = ""
+        self.variant_success = ""
 
     @rx.event
     def set_variant_tamanho(self, value: str):
@@ -184,12 +203,18 @@ class ProductsState(AuthState):
 
     @rx.event
     def add_variant(self):
+        if self.is_submitting_variant:
+            return None
+        self.is_submitting_variant = True
+        self.variant_success = ""
         if not self.is_admin or not self.selected_product_id:
+            self.is_submitting_variant = False
             return None
         try:
             quantidade = int(self.variant_quantidade or 0)
         except ValueError:
             self.variant_error = "Quantidade deve ser um número inteiro."
+            self.is_submitting_variant = False
             return None
         try:
             xano_client.create_variant(
@@ -202,6 +227,7 @@ class ProductsState(AuthState):
             )
         except xano_client.XanoAPIError as erro:
             self.variant_error = erro.message
+            self.is_submitting_variant = False
             return None
         self.variant_tamanho = ""
         self.variant_cor = ""
@@ -212,6 +238,11 @@ class ProductsState(AuthState):
             self._variacoes_raw = xano_client.list_variants(self.auth_token)
         except xano_client.XanoAPIError:
             pass
+        # select_product limpa variant_success (reseta o formulário de
+        # variação) — a mensagem de sucesso é definida depois dessa
+        # chamada, não antes.
         self.select_product(self.selected_product_id)
+        self.variant_success = "Variação adicionada."
         self.refresh_products()
+        self.is_submitting_variant = False
         return None

@@ -20,12 +20,15 @@ class CustomersState(AuthState):
     search: str = ""
     customers: list[ClienteView] = []
     load_error: str = ""
+    is_loading_page: bool = True
 
     show_form: bool = False
     form_nome: str = ""
     form_telefone: str = ""
     form_email: str = ""
     form_error: str = ""
+    success: str = ""
+    is_submitting: bool = False
 
     @rx.event
     def load(self):
@@ -33,6 +36,7 @@ class CustomersState(AuthState):
         if redirect is not None:
             return redirect
         self.refresh()
+        self.is_loading_page = False
         return None
 
     def refresh(self):
@@ -58,6 +62,7 @@ class CustomersState(AuthState):
     def toggle_form(self):
         self.show_form = not self.show_form
         self.form_error = ""
+        self.success = ""
 
     @rx.event
     def set_form_nome(self, value: str):
@@ -73,17 +78,24 @@ class CustomersState(AuthState):
 
     @rx.event
     def create_customer(self):
+        if self.is_submitting:
+            return None
+        self.is_submitting = True
+        self.success = ""
         try:
             xano_client.create_customer(
                 self.auth_token, self.form_nome, self.form_telefone, self.form_email
             )
         except xano_client.XanoAPIError as erro:
             self.form_error = erro.message
+            self.is_submitting = False
             return None
         self.form_nome = ""
         self.form_telefone = ""
         self.form_email = ""
         self.form_error = ""
+        self.success = "Cliente cadastrado."
         self.show_form = False
         self.refresh()
+        self.is_submitting = False
         return None

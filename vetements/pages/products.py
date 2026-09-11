@@ -8,6 +8,13 @@ from vetements.state.products import ProductsState
 from vetements.styles import BORDEAUX, INK_MUTED, primary_button_style
 
 
+def _product_success_banner() -> rx.Component:
+    return rx.cond(
+        ProductsState.product_success != "",
+        ui.success_message(ProductsState.product_success),
+    )
+
+
 def _new_product_form() -> rx.Component:
     return rx.cond(
         ProductsState.show_form,
@@ -65,8 +72,10 @@ def _new_product_form() -> rx.Component:
                     ),
                 ),
                 rx.button(
-                    "Salvar produto",
+                    rx.cond(ProductsState.is_submitting_product, "Salvando...", "Salvar produto"),
                     on_click=ProductsState.create_product,
+                    disabled=ProductsState.is_submitting_product,
+                    loading=ProductsState.is_submitting_product,
                     style=primary_button_style(),
                 ),
                 spacing="3",
@@ -92,9 +101,19 @@ def _variant_form() -> rx.Component:
                     ui.field("Cor", rx.input(value=ProductsState.variant_cor, on_change=ProductsState.set_variant_cor)),
                     ui.field("SKU", rx.input(value=ProductsState.variant_sku, on_change=ProductsState.set_variant_sku)),
                     ui.field("Qtd. inicial", rx.input(value=ProductsState.variant_quantidade, on_change=ProductsState.set_variant_quantidade)),
-                    rx.button("Adicionar", on_click=ProductsState.add_variant, align_self="end"),
+                    rx.button(
+                        rx.cond(ProductsState.is_submitting_variant, "Adicionando...", "Adicionar"),
+                        on_click=ProductsState.add_variant,
+                        disabled=ProductsState.is_submitting_variant,
+                        loading=ProductsState.is_submitting_variant,
+                        align_self="end",
+                    ),
                     spacing="3",
                     align_items="end",
+                ),
+                rx.cond(
+                    ProductsState.variant_success != "",
+                    ui.success_message(ProductsState.variant_success),
                 ),
                 rx.foreach(
                     ProductsState.variants_of_selected,
@@ -134,9 +153,13 @@ def _products_table() -> rx.Component:
         ),
     )
     return rx.cond(
-        ProductsState.products.length() > 0,
-        ui.data_table(["Nome", "Categoria", "Preço", "Variações", ""], rows),
-        ui.empty_state("Nenhum produto encontrado."),
+        ProductsState.is_loading_page,
+        ui.loading_state("Carregando produtos..."),
+        rx.cond(
+            ProductsState.products.length() > 0,
+            ui.data_table(["Nome", "Categoria", "Preço", "Variações", ""], rows),
+            ui.empty_state("Nenhum produto encontrado."),
+        ),
     )
 
 
@@ -153,6 +176,7 @@ def products_page() -> rx.Component:
             ProductsState.load_error != "",
             rx.text(ProductsState.load_error, style={"color": BORDEAUX}, size="2", margin_bottom="1rem"),
         ),
+        rx.box(_product_success_banner(), margin_bottom="1rem"),
         rx.input(
             placeholder="Buscar por nome...",
             value=ProductsState.search,

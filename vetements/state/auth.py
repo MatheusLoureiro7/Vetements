@@ -25,6 +25,7 @@ class AuthState(rx.State):
     login_email: str = ""
     login_senha: str = ""
     login_error: str = ""
+    is_submitting: bool = False
 
     @rx.var
     def is_admin(self) -> bool:
@@ -64,6 +65,9 @@ class AuthState(rx.State):
 
     @rx.event
     def login(self):
+        if self.is_submitting:
+            return None
+        self.is_submitting = True
         try:
             resposta = xano_client.login(self.login_email.strip(), self.login_senha)
         except xano_client.XanoAPIError as erro:
@@ -71,6 +75,7 @@ class AuthState(rx.State):
                 self.login_error = "Não foi possível conectar ao servidor. Tente novamente."
             else:
                 self.login_error = "E-mail ou senha inválidos"
+            self.is_submitting = False
             return None
 
         self.auth_token = resposta["authToken"]
@@ -79,10 +84,12 @@ class AuthState(rx.State):
         except xano_client.XanoAPIError:
             self.auth_token = ""
             self.login_error = "Não foi possível conectar ao servidor. Tente novamente."
+            self.is_submitting = False
             return None
 
         self.login_error = ""
         self.login_senha = ""
+        self.is_submitting = False
         return rx.redirect("/")
 
     @rx.event

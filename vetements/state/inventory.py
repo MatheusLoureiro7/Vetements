@@ -25,6 +25,7 @@ class InventoryState(AuthState):
     search: str = ""
     variants: list[VariacaoView] = []
     load_error: str = ""
+    is_loading_page: bool = True
 
     @rx.event
     def load(self):
@@ -37,9 +38,11 @@ class InventoryState(AuthState):
         except xano_client.XanoAPIError:
             self.load_error = "Não foi possível carregar o estoque."
             self.variants = []
+            self.is_loading_page = False
             return None
         self._raw = variacoes
         self.refresh()
+        self.is_loading_page = False
         return None
 
     _raw: list[dict] = []

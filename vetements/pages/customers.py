@@ -27,8 +27,10 @@ def _new_customer_form() -> rx.Component:
                     align_items="end",
                 ),
                 rx.button(
-                    "Salvar cliente",
+                    rx.cond(CustomersState.is_submitting, "Salvando...", "Salvar cliente"),
                     on_click=CustomersState.create_customer,
+                    disabled=CustomersState.is_submitting,
+                    loading=CustomersState.is_submitting,
                     style=primary_button_style(),
                 ),
                 spacing="3",
@@ -49,9 +51,13 @@ def _customers_table() -> rx.Component:
         ),
     )
     return rx.cond(
-        CustomersState.customers.length() > 0,
-        ui.data_table(["Nome", "Telefone", "E-mail"], rows),
-        ui.empty_state("Nenhum cliente encontrado."),
+        CustomersState.is_loading_page,
+        ui.loading_state("Carregando clientes..."),
+        rx.cond(
+            CustomersState.customers.length() > 0,
+            ui.data_table(["Nome", "Telefone", "E-mail"], rows),
+            ui.empty_state("Nenhum cliente encontrado."),
+        ),
     )
 
 
@@ -60,6 +66,10 @@ def customers_page() -> rx.Component:
         ui.section_heading(
             "Clientes",
             action=rx.button("+ Novo cliente", on_click=CustomersState.toggle_form, size="2"),
+        ),
+        rx.cond(
+            CustomersState.success != "",
+            rx.box(ui.success_message(CustomersState.success), margin_bottom="1rem"),
         ),
         rx.input(
             placeholder="Buscar por nome...",

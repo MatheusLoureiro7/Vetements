@@ -53,8 +53,10 @@ def _form_panel() -> rx.Component:
                     ),
                 ),
                 rx.button(
-                    "Entrar",
+                    rx.cond(AuthState.is_submitting, "Entrando...", "Entrar"),
                     on_click=AuthState.login,
+                    disabled=AuthState.is_submitting,
+                    loading=AuthState.is_submitting,
                     width="100%",
                     style=primary_button_style(),
                 ),

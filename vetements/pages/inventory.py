@@ -21,9 +21,13 @@ def _inventory_table() -> rx.Component:
         ),
     )
     return rx.cond(
-        InventoryState.variants.length() > 0,
-        ui.data_table(["Produto", "Tamanho", "Cor", "SKU", "Estoque"], rows),
-        ui.empty_state("Nenhuma variação encontrada."),
+        InventoryState.is_loading_page,
+        ui.loading_state("Carregando estoque..."),
+        rx.cond(
+            InventoryState.variants.length() > 0,
+            ui.data_table(["Produto", "Tamanho", "Cor", "SKU", "Estoque"], rows),
+            ui.empty_state("Nenhuma variação encontrada."),
+        ),
     )
 
 

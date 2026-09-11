@@ -54,9 +54,11 @@ class SalesState(AuthState):
 
     sale_error: str = ""
     sale_success: str = ""
+    is_submitting: bool = False
 
     history: list[VendaResumo] = []
     load_error: str = ""
+    is_loading_page: bool = True
 
     # Cache local das variações cruas do Xano (id -> dict), para validar
     # quantidade disponível sem uma chamada de rede a cada item adicionado.
@@ -70,6 +72,7 @@ class SalesState(AuthState):
             return redirect
         self.refresh_options()
         self.refresh_history()
+        self.is_loading_page = False
         return None
 
     def refresh_options(self):
@@ -194,10 +197,13 @@ class SalesState(AuthState):
 
     @rx.event
     def confirm_sale(self):
+        if self.is_submitting:
+            return None
         if not self.cart:
             self.sale_error = "Adicione ao menos um item para confirmar a venda."
             self.sale_success = ""
             return None
+        self.is_submitting = True
         itens = [
             {"variacao_id": item.variacao_id, "quantidade": item.quantidade} for item in self.cart
         ]
@@ -214,6 +220,7 @@ class SalesState(AuthState):
             else:
                 self.sale_error = erro.message
             self.sale_success = ""
+            self.is_submitting = False
             return None
         self.cart = []
         self.total_label = "R$ 0,00"
@@ -222,4 +229,5 @@ class SalesState(AuthState):
         self.sale_success = "Venda registrada."
         self.refresh_options()
         self.refresh_history()
+        self.is_submitting = False
         return None

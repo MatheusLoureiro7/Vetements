@@ -62,6 +62,7 @@ class DashboardState(AuthState):
     sales_by_day: list[dict[str, str | float]] = []
     products_by_category: list[dict[str, str | int]] = []
     load_error: str = ""
+    is_loading_page: bool = True
 
     @rx.event
     def load(self):
@@ -76,6 +77,7 @@ class DashboardState(AuthState):
             vendas = xano_client.list_sales(self.auth_token, limit=HISTORICO_VENDAS_LIMIT)
         except xano_client.XanoAPIError:
             self.load_error = "Não foi possível carregar as métricas do dashboard."
+            self.is_loading_page = False
             return None
 
         self.load_error = ""
@@ -112,4 +114,5 @@ class DashboardState(AuthState):
         ]
         self.sales_by_day = _sales_by_day(vendas)
         self.products_by_category = _products_by_category(produtos, categorias)
+        self.is_loading_page = False
         return None

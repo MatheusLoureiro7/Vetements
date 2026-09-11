@@ -1,4 +1,10 @@
-"""Layout das páginas autenticadas: sidebar fixa + topbar."""
+"""Layout das páginas autenticadas: sidebar fixa + topbar.
+
+Abaixo do breakpoint mobile (768px), a sidebar deixa de ocupar espaço
+fixo no layout e passa a ser um painel sobreposto, escondido por
+padrão e revelado pelo botão de menu na topbar (`ShellState`) — ver
+design.md, decisão "Sidebar responsiva com um Var de UI local".
+"""
 
 import reflex as rx
 
@@ -16,6 +22,8 @@ from vetements.styles import (
     SURFACE,
 )
 
+MOBILE_BREAKPOINT = "768px"
+
 NAV_ITEMS = [
     ("Dashboard", "/", "layout-dashboard"),
     ("Produtos", "/produtos", "shirt"),
@@ -23,6 +31,20 @@ NAV_ITEMS = [
     ("Vendas", "/vendas", "receipt"),
     ("Clientes", "/clientes", "users"),
 ]
+
+
+class ShellState(rx.State):
+    """Estado de UI local da casca autenticada — não persiste sessão."""
+
+    sidebar_open: bool = False
+
+    @rx.event
+    def toggle_sidebar(self):
+        self.sidebar_open = not self.sidebar_open
+
+    @rx.event
+    def close_sidebar(self):
+        self.sidebar_open = False
 
 
 def _nav_link(label: str, href: str, icon_tag: str) -> rx.Component:
@@ -43,6 +65,7 @@ def _nav_link(label: str, href: str, icon_tag: str) -> rx.Component:
             align_items="center",
         ),
         href=href,
+        on_click=ShellState.close_sidebar,
         text_decoration="none",
         padding="0.5rem 0.75rem",
         width="100%",
@@ -73,7 +96,22 @@ def sidebar() -> rx.Component:
         height="100vh",
         padding="1.5rem",
         align_items="start",
-        style={"border_right": f"1px solid {LINE}", "background_color": SURFACE},
+        style={
+            "border_right": f"1px solid {LINE}",
+            "background_color": SURFACE,
+            # Abaixo do breakpoint mobile, a sidebar sai do fluxo normal
+            # (deixa de reservar espaço) e vira um painel sobreposto que
+            # desliza para dentro/fora conforme ShellState.sidebar_open.
+            f"@media (max-width: {MOBILE_BREAKPOINT})": {
+                "position": "fixed",
+                "left": "0",
+                "top": "0",
+                "z_index": "50",
+                "box_shadow": "0 0 24px rgba(26, 24, 21, 0.18)",
+                "transform": rx.cond(ShellState.sidebar_open, "translateX(0)", "translateX(-100%)"),
+                "transition": "transform 0.2s ease",
+            },
+        },
         position="sticky",
         top="0",
     )
@@ -89,8 +127,24 @@ def _user_avatar() -> rx.Component:
     )
 
 
+def _menu_button() -> rx.Component:
+    """Botão de menu (hambúrguer) — só aparece abaixo do breakpoint
+    mobile, via media query; some por padrão em telas largas."""
+    return rx.icon_button(
+        rx.icon("menu", size=18),
+        on_click=ShellState.toggle_sidebar,
+        variant="ghost",
+        color_scheme="gray",
+        style={
+            "display": "none",
+            f"@media (max-width: {MOBILE_BREAKPOINT})": {"display": "inline-flex"},
+        },
+    )
+
+
 def topbar() -> rx.Component:
     return rx.hstack(
+        _menu_button(),
         rx.spacer(),
         _user_avatar(),
         rx.vstack(
@@ -114,9 +168,28 @@ def topbar() -> rx.Component:
     )
 
 
+def _sidebar_backdrop() -> rx.Component:
+    """Fundo escurecido atrás da sidebar aberta em telas pequenas —
+    clicar nele fecha a sidebar. Some sozinho quando ela está fechada."""
+    return rx.cond(
+        ShellState.sidebar_open,
+        rx.box(
+            on_click=ShellState.close_sidebar,
+            position="fixed",
+            top="0",
+            left="0",
+            width="100vw",
+            height="100vh",
+            z_index="40",
+            style={"background_color": "rgba(26, 24, 21, 0.35)"},
+        ),
+    )
+
+
 def shell(*children: rx.Component) -> rx.Component:
     """Envolve o conteúdo de uma página autenticada."""
     return rx.hstack(
+        _sidebar_backdrop(),
         sidebar(),
         rx.vstack(
             topbar(),

@@ -16,6 +16,8 @@ from vetements.styles import (
     INK_MUTED,
     LINE,
     RADIUS_SM,
+    SUCCESS,
+    SUCCESS_SOFT,
     card_style,
     card_title_style,
     stat_label_style,
@@ -37,7 +39,8 @@ def card_title(text: str) -> rx.Component:
 
 def data_table(headers: list[str], body: rx.Component, **props) -> rx.Component:
     """Tabela dentro de um cartão, com hairline entre linhas, sem
-    zebra."""
+    zebra. Em telas estreitas, rola horizontalmente em vez de quebrar
+    o layout da página."""
     table = rx.table.root(
         rx.table.header(
             rx.table.row(
@@ -61,7 +64,7 @@ def data_table(headers: list[str], body: rx.Component, **props) -> rx.Component:
         style={"width": "100%", "border_collapse": "collapse"},
         **props,
     )
-    return card(table, padding="0.25rem 1.5rem 1rem")
+    return card(rx.box(table, overflow_x="auto", width="100%"), padding="0.25rem 1.5rem 1rem")
 
 
 def data_row(*cells: rx.Component, is_low: Any = False, **props) -> rx.Component:
@@ -125,6 +128,36 @@ def empty_state(text: str) -> rx.Component:
         rx.text(text, style={"color": INK_MUTED}),
         padding_y="3rem",
         width="100%",
+    )
+
+
+def loading_state(text: str = "Carregando...") -> rx.Component:
+    """Indicador de carregamento inicial de uma listagem — visualmente
+    distinto de `empty_state`, para não confundir "ainda carregando"
+    com "lista vazia"."""
+    return rx.center(
+        rx.hstack(
+            rx.spinner(size="2", color=BORDEAUX),
+            rx.text(text, style={"color": INK_MUTED}),
+            spacing="2",
+            align_items="center",
+        ),
+        padding_y="3rem",
+        width="100%",
+    )
+
+
+def success_message(text) -> rx.Component:
+    """Mensagem de confirmação de sucesso, no mesmo padrão visual em
+    toda a app (mesmo tom usado antes só em Vendas)."""
+    return rx.hstack(
+        rx.icon("check", size=14, color=SUCCESS),
+        rx.text(text, size="2", style={"color": SUCCESS}),
+        spacing="2",
+        align_items="center",
+        padding="0.5rem 0.75rem",
+        border_radius=RADIUS_SM,
+        style={"background_color": SUCCESS_SOFT},
     )
 
 

@@ -116,12 +116,16 @@ def dashboard_page() -> rx.Component:
     return shell(
         ui.section_heading("Visão geral"),
         rx.cond(
-            DashboardState.load_error != "",
-            rx.text(DashboardState.load_error, style={"color": BORDEAUX}, size="2"),
-            rx.fragment(
-                _stats_row(),
-                _charts_row(),
-                _recent_sales(),
+            DashboardState.is_loading_page,
+            ui.loading_state("Carregando dashboard..."),
+            rx.cond(
+                DashboardState.load_error != "",
+                rx.text(DashboardState.load_error, style={"color": BORDEAUX}, size="2"),
+                rx.fragment(
+                    _stats_row(),
+                    _charts_row(),
+                    _recent_sales(),
+                ),
             ),
         ),
     )

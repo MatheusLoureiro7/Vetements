@@ -97,8 +97,10 @@ def _new_sale_panel() -> rx.Component:
                 rx.text(SalesState.sale_success, style={"color": SUCCESS}, size="2"),
             ),
             rx.button(
-                "Confirmar venda",
+                rx.cond(SalesState.is_submitting, "Confirmando...", "Confirmar venda"),
                 on_click=SalesState.confirm_sale,
+                disabled=SalesState.is_submitting,
+                loading=SalesState.is_submitting,
                 style=primary_button_style(),
                 margin_top="0.5rem",
             ),
@@ -122,9 +124,13 @@ def _history_table() -> rx.Component:
     return rx.box(
         ui.section_heading("Vendas registradas"),
         rx.cond(
-            SalesState.history.length() > 0,
-            ui.data_table(["Data", "Cliente", "Itens", "Total"], rows),
-            ui.empty_state("Nenhuma venda registrada ainda."),
+            SalesState.is_loading_page,
+            ui.loading_state("Carregando vendas..."),
+            rx.cond(
+                SalesState.history.length() > 0,
+                ui.data_table(["Data", "Cliente", "Itens", "Total"], rows),
+                ui.empty_state("Nenhuma venda registrada ainda."),
+            ),
         ),
         width="100%",
     )

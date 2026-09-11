@@ -1,9 +1,15 @@
 
 import {ReflexEvent,applyEventActions,isNotNullOrUndefined,isTrue} from "$/utils/state"
+import {Button as RadixThemesButton,Flex as RadixThemesFlex,Link as RadixThemesLink,Table as RadixThemesTable,Text as RadixThemesText,TextField as RadixThemesTextField} from "@radix-ui/themes"
 import {StateContexts,addEvents} from "$/utils/context"
 import {Fragment,memo,useCallback,useContext,useEffect} from "react"
+import {Link as ReactRouterLink} from "react-router"
+import LucideLayoutDashboard from "lucide-react/dist/esm/icons/layout-dashboard.mjs"
+import LucideShirt from "lucide-react/dist/esm/icons/shirt.mjs"
+import LucidePackage from "lucide-react/dist/esm/icons/package.mjs"
+import LucideReceipt from "lucide-react/dist/esm/icons/receipt.mjs"
+import LucideUsers from "lucide-react/dist/esm/icons/users.mjs"
 import {jsx} from "@emotion/react"
-import {Button as RadixThemesButton,Table as RadixThemesTable,TextField as RadixThemesTextField} from "@radix-ui/themes"
 import DebounceInput from "react-debounce-input"
 
 
@@ -12,6 +18,72 @@ import DebounceInput from "react-debounce-input"
 
 
 
+
+export const Link_link_4cd50d83ee35373dd1e072f197931b2f_41993b85 = memo(({children}) => {
+    const reflex___state____state = useContext(StateContexts.reflex___state____state)
+
+
+
+    return(
+        jsx(RadixThemesLink,{asChild:true,css:({ ["backgroundColor"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/"?.valueOf?.()) ? "#F1E4E1" : "transparent"), ["textDecoration"] : "none", ["padding"] : "0.5rem 0.75rem", ["width"] : "100%", ["borderRadius"] : "6px", ["&:hover"] : ({ ["color"] : "var(--accent-8)" }) })},jsx(ReactRouterLink,{to:"/"},jsx(RadixThemesFlex,{align:"start",className:"rx-Stack",css:({ ["alignItems"] : "center" }),direction:"row",gap:"2"},jsx(LucideLayoutDashboard,{css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/"?.valueOf?.()) ? "#6E1423" : "#6B665D") }),size:16},),jsx(RadixThemesText,{as:"p",css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/"?.valueOf?.()) ? "#6E1423" : "#1A1815"), ["fontWeight"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/"?.valueOf?.()) ? "600" : "400") }),size:"3"},"Dashboard"))))
+    )
+});
+Link_link_4cd50d83ee35373dd1e072f197931b2f_41993b85.displayName = "Link";
+
+export const Link_link_96dd182a6043f51bc2360f41219983ce_41993b85 = memo(({children}) => {
+    const reflex___state____state = useContext(StateContexts.reflex___state____state)
+
+
+
+    return(
+        jsx(RadixThemesLink,{asChild:true,css:({ ["backgroundColor"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/produtos"?.valueOf?.()) ? "#F1E4E1" : "transparent"), ["textDecoration"] : "none", ["padding"] : "0.5rem 0.75rem", ["width"] : "100%", ["borderRadius"] : "6px", ["&:hover"] : ({ ["color"] : "var(--accent-8)" }) })},jsx(ReactRouterLink,{to:"/produtos"},jsx(RadixThemesFlex,{align:"start",className:"rx-Stack",css:({ ["alignItems"] : "center" }),direction:"row",gap:"2"},jsx(LucideShirt,{css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/produtos"?.valueOf?.()) ? "#6E1423" : "#6B665D") }),size:16},),jsx(RadixThemesText,{as:"p",css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/produtos"?.valueOf?.()) ? "#6E1423" : "#1A1815"), ["fontWeight"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/produtos"?.valueOf?.()) ? "600" : "400") }),size:"3"},"Produtos"))))
+    )
+});
+Link_link_96dd182a6043f51bc2360f41219983ce_41993b85.displayName = "Link";
+
+export const Link_link_4d684eec7fac1faf17b6d1dad1cf27e0_41993b85 = memo(({children}) => {
+    const reflex___state____state = useContext(StateContexts.reflex___state____state)
+
+
+
+    return(
+        jsx(RadixThemesLink,{asChild:true,css:({ ["backgroundColor"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/estoque"?.valueOf?.()) ? "#F1E4E1" : "transparent"), ["textDecoration"] : "none", ["padding"] : "0.5rem 0.75rem", ["width"] : "100%", ["borderRadius"] : "6px", ["&:hover"] : ({ ["color"] : "var(--accent-8)" }) })},jsx(ReactRouterLink,{to:"/estoque"},jsx(RadixThemesFlex,{align:"start",className:"rx-Stack",css:({ ["alignItems"] : "center" }),direction:"row",gap:"2"},jsx(LucidePackage,{css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/estoque"?.valueOf?.()) ? "#6E1423" : "#6B665D") }),size:16},),jsx(RadixThemesText,{as:"p",css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/estoque"?.valueOf?.()) ? "#6E1423" : "#1A1815"), ["fontWeight"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/estoque"?.valueOf?.()) ? "600" : "400") }),size:"3"},"Estoque"))))
+    )
+});
+Link_link_4d684eec7fac1faf17b6d1dad1cf27e0_41993b85.displayName = "Link";
+
+export const Link_link_a8e544140e4e126cd0d5983c0761f711_41993b85 = memo(({children}) => {
+    const reflex___state____state = useContext(StateContexts.reflex___state____state)
+
+
+
+    return(
+        jsx(RadixThemesLink,{asChild:true,css:({ ["backgroundColor"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/vendas"?.valueOf?.()) ? "#F1E4E1" : "transparent"), ["textDecoration"] : "none", ["padding"] : "0.5rem 0.75rem", ["width"] : "100%", ["borderRadius"] : "6px", ["&:hover"] : ({ ["color"] : "var(--accent-8)" }) })},jsx(ReactRouterLink,{to:"/vendas"},jsx(RadixThemesFlex,{align:"start",className:"rx-Stack",css:({ ["alignItems"] : "center" }),direction:"row",gap:"2"},jsx(LucideReceipt,{css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/vendas"?.valueOf?.()) ? "#6E1423" : "#6B665D") }),size:16},),jsx(RadixThemesText,{as:"p",css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/vendas"?.valueOf?.()) ? "#6E1423" : "#1A1815"), ["fontWeight"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/vendas"?.valueOf?.()) ? "600" : "400") }),size:"3"},"Vendas"))))
+    )
+});
+Link_link_a8e544140e4e126cd0d5983c0761f711_41993b85.displayName = "Link";
+
+export const Link_link_5575b88e34c09ee6947431db395cf580_41993b85 = memo(({children}) => {
+    const reflex___state____state = useContext(StateContexts.reflex___state____state)
+
+
+
+    return(
+        jsx(RadixThemesLink,{asChild:true,css:({ ["backgroundColor"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/clientes"?.valueOf?.()) ? "#F1E4E1" : "transparent"), ["textDecoration"] : "none", ["padding"] : "0.5rem 0.75rem", ["width"] : "100%", ["borderRadius"] : "6px", ["&:hover"] : ({ ["color"] : "var(--accent-8)" }) })},jsx(ReactRouterLink,{to:"/clientes"},jsx(RadixThemesFlex,{align:"start",className:"rx-Stack",css:({ ["alignItems"] : "center" }),direction:"row",gap:"2"},jsx(LucideUsers,{css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/clientes"?.valueOf?.()) ? "#6E1423" : "#6B665D") }),size:16},),jsx(RadixThemesText,{as:"p",css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/clientes"?.valueOf?.()) ? "#6E1423" : "#1A1815"), ["fontWeight"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/clientes"?.valueOf?.()) ? "600" : "400") }),size:"3"},"Clientes"))))
+    )
+});
+Link_link_5575b88e34c09ee6947431db395cf580_41993b85.displayName = "Link";
+
+export const Bare_comp_c3a580bedf1415a3b5e60e5eda6397bc_41993b85 = memo(({children}) => {
+    const reflex___state____state__vetements___state___auth____auth_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state)
+
+
+
+    return(
+        reflex___state____state__vetements___state___auth____auth_state.iniciais_rx_state_
+    )
+});
+Bare_comp_c3a580bedf1415a3b5e60e5eda6397bc_41993b85.displayName = "Bare";
 
 export const Bare_comp_14a2a83cd2d090706e4125125dbf5156_41993b85 = memo(({children}) => {
     const reflex___state____state__vetements___state___auth____auth_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state)
@@ -46,6 +118,28 @@ export const Button_button_3c7370fe4b8fbd10664da711e404fc2e_41993b85 = memo(({ch
 });
 Button_button_3c7370fe4b8fbd10664da711e404fc2e_41993b85.displayName = "Button";
 
+export const Bare_comp_dfe71b4b1ddfeb8ff9e14b1d625729cc_41993b85 = memo(({children}) => {
+    const reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state)
+
+
+
+    return(
+        reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state.load_error_rx_state_
+    )
+});
+Bare_comp_dfe71b4b1ddfeb8ff9e14b1d625729cc_41993b85.displayName = "Bare";
+
+export const Cond_comp_8f49e5ff7f95855e602b4e82382f6964_41993b85 = memo(({children}) => {
+    const reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state)
+
+
+
+    return(
+        (!((reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state.load_error_rx_state_?.valueOf?.() === ""?.valueOf?.()))?(children?.at?.(0)):(children?.at?.(1)))
+    )
+});
+Cond_comp_8f49e5ff7f95855e602b4e82382f6964_41993b85.displayName = "Cond";
+
 export const Debounceinput_debounceinput_ac0f76d9478b28785b9d974845661f24_41993b85 = memo(({children}) => {
     const on_change_624fd339ce8cfbd7e5f6ee4d5d5d3ea0 = useCallback(((_e) => (addEvents([(ReflexEvent("reflex___state____state.vetements___state___auth____auth_state.vetements___state___inventory____inventory_state.set_search", ({ ["value"] : _e?.["target"]?.["value"] }), ({  })))], [_e], ({  })))), [addEvents, ReflexEvent])
 const reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state)
@@ -58,16 +152,16 @@ const reflex___state____state__vetements___state___auth____auth_state__vetements
 });
 Debounceinput_debounceinput_ac0f76d9478b28785b9d974845661f24_41993b85.displayName = "DebounceInput";
 
-export const Foreach_comp_aef0446adeec39f6637f4c8a78755318_41993b85 = memo(({children}) => {
+export const Foreach_comp_206c7282dc8e775abc6aff7e8bd43927_41993b85 = memo(({children}) => {
     const reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state)
 
 
 
     return(
-        Array.prototype.map.call(reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state.variants_rx_state_ ?? [],((v_rx_state_,index_8ea21678ac1994f9b6fe5c5207f50369)=>(jsx(RadixThemesTable.Row,{css:({ ["borderBottom"] : "1px solid #DDD8CC", ["borderLeft"] : (v_rx_state_?.["is_low"] ? "3px solid #6E1423" : "3px solid transparent") }),key:index_8ea21678ac1994f9b6fe5c5207f50369},jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},v_rx_state_?.["produto_nome"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},v_rx_state_?.["tamanho"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},v_rx_state_?.["cor"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},v_rx_state_?.["sku"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},v_rx_state_?.["quantidade"])))))
+        Array.prototype.map.call(reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state.variants_rx_state_ ?? [],((v_rx_state_,index_8ea21678ac1994f9b6fe5c5207f50369)=>(jsx(RadixThemesTable.Row,{css:({ ["borderBottom"] : "1px solid #E1E4E9", ["borderLeft"] : (v_rx_state_?.["is_low"] ? "3px solid #6E1423" : "3px solid transparent") }),key:index_8ea21678ac1994f9b6fe5c5207f50369},jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},v_rx_state_?.["produto_nome"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},v_rx_state_?.["tamanho"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},v_rx_state_?.["cor"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},v_rx_state_?.["sku"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},v_rx_state_?.["quantidade"])))))
     )
 });
-Foreach_comp_aef0446adeec39f6637f4c8a78755318_41993b85.displayName = "Foreach";
+Foreach_comp_206c7282dc8e775abc6aff7e8bd43927_41993b85.displayName = "Foreach";
 
 export const Cond_comp_2cec12a4a675b7796aebfaae90e8c7a3_41993b85 = memo(({children}) => {
     const reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state)
@@ -79,3 +173,14 @@ export const Cond_comp_2cec12a4a675b7796aebfaae90e8c7a3_41993b85 = memo(({childr
     )
 });
 Cond_comp_2cec12a4a675b7796aebfaae90e8c7a3_41993b85.displayName = "Cond";
+
+export const Cond_comp_f0589ac62479bc9523c5daffc24b5baf_41993b85 = memo(({children}) => {
+    const reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state)
+
+
+
+    return(
+        ((reflex___state____state__vetements___state___auth____auth_state__vetements___state___inventory____inventory_state.load_error_rx_state_?.valueOf?.() === ""?.valueOf?.())?(children?.at?.(0)):(children?.at?.(1)))
+    )
+});
+Cond_comp_f0589ac62479bc9523c5daffc24b5baf_41993b85.displayName = "Cond";

@@ -1,20 +1,44 @@
-"""Peças visuais compartilhadas do sistema "Atelier".
+"""Peças visuais compartilhadas do sistema "Vetements".
 
-Sem cards com sombra: separação por hairline (1px), destaque por
-borda lateral em vez de badge, tipografia como o elemento de
-hierarquia principal.
+Cartões brancos com sombra suave (em vez de hairline solta na
+página); dentro do cartão, linhas de tabela continuam separadas por
+hairline (1px), sem zebra.
 """
 
 from typing import Any
 
 import reflex as rx
 
-from vetements.styles import BORDEAUX, INK, INK_MUTED, LINE, stat_label_style, stat_number_style
+from vetements.styles import (
+    BORDEAUX,
+    BORDEAUX_SOFT,
+    INK,
+    INK_MUTED,
+    LINE,
+    RADIUS_SM,
+    card_style,
+    card_title_style,
+    stat_label_style,
+    stat_number_style,
+)
+
+
+def card(*children: rx.Component, padding: str = "1.5rem", **props) -> rx.Component:
+    """Cartão base (fundo branco, radius, sombra) para envolver
+    conteúdo — formulários, painéis — de forma consistente."""
+    return rx.box(*children, style=card_style(padding=padding), **props)
+
+
+def card_title(text: str) -> rx.Component:
+    """Título interno de cartão/painel (IBM Plex Sans), distinto do
+    título de página (`section_heading`, em Fraunces)."""
+    return rx.text(text, style=card_title_style())
 
 
 def data_table(headers: list[str], body: rx.Component, **props) -> rx.Component:
-    """Tabela com hairline entre linhas, sem sombra, sem zebra."""
-    return rx.table.root(
+    """Tabela dentro de um cartão, com hairline entre linhas, sem
+    zebra."""
+    table = rx.table.root(
         rx.table.header(
             rx.table.row(
                 *[
@@ -37,6 +61,7 @@ def data_table(headers: list[str], body: rx.Component, **props) -> rx.Component:
         style={"width": "100%", "border_collapse": "collapse"},
         **props,
     )
+    return card(table, padding="0.25rem 1.5rem 1rem")
 
 
 def data_row(*cells: rx.Component, is_low: Any = False, **props) -> rx.Component:
@@ -58,16 +83,26 @@ def data_cell(content, **props) -> rx.Component:
     return rx.table.cell(content, padding_y="0.65rem", color=INK, **props)
 
 
-def stat(number, label: str, divider: bool = True) -> rx.Component:
-    """Bloco 'número grande + rótulo', separado por hairline vertical."""
-    return rx.vstack(
-        rx.text(number, style=stat_number_style()),
-        rx.text(label, style=stat_label_style()),
-        spacing="1",
-        align_items="start",
-        padding_left="1.5rem" if divider else "0",
-        padding_right="1.5rem",
-        border_left=f"1px solid {LINE}" if divider else "none",
+def stat(number, label: str, icon: str = "trending-up", color: str = BORDEAUX, color_soft: str = BORDEAUX_SOFT) -> rx.Component:
+    """Cartão 'ícone colorido + número grande + rótulo'."""
+    return rx.hstack(
+        rx.center(
+            rx.icon(icon, size=20, color=color),
+            width="2.75rem",
+            height="2.75rem",
+            border_radius=RADIUS_SM,
+            style={"background_color": color_soft},
+        ),
+        rx.vstack(
+            rx.text(number, style=stat_number_style()),
+            rx.text(label, style=stat_label_style()),
+            spacing="1",
+            align_items="start",
+        ),
+        spacing="3",
+        align_items="center",
+        width="100%",
+        style=card_style(padding="1.25rem"),
     )
 
 

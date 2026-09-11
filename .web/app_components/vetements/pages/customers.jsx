@@ -1,9 +1,15 @@
 
 import {ReflexEvent,applyEventActions,isNotNullOrUndefined,isTrue} from "$/utils/state"
+import {Button as RadixThemesButton,Flex as RadixThemesFlex,Link as RadixThemesLink,Table as RadixThemesTable,Text as RadixThemesText,TextField as RadixThemesTextField} from "@radix-ui/themes"
 import {StateContexts,addEvents} from "$/utils/context"
 import {Fragment,memo,useCallback,useContext,useEffect} from "react"
+import {Link as ReactRouterLink} from "react-router"
+import LucideLayoutDashboard from "lucide-react/dist/esm/icons/layout-dashboard.mjs"
+import LucideShirt from "lucide-react/dist/esm/icons/shirt.mjs"
+import LucidePackage from "lucide-react/dist/esm/icons/package.mjs"
+import LucideReceipt from "lucide-react/dist/esm/icons/receipt.mjs"
+import LucideUsers from "lucide-react/dist/esm/icons/users.mjs"
 import {jsx} from "@emotion/react"
-import {Button as RadixThemesButton,Table as RadixThemesTable,TextField as RadixThemesTextField} from "@radix-ui/themes"
 import DebounceInput from "react-debounce-input"
 
 
@@ -12,6 +18,72 @@ import DebounceInput from "react-debounce-input"
 
 
 
+
+export const Link_link_4cd50d83ee35373dd1e072f197931b2f_23db2c7c = memo(({children}) => {
+    const reflex___state____state = useContext(StateContexts.reflex___state____state)
+
+
+
+    return(
+        jsx(RadixThemesLink,{asChild:true,css:({ ["backgroundColor"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/"?.valueOf?.()) ? "#F1E4E1" : "transparent"), ["textDecoration"] : "none", ["padding"] : "0.5rem 0.75rem", ["width"] : "100%", ["borderRadius"] : "6px", ["&:hover"] : ({ ["color"] : "var(--accent-8)" }) })},jsx(ReactRouterLink,{to:"/"},jsx(RadixThemesFlex,{align:"start",className:"rx-Stack",css:({ ["alignItems"] : "center" }),direction:"row",gap:"2"},jsx(LucideLayoutDashboard,{css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/"?.valueOf?.()) ? "#6E1423" : "#6B665D") }),size:16},),jsx(RadixThemesText,{as:"p",css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/"?.valueOf?.()) ? "#6E1423" : "#1A1815"), ["fontWeight"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/"?.valueOf?.()) ? "600" : "400") }),size:"3"},"Dashboard"))))
+    )
+});
+Link_link_4cd50d83ee35373dd1e072f197931b2f_23db2c7c.displayName = "Link";
+
+export const Link_link_96dd182a6043f51bc2360f41219983ce_23db2c7c = memo(({children}) => {
+    const reflex___state____state = useContext(StateContexts.reflex___state____state)
+
+
+
+    return(
+        jsx(RadixThemesLink,{asChild:true,css:({ ["backgroundColor"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/produtos"?.valueOf?.()) ? "#F1E4E1" : "transparent"), ["textDecoration"] : "none", ["padding"] : "0.5rem 0.75rem", ["width"] : "100%", ["borderRadius"] : "6px", ["&:hover"] : ({ ["color"] : "var(--accent-8)" }) })},jsx(ReactRouterLink,{to:"/produtos"},jsx(RadixThemesFlex,{align:"start",className:"rx-Stack",css:({ ["alignItems"] : "center" }),direction:"row",gap:"2"},jsx(LucideShirt,{css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/produtos"?.valueOf?.()) ? "#6E1423" : "#6B665D") }),size:16},),jsx(RadixThemesText,{as:"p",css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/produtos"?.valueOf?.()) ? "#6E1423" : "#1A1815"), ["fontWeight"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/produtos"?.valueOf?.()) ? "600" : "400") }),size:"3"},"Produtos"))))
+    )
+});
+Link_link_96dd182a6043f51bc2360f41219983ce_23db2c7c.displayName = "Link";
+
+export const Link_link_4d684eec7fac1faf17b6d1dad1cf27e0_23db2c7c = memo(({children}) => {
+    const reflex___state____state = useContext(StateContexts.reflex___state____state)
+
+
+
+    return(
+        jsx(RadixThemesLink,{asChild:true,css:({ ["backgroundColor"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/estoque"?.valueOf?.()) ? "#F1E4E1" : "transparent"), ["textDecoration"] : "none", ["padding"] : "0.5rem 0.75rem", ["width"] : "100%", ["borderRadius"] : "6px", ["&:hover"] : ({ ["color"] : "var(--accent-8)" }) })},jsx(ReactRouterLink,{to:"/estoque"},jsx(RadixThemesFlex,{align:"start",className:"rx-Stack",css:({ ["alignItems"] : "center" }),direction:"row",gap:"2"},jsx(LucidePackage,{css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/estoque"?.valueOf?.()) ? "#6E1423" : "#6B665D") }),size:16},),jsx(RadixThemesText,{as:"p",css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/estoque"?.valueOf?.()) ? "#6E1423" : "#1A1815"), ["fontWeight"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/estoque"?.valueOf?.()) ? "600" : "400") }),size:"3"},"Estoque"))))
+    )
+});
+Link_link_4d684eec7fac1faf17b6d1dad1cf27e0_23db2c7c.displayName = "Link";
+
+export const Link_link_a8e544140e4e126cd0d5983c0761f711_23db2c7c = memo(({children}) => {
+    const reflex___state____state = useContext(StateContexts.reflex___state____state)
+
+
+
+    return(
+        jsx(RadixThemesLink,{asChild:true,css:({ ["backgroundColor"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/vendas"?.valueOf?.()) ? "#F1E4E1" : "transparent"), ["textDecoration"] : "none", ["padding"] : "0.5rem 0.75rem", ["width"] : "100%", ["borderRadius"] : "6px", ["&:hover"] : ({ ["color"] : "var(--accent-8)" }) })},jsx(ReactRouterLink,{to:"/vendas"},jsx(RadixThemesFlex,{align:"start",className:"rx-Stack",css:({ ["alignItems"] : "center" }),direction:"row",gap:"2"},jsx(LucideReceipt,{css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/vendas"?.valueOf?.()) ? "#6E1423" : "#6B665D") }),size:16},),jsx(RadixThemesText,{as:"p",css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/vendas"?.valueOf?.()) ? "#6E1423" : "#1A1815"), ["fontWeight"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/vendas"?.valueOf?.()) ? "600" : "400") }),size:"3"},"Vendas"))))
+    )
+});
+Link_link_a8e544140e4e126cd0d5983c0761f711_23db2c7c.displayName = "Link";
+
+export const Link_link_5575b88e34c09ee6947431db395cf580_23db2c7c = memo(({children}) => {
+    const reflex___state____state = useContext(StateContexts.reflex___state____state)
+
+
+
+    return(
+        jsx(RadixThemesLink,{asChild:true,css:({ ["backgroundColor"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/clientes"?.valueOf?.()) ? "#F1E4E1" : "transparent"), ["textDecoration"] : "none", ["padding"] : "0.5rem 0.75rem", ["width"] : "100%", ["borderRadius"] : "6px", ["&:hover"] : ({ ["color"] : "var(--accent-8)" }) })},jsx(ReactRouterLink,{to:"/clientes"},jsx(RadixThemesFlex,{align:"start",className:"rx-Stack",css:({ ["alignItems"] : "center" }),direction:"row",gap:"2"},jsx(LucideUsers,{css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/clientes"?.valueOf?.()) ? "#6E1423" : "#6B665D") }),size:16},),jsx(RadixThemesText,{as:"p",css:({ ["color"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/clientes"?.valueOf?.()) ? "#6E1423" : "#1A1815"), ["fontWeight"] : ((reflex___state____state.router_rx_state_?.["page"]?.["path"]?.valueOf?.() === "/clientes"?.valueOf?.()) ? "600" : "400") }),size:"3"},"Clientes"))))
+    )
+});
+Link_link_5575b88e34c09ee6947431db395cf580_23db2c7c.displayName = "Link";
+
+export const Bare_comp_c3a580bedf1415a3b5e60e5eda6397bc_23db2c7c = memo(({children}) => {
+    const reflex___state____state__vetements___state___auth____auth_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state)
+
+
+
+    return(
+        reflex___state____state__vetements___state___auth____auth_state.iniciais_rx_state_
+    )
+});
+Bare_comp_c3a580bedf1415a3b5e60e5eda6397bc_23db2c7c.displayName = "Bare";
 
 export const Bare_comp_14a2a83cd2d090706e4125125dbf5156_23db2c7c = memo(({children}) => {
     const reflex___state____state__vetements___state___auth____auth_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state)
@@ -127,16 +199,16 @@ const reflex___state____state__vetements___state___auth____auth_state__vetements
 });
 Debounceinput_debounceinput_0775d26f8c0ad083d1571d610f67f3ec_23db2c7c.displayName = "DebounceInput";
 
-export const Button_button_0b1f9b8fccf538db8f24fc50db612fcf_23db2c7c = memo(({children}) => {
+export const Button_button_cbb18208ef0a06b7a8cf40fcdb2f5319_23db2c7c = memo(({children}) => {
     const on_click_0115765a98d1b871a5025f4ffb5276fe = useCallback(((_e) => (addEvents([(ReflexEvent("reflex___state____state.vetements___state___auth____auth_state.vetements___state___customers____customers_state.create_customer", ({  }), ({  })))], [_e], ({  })))), [addEvents, ReflexEvent])
 
 
 
     return(
-        jsx(RadixThemesButton,{css:({ ["backgroundColor"] : "#6E1423", ["color"] : "white" }),onClick:on_click_0115765a98d1b871a5025f4ffb5276fe},children)
+        jsx(RadixThemesButton,{css:({ ["backgroundColor"] : "#6E1423", ["color"] : "white", ["borderRadius"] : "6px", ["boxShadow"] : "0 1px 2px rgba(26, 24, 21, 0.04), 0 4px 12px rgba(26, 24, 21, 0.06)", ["transition"] : "box-shadow 0.15s ease, transform 0.15s ease", ["&:hover"] : ({ ["boxShadow"] : "0 0 0 3px rgba(110, 20, 35, 0.12)", ["transform"] : "translateY(-1px)" }), ["&:focus-visible"] : ({ ["boxShadow"] : "0 0 0 3px rgba(110, 20, 35, 0.12)" }) }),onClick:on_click_0115765a98d1b871a5025f4ffb5276fe},children)
     )
 });
-Button_button_0b1f9b8fccf538db8f24fc50db612fcf_23db2c7c.displayName = "Button";
+Button_button_cbb18208ef0a06b7a8cf40fcdb2f5319_23db2c7c.displayName = "Button";
 
 export const Cond_comp_afb0fed549b809af8972000d357ee255_23db2c7c = memo(({children}) => {
     const reflex___state____state__vetements___state___auth____auth_state__vetements___state___customers____customers_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state__vetements___state___customers____customers_state)
@@ -149,16 +221,16 @@ export const Cond_comp_afb0fed549b809af8972000d357ee255_23db2c7c = memo(({childr
 });
 Cond_comp_afb0fed549b809af8972000d357ee255_23db2c7c.displayName = "Cond";
 
-export const Foreach_comp_45a63a45c6b03f515da44ee07d9375a1_23db2c7c = memo(({children}) => {
+export const Foreach_comp_d934f614f46bd3be3de47d59524c89f2_23db2c7c = memo(({children}) => {
     const reflex___state____state__vetements___state___auth____auth_state__vetements___state___customers____customers_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state__vetements___state___customers____customers_state)
 
 
 
     return(
-        Array.prototype.map.call(reflex___state____state__vetements___state___auth____auth_state__vetements___state___customers____customers_state.customers_rx_state_ ?? [],((c_rx_state_,index_ea38ba42aed0509d6ccb85008441344d)=>(jsx(RadixThemesTable.Row,{css:({ ["borderBottom"] : "1px solid #DDD8CC", ["borderLeft"] : (false ? "3px solid #6E1423" : "3px solid transparent") }),key:index_ea38ba42aed0509d6ccb85008441344d},jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},c_rx_state_?.["nome"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},c_rx_state_?.["telefone"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},c_rx_state_?.["email"])))))
+        Array.prototype.map.call(reflex___state____state__vetements___state___auth____auth_state__vetements___state___customers____customers_state.customers_rx_state_ ?? [],((c_rx_state_,index_ea38ba42aed0509d6ccb85008441344d)=>(jsx(RadixThemesTable.Row,{css:({ ["borderBottom"] : "1px solid #E1E4E9", ["borderLeft"] : (false ? "3px solid #6E1423" : "3px solid transparent") }),key:index_ea38ba42aed0509d6ccb85008441344d},jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},c_rx_state_?.["nome"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},c_rx_state_?.["telefone"]),jsx(RadixThemesTable.Cell,{css:({ ["paddingTop"] : "0.65rem", ["paddingBottom"] : "0.65rem", ["color"] : "#1A1815" })},c_rx_state_?.["email"])))))
     )
 });
-Foreach_comp_45a63a45c6b03f515da44ee07d9375a1_23db2c7c.displayName = "Foreach";
+Foreach_comp_d934f614f46bd3be3de47d59524c89f2_23db2c7c.displayName = "Foreach";
 
 export const Cond_comp_ce31260b814ce5dfd25755afad8273b0_23db2c7c = memo(({children}) => {
     const reflex___state____state__vetements___state___auth____auth_state__vetements___state___customers____customers_state = useContext(StateContexts.reflex___state____state__vetements___state___auth____auth_state__vetements___state___customers____customers_state)

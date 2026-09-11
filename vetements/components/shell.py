@@ -3,7 +3,18 @@
 import reflex as rx
 
 from vetements.state.auth import AuthState
-from vetements.styles import BG, BORDEAUX, DISPLAY_FONT, INK, INK_MUTED, LINE, SIDEBAR_WIDTH
+from vetements.styles import (
+    BG,
+    BORDEAUX,
+    BORDEAUX_SOFT,
+    DISPLAY_FONT,
+    INK,
+    INK_MUTED,
+    LINE,
+    RADIUS_SM,
+    SIDEBAR_WIDTH,
+    SURFACE,
+)
 
 NAV_ITEMS = [
     ("Dashboard", "/", "layout-dashboard"),
@@ -15,10 +26,19 @@ NAV_ITEMS = [
 
 
 def _nav_link(label: str, href: str, icon_tag: str) -> rx.Component:
+    is_active = AuthState.router.page.path == href
     return rx.link(
         rx.hstack(
-            rx.icon(icon_tag, size=16, color=INK_MUTED),
-            rx.text(label, size="3", style={"color": INK}),
+            rx.icon(
+                icon_tag,
+                size=16,
+                color=rx.cond(is_active, BORDEAUX, INK_MUTED),
+            ),
+            rx.text(
+                label,
+                size="3",
+                style={"color": rx.cond(is_active, BORDEAUX, INK), "font_weight": rx.cond(is_active, "600", "400")},
+            ),
             spacing="2",
             align_items="center",
         ),
@@ -26,6 +46,8 @@ def _nav_link(label: str, href: str, icon_tag: str) -> rx.Component:
         text_decoration="none",
         padding="0.5rem 0.75rem",
         width="100%",
+        border_radius=RADIUS_SM,
+        style={"background_color": rx.cond(is_active, BORDEAUX_SOFT, "transparent")},
     )
 
 
@@ -51,18 +73,32 @@ def sidebar() -> rx.Component:
         height="100vh",
         padding="1.5rem",
         align_items="start",
-        style={"border_right": f"1px solid {LINE}", "background_color": "#FBFAF7"},
+        style={"border_right": f"1px solid {LINE}", "background_color": SURFACE},
         position="sticky",
         top="0",
+    )
+
+
+def _user_avatar() -> rx.Component:
+    return rx.center(
+        rx.text(AuthState.iniciais, size="2", weight="bold", style={"color": BORDEAUX}),
+        width="2rem",
+        height="2rem",
+        border_radius="9999px",
+        style={"background_color": BORDEAUX_SOFT},
     )
 
 
 def topbar() -> rx.Component:
     return rx.hstack(
         rx.spacer(),
-        rx.text(AuthState.nome, size="2", weight="medium"),
-        rx.text("·", style={"color": INK_MUTED}),
-        rx.text(AuthState.papel_label, size="2", style={"color": INK_MUTED}),
+        _user_avatar(),
+        rx.vstack(
+            rx.text(AuthState.nome, size="2", weight="medium"),
+            rx.text(AuthState.papel_label, size="1", style={"color": INK_MUTED}),
+            spacing="0",
+            align_items="start",
+        ),
         rx.button(
             "Sair",
             on_click=AuthState.logout,
@@ -74,7 +110,7 @@ def topbar() -> rx.Component:
         align_items="center",
         width="100%",
         padding="1rem 2rem",
-        style={"border_bottom": f"1px solid {LINE}"},
+        style={"background_color": SURFACE, "border_bottom": f"1px solid {LINE}"},
     )
 
 

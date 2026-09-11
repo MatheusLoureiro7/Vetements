@@ -1,4 +1,10 @@
 [
+  "tests/test_dashboard_state.py::test_products_by_category_soma_bate_com_total_de_produtos",
+  "tests/test_dashboard_state.py::test_products_by_category_uma_entrada_por_categoria",
+  "tests/test_dashboard_state.py::test_sales_by_day_ignora_vendas_fora_da_janela",
+  "tests/test_dashboard_state.py::test_sales_by_day_sem_vendas_fica_zerado_sem_erro",
+  "tests/test_dashboard_state.py::test_sales_by_day_sempre_tem_um_ponto_por_dia",
+  "tests/test_dashboard_state.py::test_sales_by_day_soma_vendas_do_mesmo_dia",
   "tests/test_mock_data.py::test_authenticate_credenciais_invalidas",
   "tests/test_mock_data.py::test_authenticate_credenciais_validas",
   "tests/test_mock_data.py::test_create_customer_exige_telefone_ou_email",
@@ -12,5 +18,8 @@
   "tests/test_mock_data.py::test_create_variant_associada_ao_produto",
   "tests/test_mock_data.py::test_decrement_stock_ate_zero_nunca_abaixo",
   "tests/test_mock_data.py::test_estoque_nunca_fica_negativo",
-  "tests/test_mock_data.py::test_list_products_busca_por_nome"
+  "tests/test_mock_data.py::test_list_products_busca_por_nome",
+  "tests/test_xano_client.py::test_falha_de_rede_vira_xano_api_error_sem_status_code",
+  "tests/test_xano_client.py::test_resposta_com_sucesso_retorna_json_decodificado",
+  "tests/test_xano_client.py::test_resposta_de_erro_do_xano_vira_xano_api_error"
 ]

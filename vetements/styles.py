@@ -61,8 +61,18 @@ SIDEBAR_WIDTH = "240px"
 CONTENT_MAX_WIDTH = "1120px"
 RADIUS = "10px"
 RADIUS_SM = "6px"
-SHADOW = "0 1px 2px rgba(26, 24, 21, 0.04), 0 4px 12px rgba(26, 24, 21, 0.06)"
+
+# Escala de elevação: SM é o repouso dos cartões, MD é o valor histórico
+# (mantido para o botão primário e como base do SM/LG), LG é o hover.
+SHADOW_SM = "0 1px 2px rgba(26, 24, 21, 0.03), 0 2px 6px rgba(26, 24, 21, 0.04)"
+SHADOW_MD = "0 1px 2px rgba(26, 24, 21, 0.04), 0 4px 12px rgba(26, 24, 21, 0.06)"
+SHADOW_LG = "0 4px 10px rgba(26, 24, 21, 0.07), 0 10px 24px rgba(26, 24, 21, 0.10)"
 SHADOW_FOCUS = "0 0 0 3px rgba(110, 20, 35, 0.12)"
+
+TRANSITION_FAST = "all 0.2s ease"
+
+# Gradiente de marca (só tons do próprio bordô) para o painel de login.
+BRAND_GRADIENT = f"linear-gradient(160deg, {BORDEAUX} 0%, #4A0D18 100%)"
 
 # --- Estilo global aplicado ao <body> via rx.App(style=...) -----------
 
@@ -73,6 +83,14 @@ base_style: dict = {
     "::selection": {
         "background_color": BORDEAUX_SOFT,
         "color": BORDEAUX,
+    },
+    # Transição de entrada do conteúdo de página (usada por `shell()`).
+    # Só roda se o usuário não pediu movimento reduzido no sistema.
+    "@media (prefers-reduced-motion: no-preference)": {
+        "@keyframes vetements-fade-in": {
+            "from": {"opacity": "0", "transform": "translateY(6px)"},
+            "to": {"opacity": "1", "transform": "translateY(0)"},
+        },
     },
     "h1, h2, h3": {
         "font_family": DISPLAY_FONT,
@@ -139,12 +157,15 @@ def stat_label_style() -> dict:
 
 def card_style(padding: str = "1.5rem") -> dict:
     """Cartão base: fundo branco, radius e sombra suave — substitui o
-    padrão anterior de hairline solta na página."""
+    padrão anterior de hairline solta na página. Ganha uma leve elevação
+    no hover (puramente decorativo; não implica que o cartão é clicável)."""
     return {
         "background_color": SURFACE,
         "border_radius": RADIUS,
-        "box_shadow": SHADOW,
+        "box_shadow": SHADOW_SM,
         "padding": padding,
+        "transition": TRANSITION_FAST,
+        "&:hover": {"box_shadow": SHADOW_LG, "transform": "translateY(-2px)"},
     }
 
 
@@ -155,7 +176,7 @@ def primary_button_style() -> dict:
         "background_color": BORDEAUX,
         "color": "white",
         "border_radius": RADIUS_SM,
-        "box_shadow": SHADOW,
+        "box_shadow": SHADOW_MD,
         "transition": "box-shadow 0.15s ease, transform 0.15s ease",
         "&:hover": {"box_shadow": SHADOW_FOCUS, "transform": "translateY(-1px)"},
         "&:focus-visible": {"box_shadow": SHADOW_FOCUS},

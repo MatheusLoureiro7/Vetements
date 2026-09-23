@@ -123,9 +123,14 @@ def section_heading(text: str, action: rx.Component | None = None) -> rx.Compone
     )
 
 
-def empty_state(text: str) -> rx.Component:
+def empty_state(text: str, icon: str | None = None) -> rx.Component:
     return rx.center(
-        rx.text(text, style={"color": INK_MUTED}),
+        rx.vstack(
+            *([rx.icon(icon, size=28, color=INK_MUTED)] if icon else []),
+            rx.text(text, style={"color": INK_MUTED}),
+            spacing="2",
+            align_items="center",
+        ),
         padding_y="3rem",
         width="100%",
     )
@@ -161,11 +166,18 @@ def success_message(text) -> rx.Component:
     )
 
 
-def field(label: str, input_component: rx.Component) -> rx.Component:
-    """Rótulo + campo, empilhados, para formulários."""
+def field(label: str, input_component: rx.Component, error: Any = None) -> rx.Component:
+    """Rótulo + campo, empilhados, para formulários. Se `error` (texto
+    ou Var) for informado e não vazio, exibe a mensagem abaixo do
+    campo."""
     return rx.vstack(
         rx.text(label, size="2", weight="medium", style={"color": INK_MUTED}),
         input_component,
+        *(
+            [rx.cond(error != "", rx.text(error, size="1", style={"color": BORDEAUX}))]
+            if error is not None
+            else []
+        ),
         spacing="1",
         align_items="start",
         width="100%",

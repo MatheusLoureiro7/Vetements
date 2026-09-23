@@ -4,24 +4,65 @@ import reflex as rx
 
 from vetements.components import ui
 from vetements.state.auth import AuthState
-from vetements.styles import BG, BORDEAUX, INK_MUTED, SURFACE, heading_style, primary_button_style
+from vetements.styles import (
+    BG,
+    BORDEAUX,
+    BRAND_GRADIENT,
+    DISPLAY_FONT,
+    SIDEBAR_ACCENT,
+    SIDEBAR_TEXT,
+    SIDEBAR_TEXT_STRONG,
+    heading_style,
+    primary_button_style,
+)
 
 
 def _brand_panel() -> rx.Component:
-    return rx.center(
-        rx.vstack(
-            rx.heading(
-                "VETEMENTS",
-                style={**heading_style(), "color": BORDEAUX, "font_size": "3rem"},
+    # Monograma "V" gigante e translúcido, só decorativo (aria-hidden),
+    # atrás do bloco de texto — dá presença visual ao painel sem depender
+    # de imagem externa.
+    watermark = rx.text(
+        "V",
+        aria_hidden="true",
+        style={
+            "font_family": DISPLAY_FONT,
+            "color": "rgba(255, 255, 255, 0.06)",
+            "font_size": "min(48vw, 34rem)",
+            "font_weight": "600",
+            "line_height": "1",
+            "position": "absolute",
+            "right": "-8%",
+            "bottom": "-12%",
+            "user_select": "none",
+            "pointer_events": "none",
+        },
+    )
+    return rx.box(
+        watermark,
+        rx.center(
+            rx.vstack(
+                rx.text(
+                    "VETEMENTS",
+                    style={
+                        **heading_style(),
+                        "color": SIDEBAR_TEXT_STRONG,
+                        "font_size": "3rem",
+                    },
+                ),
+                rx.box(width="2.5rem", height="2px", style={"background_color": SIDEBAR_ACCENT}),
+                rx.text("Gestão da loja", style={"color": SIDEBAR_TEXT}, size="4"),
+                spacing="3",
+                align_items="start",
             ),
-            rx.text("Gestão da loja", style={"color": INK_MUTED}, size="4"),
-            spacing="2",
-            align_items="start",
+            width="100%",
+            height="100%",
+            padding_x="3rem",
         ),
         width="100%",
         height="100vh",
-        style={"background_color": SURFACE},
-        padding_x="3rem",
+        position="relative",
+        overflow="hidden",
+        style={"background": BRAND_GRADIENT},
     )
 
 

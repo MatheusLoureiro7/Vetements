@@ -327,6 +327,7 @@ def shell(*children: rx.Component) -> rx.Component:
                 width="100%",
                 max_width=CONTENT_MAX_WIDTH,
                 margin_x="auto",
+                style={"animation": "vetements-fade-in 0.25s ease both"},
             ),
             width="100%",
             min_width="0",

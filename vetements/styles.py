@@ -30,6 +30,18 @@ WARNING_SOFT = "#F5EAD8"
 INFO = "#3A5A8C"
 INFO_SOFT = "#E4E9F1"
 
+# Sidebar escura (bordô muito profundo). Estados em branco translúcido
+# sobre o fundo, para ficarem coerentes se o fundo for ajustado. Texto
+# pequeno (rótulo, papel) usa no mínimo 55% de opacidade, por contraste.
+SIDEBAR_BG = "#2A0A12"
+SIDEBAR_TEXT = "rgba(255, 255, 255, 0.72)"
+SIDEBAR_TEXT_STRONG = "#FFFFFF"
+SIDEBAR_MUTED = "rgba(255, 255, 255, 0.55)"
+SIDEBAR_LINE = "rgba(255, 255, 255, 0.10)"
+SIDEBAR_HOVER = "rgba(255, 255, 255, 0.06)"
+SIDEBAR_ACTIVE_BG = "rgba(255, 255, 255, 0.10)"
+SIDEBAR_ACCENT = "#E7B7BE"
+
 # --- Tipografia --------------------------------------------------------
 
 DISPLAY_FONT = "Fraunces, 'Iowan Old Style', serif"
@@ -44,6 +56,9 @@ GOOGLE_FONTS_STYLESHEET = (
 # --- Layout --------------------------------------------------------
 
 SIDEBAR_WIDTH = "240px"
+# Largura máxima do conteúdo das páginas autenticadas (centralizado ao
+# lado da sidebar); em janelas menores o conteúdo ocupa o espaço todo.
+CONTENT_MAX_WIDTH = "1120px"
 RADIUS = "10px"
 RADIUS_SM = "6px"
 SHADOW = "0 1px 2px rgba(26, 24, 21, 0.04), 0 4px 12px rgba(26, 24, 21, 0.06)"
@@ -105,9 +120,12 @@ def stat_number_style() -> dict:
     return {
         "font_family": DISPLAY_FONT,
         "font_weight": "500",
-        "font_size": "2rem",
+        "font_size": "1.75rem",
         "color": INK,
         "font_variant_numeric": "tabular-nums",
+        # Com o conteúdo limitado a CONTENT_MAX_WIDTH, o cartão fica estreito
+        # e "R$ 499,00" quebrava entre o "R$" e o valor.
+        "white_space": "nowrap",
     }
 
 

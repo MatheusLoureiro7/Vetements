@@ -323,7 +323,7 @@ def shell(*children: rx.Component) -> rx.Component:
             topbar(),
             rx.box(
                 *children,
-                padding="2rem",
+                padding="1.5rem",
                 width="100%",
                 max_width=CONTENT_MAX_WIDTH,
                 margin_x="auto",

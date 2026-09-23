@@ -9,7 +9,12 @@ API do Xano (dicts, `created_at` em milissegundos desde epoch).
 
 from datetime import date, datetime, timedelta
 
-from vetements.state.dashboard import DIAS_GRAFICO_VENDAS, _products_by_category, _sales_by_day
+from vetements.state.dashboard import (
+    DIAS_GRAFICO_VENDAS,
+    _month_trend,
+    _products_by_category,
+    _sales_by_day,
+)
 
 
 def _epoch_ms(dia: date, hora: int = 10) -> int:
@@ -67,3 +72,50 @@ def test_products_by_category_uma_entrada_por_categoria():
     pontos = _products_by_category(produtos, categorias)
     assert len(pontos) == len(categorias)
     assert {p["categoria"] for p in pontos} == {c["nome"] for c in categorias}
+
+
+def test_month_trend_sem_vendas_no_mes_anterior_nao_tem_comparacao():
+    hoje = date(2026, 3, 10)
+    vendas = [{"id": 1, "created_at": _epoch_ms(hoje), "total": 100.0}]
+    tem_comparacao, rotulo, alta = _month_trend(vendas, hoje=hoje)
+    assert tem_comparacao is False
+    assert rotulo == ""
+
+
+def test_month_trend_alta_em_relacao_ao_mes_anterior():
+    hoje = date(2026, 3, 10)
+    mes_anterior = date(2026, 2, 10)
+    vendas = [
+        {"id": 1, "created_at": _epoch_ms(mes_anterior), "total": 100.0},
+        {"id": 2, "created_at": _epoch_ms(hoje), "total": 150.0},
+    ]
+    tem_comparacao, rotulo, alta = _month_trend(vendas, hoje=hoje)
+    assert tem_comparacao is True
+    assert alta is True
+    assert rotulo == "+50%"
+
+
+def test_month_trend_queda_em_relacao_ao_mes_anterior():
+    hoje = date(2026, 3, 10)
+    mes_anterior = date(2026, 2, 10)
+    vendas = [
+        {"id": 1, "created_at": _epoch_ms(mes_anterior), "total": 200.0},
+        {"id": 2, "created_at": _epoch_ms(hoje), "total": 150.0},
+    ]
+    tem_comparacao, rotulo, alta = _month_trend(vendas, hoje=hoje)
+    assert tem_comparacao is True
+    assert alta is False
+    assert rotulo == "-25%"
+
+
+def test_month_trend_virada_de_ano_compara_com_dezembro_anterior():
+    hoje = date(2026, 1, 5)
+    dezembro_anterior = date(2025, 12, 20)
+    vendas = [
+        {"id": 1, "created_at": _epoch_ms(dezembro_anterior), "total": 100.0},
+        {"id": 2, "created_at": _epoch_ms(hoje), "total": 120.0},
+    ]
+    tem_comparacao, rotulo, alta = _month_trend(vendas, hoje=hoje)
+    assert tem_comparacao is True
+    assert alta is True
+    assert rotulo == "+20%"

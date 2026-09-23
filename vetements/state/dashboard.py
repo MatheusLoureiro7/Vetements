@@ -42,6 +42,38 @@ def _sales_by_day(vendas: list[dict], hoje: date | None = None) -> list[dict[str
     return [{"dia": dia.strftime("%d/%m"), "total": round(totais[dia], 2)} for dia in dias]
 
 
+def _total_do_mes(vendas: list[dict], mes: int, ano: int) -> float:
+    return sum(
+        venda["total"]
+        for venda in vendas
+        if datetime.fromtimestamp(venda["created_at"] / 1000).year == ano
+        and datetime.fromtimestamp(venda["created_at"] / 1000).month == mes
+    )
+
+
+def _month_trend(vendas: list[dict], hoje: date | None = None) -> tuple[bool, str, bool]:
+    """Variação percentual do total vendido no mês corrente vs. o mês
+    anterior (cuidando da virada de ano). Retorna `(tem_comparacao,
+    rotulo_formatado, alta)`; sem vendas no mês anterior não há base de
+    comparação, então `tem_comparacao` vem `False` e o rótulo vem vazio.
+    """
+    hoje = hoje or datetime.now().date()
+    if hoje.month == 1:
+        mes_anterior, ano_anterior = 12, hoje.year - 1
+    else:
+        mes_anterior, ano_anterior = hoje.month - 1, hoje.year
+
+    total_anterior = _total_do_mes(vendas, mes_anterior, ano_anterior)
+    if total_anterior == 0:
+        return False, "", True
+
+    total_atual = _total_do_mes(vendas, hoje.month, hoje.year)
+    variacao = (total_atual - total_anterior) / total_anterior * 100
+    alta = variacao >= 0
+    rotulo = f"{'+' if alta else '-'}{abs(round(variacao))}%"
+    return True, rotulo, alta
+
+
 def _products_by_category(produtos: list[dict], categorias: list[dict]) -> list[dict[str, str | int]]:
     """Quantidade de produtos cadastrados por categoria."""
     return [
@@ -57,6 +89,9 @@ class DashboardState(AuthState):
     total_products: int = 0
     low_stock_count: int = 0
     total_sold_month_label: str = "R$ 0,00"
+    has_month_trend: bool = False
+    month_trend_label: str = ""
+    month_trend_up: bool = True
     total_customers: int = 0
     recent_sales: list[VendaResumo] = []
     sales_by_day: list[dict[str, str | float]] = []
@@ -86,13 +121,11 @@ class DashboardState(AuthState):
         self.total_customers = len(clientes)
 
         agora = datetime.now()
-        total_mes = sum(
-            venda["total"]
-            for venda in vendas
-            if datetime.fromtimestamp(venda["created_at"] / 1000).year == agora.year
-            and datetime.fromtimestamp(venda["created_at"] / 1000).month == agora.month
-        )
+        total_mes = _total_do_mes(vendas, agora.month, agora.year)
         self.total_sold_month_label = format_currency(total_mes)
+        self.has_month_trend, self.month_trend_label, self.month_trend_up = _month_trend(
+            vendas, agora.date()
+        )
 
         clientes_por_id = {c["id"]: c["nome"] for c in clientes}
         self.recent_sales = [

@@ -33,6 +33,11 @@ def _stats_row() -> rx.Component:
             icon="banknote",
             color=SUCCESS,
             color_soft=SUCCESS_SOFT,
+            extra=rx.cond(
+                DashboardState.has_month_trend,
+                ui.trend_indicator(DashboardState.month_trend_label, DashboardState.month_trend_up),
+                rx.fragment(),
+            ),
         ),
         ui.stat(DashboardState.total_customers, "clientes cadastrados", icon="users"),
         columns="4",
@@ -117,7 +122,7 @@ def dashboard_page() -> rx.Component:
         ui.section_heading("Visão geral"),
         rx.cond(
             DashboardState.is_loading_page,
-            ui.loading_state("Carregando dashboard..."),
+            ui.loading_state("Carregando dashboard...", kind="dashboard"),
             rx.cond(
                 DashboardState.load_error != "",
                 rx.text(DashboardState.load_error, style={"color": BORDEAUX}, size="2"),

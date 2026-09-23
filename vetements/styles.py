@@ -29,6 +29,17 @@ WARNING = "#B7791F"
 WARNING_SOFT = "#F5EAD8"
 INFO = "#3A5A8C"
 INFO_SOFT = "#E4E9F1"
+# Queda (ex.: variação negativa de vendas) — distinto de BORDEAUX, que já
+# acumula os papéis de accent de ação primária e cor de erro.
+TREND_DOWN = "#B24444"
+TREND_DOWN_SOFT = "#F5E4E4"
+
+# Fundo sutil de linha de tabela em hover, dentro de um cartão branco.
+ROW_HOVER = "#F1F2F5"
+
+# Esqueleto de carregamento (brilho animado entre os dois tons).
+SKELETON_BASE = "#EDEEF1"
+SKELETON_HIGHLIGHT = "#F8F9FB"
 
 # Sidebar escura (bordô muito profundo). Estados em branco translúcido
 # sobre o fundo, para ficarem coerentes se o fundo for ajustado. Texto
@@ -90,6 +101,13 @@ base_style: dict = {
         "@keyframes vetements-fade-in": {
             "from": {"opacity": "0", "transform": "translateY(6px)"},
             "to": {"opacity": "1", "transform": "translateY(0)"},
+        },
+        # Esqueleto de carregamento (`ui.skeleton_block`): brilho varrendo
+        # da esquerda para a direita. Sob movimento reduzido, o bloco fica
+        # parado em SKELETON_BASE (a forma já comunica "carregando").
+        "@keyframes vetements-shimmer": {
+            "0%": {"background_position": "-100% 0"},
+            "100%": {"background_position": "100% 0"},
         },
     },
     "h1, h2, h3": {

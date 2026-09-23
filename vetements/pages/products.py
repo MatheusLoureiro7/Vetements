@@ -15,17 +15,39 @@ def _product_success_banner() -> rx.Component:
     )
 
 
-def _new_product_form() -> rx.Component:
-    return rx.cond(
-        ProductsState.show_form,
-        ui.card(
+def _new_product_dialog() -> rx.Component:
+    """Popup de cadastro de produto, controlado por `show_form`. Todo
+    fechamento (Cancelar, X, Esc, clique fora) passa por
+    `set_show_form`, que descarta o formulário."""
+    return rx.dialog.root(
+        rx.dialog.content(
+            rx.hstack(
+                rx.dialog.title("Novo produto", margin_bottom="0"),
+                rx.spacer(),
+                rx.dialog.close(
+                    rx.icon_button(
+                        rx.icon("x", size=16),
+                        variant="ghost",
+                        color_scheme="gray",
+                        size="1",
+                        type="button",
+                    ),
+                ),
+                width="100%",
+                align_items="center",
+            ),
+            rx.dialog.description(
+                "Preencha os dados do modelo. As variações (tamanho e cor) "
+                "são adicionadas depois, pelo botão Variações.",
+                size="2",
+                margin_bottom="1rem",
+            ),
             rx.vstack(
-                ui.card_title("Novo produto"),
                 rx.cond(
                     ProductsState.form_error != "",
                     rx.text(ProductsState.form_error, style={"color": BORDEAUX}, size="2"),
                 ),
-                rx.hstack(
+                rx.flex(
                     ui.field(
                         "Nome",
                         rx.input(
@@ -33,11 +55,12 @@ def _new_product_form() -> rx.Component:
                             on_change=ProductsState.set_form_nome,
                             width="100%",
                         ),
+                        error=ProductsState.nome_error,
                     ),
                     ui.field(
                         "Categoria",
                         rx.select.root(
-                            rx.select.trigger(placeholder="Selecione"),
+                            rx.select.trigger(placeholder="Selecione", width="100%"),
                             rx.select.content(
                                 rx.foreach(
                                     ProductsState.categories,
@@ -49,27 +72,43 @@ def _new_product_form() -> rx.Component:
                             value=ProductsState.form_categoria_id,
                             on_change=ProductsState.set_form_categoria_id,
                         ),
+                        error=ProductsState.categoria_error,
                     ),
+                    direction=rx.breakpoints(initial="column", sm="row"),
+                    spacing="3",
+                    width="100%",
+                ),
+                rx.flex(
                     ui.field(
                         "Preço base",
                         rx.input(
+                            rx.input.slot("R$"),
                             value=ProductsState.form_preco,
                             on_change=ProductsState.set_form_preco,
                             placeholder="0,00",
+                            input_mode="decimal",
+                            width="100%",
+                        ),
+                        error=ProductsState.preco_error,
+                    ),
+                    ui.field(
+                        "Descrição",
+                        rx.text_area(
+                            value=ProductsState.form_descricao,
+                            on_change=ProductsState.set_form_descricao,
                             width="100%",
                         ),
                     ),
+                    direction=rx.breakpoints(initial="column", sm="row"),
                     spacing="3",
                     width="100%",
-                    align_items="end",
                 ),
-                ui.field(
-                    "Descrição",
-                    rx.text_area(
-                        value=ProductsState.form_descricao,
-                        on_change=ProductsState.set_form_descricao,
-                        width="100%",
-                    ),
+                spacing="3",
+                width="100%",
+            ),
+            rx.flex(
+                rx.dialog.close(
+                    rx.button("Cancelar", variant="soft", color_scheme="gray", type="button"),
                 ),
                 rx.button(
                     rx.cond(ProductsState.is_submitting_product, "Salvando...", "Salvar produto"),
@@ -79,10 +118,13 @@ def _new_product_form() -> rx.Component:
                     style=primary_button_style(),
                 ),
                 spacing="3",
-                width="100%",
+                justify="end",
+                margin_top="1.5rem",
             ),
-            margin_bottom="1.5rem",
+            max_width="560px",
         ),
+        open=ProductsState.show_form,
+        on_open_change=ProductsState.set_show_form,
     )
 
 
@@ -169,7 +211,7 @@ def products_page() -> rx.Component:
             "Produtos",
             action=rx.cond(
                 ProductsState.is_admin,
-                rx.button("+ Novo produto", on_click=ProductsState.toggle_form, size="2"),
+                rx.button("+ Novo produto", on_click=ProductsState.open_form, size="2"),
             ),
         ),
         rx.cond(
@@ -184,7 +226,7 @@ def products_page() -> rx.Component:
             max_width="320px",
             margin_bottom="1.5rem",
         ),
-        _new_product_form(),
+        _new_product_dialog(),
         _variant_form(),
         _products_table(),
     )

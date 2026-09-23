@@ -1,5 +1,6 @@
 """Estado da tela de Produtos & Categorias."""
 
+import math
 from dataclasses import dataclass
 
 import reflex as rx
@@ -33,6 +34,32 @@ class VariacaoView:
     quantidade: int
 
 
+def validate_product_form(
+    nome: str, categoria_id: str, preco: str
+) -> tuple[dict[str, str], float | None]:
+    """Valida o formulário de cadastro de produto.
+
+    Devolve os erros por campo (chaves `nome`, `categoria`, `preco`;
+    vazio se tudo válido) e o preço já convertido (`None` se o preço
+    for inválido). O preço aceita vírgula ou ponto decimal e não pode
+    ser negativo. A validação autoritativa continua no Xano.
+    """
+    erros: dict[str, str] = {}
+    if not nome.strip():
+        erros["nome"] = "Informe o nome do produto."
+    if not categoria_id:
+        erros["categoria"] = "Selecione uma categoria."
+    valor: float | None
+    try:
+        valor = float(preco.strip().replace(",", "."))
+    except ValueError:
+        valor = None
+    if valor is None or not math.isfinite(valor) or valor < 0:
+        erros["preco"] = "Informe um preço válido."
+        valor = None
+    return erros, valor
+
+
 class ProductsState(AuthState):
     search: str = ""
     products: list[ProdutoView] = []
@@ -44,6 +71,9 @@ class ProductsState(AuthState):
     form_categoria_id: str = ""
     form_preco: str = ""
     form_error: str = ""
+    nome_error: str = ""
+    categoria_error: str = ""
+    preco_error: str = ""
     product_success: str = ""
     is_submitting_product: bool = False
 
@@ -108,15 +138,34 @@ class ProductsState(AuthState):
         self.search = value
         self.refresh_products()
 
-    @rx.event
-    def toggle_form(self):
-        self.show_form = not self.show_form
+    def _reset_form(self):
+        self.form_nome = ""
+        self.form_descricao = ""
+        self.form_categoria_id = ""
+        self.form_preco = ""
         self.form_error = ""
+        self.nome_error = ""
+        self.categoria_error = ""
+        self.preco_error = ""
+
+    @rx.event
+    def open_form(self):
+        self._reset_form()
         self.product_success = ""
+        self.show_form = True
+
+    @rx.event
+    def set_show_form(self, open: bool):
+        # Chamado pelo diálogo (Cancelar, X, Esc, clique fora). Fechar
+        # sem salvar descarta o que foi digitado.
+        if not open:
+            self._reset_form()
+        self.show_form = open
 
     @rx.event
     def set_form_nome(self, value: str):
         self.form_nome = value
+        self.nome_error = ""
 
     @rx.event
     def set_form_descricao(self, value: str):
@@ -125,28 +174,34 @@ class ProductsState(AuthState):
     @rx.event
     def set_form_categoria_id(self, value: str):
         self.form_categoria_id = value
+        self.categoria_error = ""
 
     @rx.event
     def set_form_preco(self, value: str):
         self.form_preco = value
+        self.preco_error = ""
 
     @rx.event
     def create_product(self):
-        if self.is_submitting_product:
+        # Só há envio válido com o popup aberto: uma confirmação repetida
+        # (clique duplo) chega depois que o primeiro envio já fechou o
+        # popup e limpou o formulário, e não deve apagar a mensagem de
+        # sucesso nem revalidar um formulário vazio.
+        if self.is_submitting_product or not self.show_form:
             return None
         self.is_submitting_product = True
         self.product_success = ""
         if not self.is_admin:
             self.is_submitting_product = False
             return None
-        if not self.form_categoria_id:
-            self.form_error = "Selecione uma categoria válida."
-            self.is_submitting_product = False
-            return None
-        try:
-            preco = float(self.form_preco.strip().replace(",", "."))
-        except ValueError:
-            self.form_error = "Informe um preço válido."
+        erros, preco = validate_product_form(
+            self.form_nome, self.form_categoria_id, self.form_preco
+        )
+        self.form_error = ""
+        self.nome_error = erros.get("nome", "")
+        self.categoria_error = erros.get("categoria", "")
+        self.preco_error = erros.get("preco", "")
+        if erros:
             self.is_submitting_product = False
             return None
         try:
@@ -161,11 +216,7 @@ class ProductsState(AuthState):
             self.form_error = erro.message
             self.is_submitting_product = False
             return None
-        self.form_nome = ""
-        self.form_descricao = ""
-        self.form_categoria_id = ""
-        self.form_preco = ""
-        self.form_error = ""
+        self._reset_form()
         self.product_success = "Produto cadastrado."
         self.show_form = False
         self.refresh_products()

@@ -1,1 +1,4 @@
 .xano-snapshot-pre-integration/
+.web/
+.states/
+*.log

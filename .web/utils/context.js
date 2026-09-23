@@ -1,6 +1,28 @@
-import { createContext, useContext, useMemo, useReducer, useState, createElement, useEffect } from "react"
+import React, { createContext, useContext, useMemo, useReducer, useState, createElement, useEffect } from "react"
 import { applyDelta, ReflexEvent, hydrateClientStorage, useEventLoop, refs } from "$/utils/state"
 import { jsx } from "@emotion/react";
+
+// Disable React dev-build owner-stack capture: the per-element Error()
+// dominates dev-mode render CPU on large pages. Costs owner frames in
+// `React.captureOwnerStack()`; set REFLEX_REACT_OWNER_STACKS=1 to restore.
+// Full context: https://github.com/reflex-dev/reflex/pull/6905
+if (typeof window !== "undefined") {
+  try {
+    const reactInternals =
+      React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+    const ownerStackCounterKey = "recentlyCreatedOwnerStacks";
+    if (
+      reactInternals &&
+      typeof reactInternals[ownerStackCounterKey] === "number"
+    ) {
+      Object.defineProperty(reactInternals, ownerStackCounterKey, {
+        get: () => 1e9,
+        set: () => {},
+        configurable: true,
+      });
+    }
+  } catch {}
+}
 
 export const initialState = {"reflex___state____state": {"is_hydrated_rx_state_": false, "router_rx_state_": {"session": {"client_token": "", "client_ip": "", "session_id": ""}, "headers": {"host": "", "origin": "", "upgrade": "", "connection": "", "cookie": "", "pragma": "", "cache_control": "", "user_agent": "", "sec_websocket_version": "", "sec_websocket_key": "", "sec_websocket_extensions": "", "accept_encoding": "", "accept_language": "", "raw_headers": {}}, "page": {"host": "", "path": "", "raw_path": "", "full_path": "", "full_raw_path": "", "params": {}}, "url": {"scheme": "", "netloc": "", "origin": "://", "path": "", "query": "", "query_parameters": {}, "fragment": "", "href": ""}, "route_id": ""}}, "reflex___state____state.reflex___istate___shared____shared_state_base_internal": {}, "reflex___state____state.reflex___state____frontend_event_exception_state": {}, "reflex___state____state.reflex___state____on_load_internal_state": {}, "reflex___state____state.reflex___state____update_vars_internal_state": {}, "reflex___state____state.vetements___components___shell____shell_state": {"sidebar_open_rx_state_": false}, "reflex___state____state.vetements___state___auth____auth_state": {"auth_token_rx_state_": "", "iniciais_rx_state_": "?", "is_admin_rx_state_": false, "is_authenticated_rx_state_": false, "is_submitting_rx_state_": false, "login_email_rx_state_": "", "login_error_rx_state_": "", "login_senha_rx_state_": "", "nome_rx_state_": "", "papel_rx_state_": "", "papel_label_rx_state_": "Vendedor", "user_id_rx_state_": 0}, "reflex___state____state.vetements___state___auth____auth_state.vetements___state___customers____customers_state": {"customers_rx_state_": [], "form_email_rx_state_": "", "form_error_rx_state_": "", "form_nome_rx_state_": "", "form_telefone_rx_state_": "", "is_loading_page_rx_state_": true, "load_error_rx_state_": "", "search_rx_state_": "", "show_form_rx_state_": false, "success_rx_state_": ""}, "reflex___state____state.vetements___state___auth____auth_state.vetements___state___dashboard____dashboard_state": {"has_month_trend_rx_state_": false, "is_loading_page_rx_state_": true, "load_error_rx_state_": "", "low_stock_count_rx_state_": 0, "month_trend_label_rx_state_": "", "month_trend_up_rx_state_": true, "products_by_category_rx_state_": [], "recent_sales_rx_state_": [], "sales_by_day_rx_state_": [], "total_customers_rx_state_": 0, "total_products_rx_state_": 0, "total_sold_month_label_rx_state_": "R$ 0,00"}, "reflex___state____state.vetements___state___auth____auth_state.vetements___state___inventory____inventory_state": {"is_loading_page_rx_state_": true, "load_error_rx_state_": "", "search_rx_state_": "", "variants_rx_state_": []}, "reflex___state____state.vetements___state___auth____auth_state.vetements___state___products____products_state": {"categoria_error_rx_state_": "", "categories_rx_state_": [], "form_categoria_id_rx_state_": "", "form_descricao_rx_state_": "", "form_error_rx_state_": "", "form_nome_rx_state_": "", "form_preco_rx_state_": "", "is_loading_page_rx_state_": true, "is_submitting_product_rx_state_": false, "is_submitting_variant_rx_state_": false, "load_error_rx_state_": "", "nome_error_rx_state_": "", "preco_error_rx_state_": "", "product_success_rx_state_": "", "products_rx_state_": [], "search_rx_state_": "", "selected_product_id_rx_state_": 0, "show_form_rx_state_": false, "variant_cor_rx_state_": "", "variant_error_rx_state_": "", "variant_quantidade_rx_state_": "", "variant_sku_rx_state_": "", "variant_success_rx_state_": "", "variant_tamanho_rx_state_": "", "variants_of_selected_rx_state_": []}, "reflex___state____state.vetements___state___auth____auth_state.vetements___state___sales____sales_state": {"cart_rx_state_": [], "customers_rx_state_": [], "history_rx_state_": [], "is_loading_page_rx_state_": true, "item_error_rx_state_": "", "item_quantidade_rx_state_": "", "load_error_rx_state_": "", "sale_error_rx_state_": "", "sale_success_rx_state_": "", "selected_cliente_id_rx_state_": "", "selected_variant_id_rx_state_": "", "total_label_rx_state_": "R$ 0,00", "variant_options_rx_state_": []}}
 
@@ -69,7 +91,7 @@ export const initialEvents = () => [
 ]
     
 
-export const isDevMode = false;
+export const isDevMode = true;
 
 // Module-level event dispatchers populated by ``EventLoopProvider`` on each
 // render. Components reach addEvents/connectErrors via this import instead of

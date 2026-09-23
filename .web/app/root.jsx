@@ -6,7 +6,7 @@ import RadixThemesColorModeProvider from "$/components/reflex/radix_themes_color
 import {MemoizedToastProvider_18b15038} from "$/app_components/reflex/compiler/compiler"
 import {Theme as RadixThemesTheme} from "@radix-ui/themes"
 import theme from "$/utils/theme"
-import {DefaultOverlayComponents_04c36749,MemoizedBadge_04c36749} from "$/app_components/reflex/app"
+import {DefaultOverlayComponents_04c36749} from "$/app_components/reflex/app"
 import {jsx} from "@emotion/react"
 
 import { defaultColorMode } from "$/utils/context";
@@ -45,7 +45,7 @@ function AppWrap({children}) {
 
 
 
-return (jsx(StrictMode,{},jsx(StateProvider,{},jsx(EventLoopProvider,{},jsx(Errorboundary_errorboundary_ad430eb9ef763ec324d29701c1abc345,{},jsx(RadixThemesColorModeProvider,{},jsx(Fragment,{},jsx(MemoizedToastProvider_18b15038,{},),jsx(RadixThemesTheme,{accentColor:"ruby",css:{...theme.styles.global[':root'], ...theme.styles.global.body},grayColor:"sand",radius:"large"},jsx(Fragment,{},jsx(DefaultOverlayComponents_04c36749,{},),jsx(Fragment,{},children,jsx(MemoizedBadge_04c36749,{},)))))))))))
+return (jsx(StrictMode,{},jsx(StateProvider,{},jsx(EventLoopProvider,{},jsx(Errorboundary_errorboundary_ad430eb9ef763ec324d29701c1abc345,{},jsx(RadixThemesColorModeProvider,{},jsx(Fragment,{},jsx(MemoizedToastProvider_18b15038,{},),jsx(RadixThemesTheme,{accentColor:"ruby",css:{...theme.styles.global[':root'], ...theme.styles.global.body},grayColor:"sand",radius:"large"},jsx(Fragment,{},jsx(DefaultOverlayComponents_04c36749,{},),jsx(Fragment,{},children))))))))))
 }
 
 export function Layout({children}) {

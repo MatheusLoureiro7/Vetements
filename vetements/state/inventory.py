@@ -4,8 +4,10 @@ from dataclasses import dataclass
 
 import reflex as rx
 
-from vetements.state import mock_data
+from vetements import xano_client
 from vetements.state.auth import AuthState
+
+LOW_STOCK_THRESHOLD = 5
 
 
 @dataclass
@@ -22,32 +24,47 @@ class VariacaoView:
 class InventoryState(AuthState):
     search: str = ""
     variants: list[VariacaoView] = []
+    load_error: str = ""
+    is_loading_page: bool = True
 
     @rx.event
     def load(self):
         redirect = self.require_auth()
         if redirect is not None:
             return redirect
+        self.load_error = ""
+        try:
+            variacoes = xano_client.list_variants(self.auth_token)
+        except xano_client.XanoAPIError:
+            self.load_error = "Não foi possível carregar o estoque."
+            self.variants = []
+            self.is_loading_page = False
+            return None
+        self._raw = variacoes
         self.refresh()
+        self.is_loading_page = False
         return None
+
+    _raw: list[dict] = []
 
     def refresh(self):
         termo = self.search.strip().lower()
         views = []
-        for variacao in mock_data.list_variants():
-            produto = mock_data.get_product(variacao.produto_id)
-            nome = produto.nome if produto else "—"
-            if termo and termo not in nome.lower() and termo not in variacao.sku.lower():
+        for variacao in self._raw:
+            nome = variacao.get("produto_nome") or "—"
+            sku = variacao.get("sku", "")
+            if termo and termo not in nome.lower() and termo not in sku.lower():
                 continue
+            quantidade = variacao.get("estoque", 0)
             views.append(
                 VariacaoView(
-                    id=variacao.id,
+                    id=variacao["id"],
                     produto_nome=nome,
-                    tamanho=variacao.tamanho,
-                    cor=variacao.cor,
-                    sku=variacao.sku,
-                    quantidade=variacao.quantidade,
-                    is_low=mock_data.is_low_stock(variacao),
+                    tamanho=variacao.get("tamanho", ""),
+                    cor=variacao.get("cor", ""),
+                    sku=sku,
+                    quantidade=quantidade,
+                    is_low=quantidade < LOW_STOCK_THRESHOLD,
                 )
             )
         self.variants = views

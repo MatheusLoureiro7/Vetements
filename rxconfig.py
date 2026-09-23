@@ -10,7 +10,7 @@ config = rx.Config(
                 appearance="light",
                 accent_color="ruby",
                 gray_color="sand",
-                radius="small",
+                radius="large",
             )
         ),
     ]

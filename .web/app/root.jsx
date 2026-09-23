@@ -45,7 +45,7 @@ function AppWrap({children}) {
 
 
 
-return (jsx(StrictMode,{},jsx(StateProvider,{},jsx(EventLoopProvider,{},jsx(Errorboundary_errorboundary_ad430eb9ef763ec324d29701c1abc345,{},jsx(RadixThemesColorModeProvider,{},jsx(Fragment,{},jsx(MemoizedToastProvider_18b15038,{},),jsx(RadixThemesTheme,{accentColor:"ruby",css:{...theme.styles.global[':root'], ...theme.styles.global.body},grayColor:"sand",radius:"small"},jsx(Fragment,{},jsx(DefaultOverlayComponents_04c36749,{},),jsx(Fragment,{},children))))))))))
+return (jsx(StrictMode,{},jsx(StateProvider,{},jsx(EventLoopProvider,{},jsx(Errorboundary_errorboundary_ad430eb9ef763ec324d29701c1abc345,{},jsx(RadixThemesColorModeProvider,{},jsx(Fragment,{},jsx(MemoizedToastProvider_18b15038,{},),jsx(RadixThemesTheme,{accentColor:"ruby",css:{...theme.styles.global[':root'], ...theme.styles.global.body},grayColor:"sand",radius:"large"},jsx(Fragment,{},jsx(DefaultOverlayComponents_04c36749,{},),jsx(Fragment,{},children))))))))))
 }
 
 export function Layout({children}) {

@@ -4,9 +4,15 @@ from dataclasses import dataclass
 
 import reflex as rx
 
+from vetements import xano_client
 from vetements.format_utils import format_currency, format_datetime
-from vetements.state import mock_data
 from vetements.state.auth import AuthState
+
+
+@dataclass
+class ClienteOption:
+    id: int
+    nome: str
 
 
 @dataclass
@@ -34,7 +40,7 @@ class VendaResumo:
 
 
 class SalesState(AuthState):
-    customers: list[mock_data.Cliente] = []
+    customers: list[ClienteOption] = []
     variant_options: list[VariantOption] = []
 
     selected_variant_id: str = ""
@@ -48,8 +54,16 @@ class SalesState(AuthState):
 
     sale_error: str = ""
     sale_success: str = ""
+    is_submitting: bool = False
 
     history: list[VendaResumo] = []
+    load_error: str = ""
+    is_loading_page: bool = True
+
+    # Cache local das variações cruas do Xano (id -> dict), para validar
+    # quantidade disponível sem uma chamada de rede a cada item adicionado.
+    _variacoes_raw: dict = {}
+    _produtos_raw: dict = {}
 
     @rx.event
     def load(self):
@@ -58,32 +72,46 @@ class SalesState(AuthState):
             return redirect
         self.refresh_options()
         self.refresh_history()
+        self.is_loading_page = False
         return None
 
     def refresh_options(self):
-        self.customers = mock_data.list_customers()
-        options = []
-        for variacao in mock_data.list_variants():
-            produto = mock_data.get_product(variacao.produto_id)
-            nome = produto.nome if produto else "—"
-            options.append(
-                VariantOption(
-                    id=variacao.id,
-                    label=f"{nome} — {variacao.tamanho}/{variacao.cor} (disp. {variacao.quantidade})",
-                )
+        try:
+            clientes = xano_client.list_customers(self.auth_token)
+            variacoes = xano_client.list_variants(self.auth_token)
+        except xano_client.XanoAPIError:
+            self.load_error = "Não foi possível carregar clientes e produtos para a venda."
+            return
+        self.load_error = ""
+        self.customers = [ClienteOption(id=c["id"], nome=c["nome"]) for c in clientes]
+        self._variacoes_raw = {v["id"]: v for v in variacoes}
+        self.variant_options = [
+            VariantOption(
+                id=v["id"],
+                label=f"{v.get('produto_nome', '—')} — {v['tamanho']}/{v['cor']} (disp. {v['estoque']})",
             )
-        self.variant_options = options
+            for v in variacoes
+        ]
 
     def refresh_history(self):
+        try:
+            vendas = xano_client.list_sales(self.auth_token)
+        except xano_client.XanoAPIError:
+            self.load_error = "Não foi possível carregar o histórico de vendas."
+            return
+        self.load_error = ""
+        clientes_por_id = {c.id: c.nome for c in self.customers}
         self.history = [
             VendaResumo(
-                id=venda.id,
-                data_label=format_datetime(venda.data_hora),
-                cliente=(mock_data.get_customer(venda.cliente_id).nome if venda.cliente_id else "Balcão"),
-                total_label=format_currency(venda.total),
-                itens_label=f"{sum(i.quantidade for i in venda.itens)} item(ns)",
+                id=venda["id"],
+                data_label=format_datetime(venda["created_at"]),
+                cliente=clientes_por_id.get(venda.get("cliente_id"), "Balcão")
+                if venda.get("cliente_id")
+                else "Balcão",
+                total_label=format_currency(venda["total"]),
+                itens_label=f"{sum(i['quantidade'] for i in venda.get('itens', []))} item(ns)",
             )
-            for venda in mock_data.list_sales()
+            for venda in vendas
         ]
 
     def _qty_in_cart(self, variacao_id: int) -> int:
@@ -116,20 +144,19 @@ class SalesState(AuthState):
             return None
 
         variacao_id = int(self.selected_variant_id)
-        variacao = mock_data.get_variant(variacao_id)
+        variacao = self._variacoes_raw.get(variacao_id)
         if variacao is None:
             self.item_error = "Variação não encontrada."
             return None
 
         ja_no_carrinho = self._qty_in_cart(variacao_id)
-        disponivel = variacao.quantidade - ja_no_carrinho
+        disponivel = variacao["estoque"] - ja_no_carrinho
         if quantidade > disponivel:
             self.item_error = f"Quantidade indisponível: máximo {disponivel} para esta variação."
             return None
 
-        produto = mock_data.get_product(variacao.produto_id)
-        preco = produto.preco_base if produto else 0.0
-        label = f"{(produto.nome if produto else '—')} — {variacao.tamanho}/{variacao.cor}"
+        preco = variacao.get("preco_base") or 0.0
+        label = f"{variacao.get('produto_nome', '—')} — {variacao['tamanho']}/{variacao['cor']}"
 
         novo_carrinho = list(self.cart)
         for i, item in enumerate(novo_carrinho):
@@ -170,24 +197,30 @@ class SalesState(AuthState):
 
     @rx.event
     def confirm_sale(self):
+        if self.is_submitting:
+            return None
         if not self.cart:
             self.sale_error = "Adicione ao menos um item para confirmar a venda."
             self.sale_success = ""
             return None
+        self.is_submitting = True
         itens = [
-            mock_data.ItemVenda(
-                variacao_id=item.variacao_id,
-                quantidade=item.quantidade,
-                preco_unitario=item.preco_unitario,
-            )
-            for item in self.cart
+            {"variacao_id": item.variacao_id, "quantidade": item.quantidade} for item in self.cart
         ]
         cliente_id = int(self.selected_cliente_id) if self.selected_cliente_id else None
         try:
-            mock_data.create_sale(usuario_id=self.user_id, cliente_id=cliente_id, itens=itens)
-        except mock_data.DomainError as erro:
-            self.sale_error = str(erro)
+            xano_client.create_sale(self.auth_token, cliente_id, itens)
+        except xano_client.XanoAPIError as erro:
+            # Mantém o carrinho preenchido em qualquer falha (rede ou
+            # rejeição do backend), para o usuário corrigir ou tentar de
+            # novo (specs sales: Erro ao confirmar venda por falha de
+            # comunicação / Backend rejeita venda por estoque insuficiente).
+            if erro.is_network_error:
+                self.sale_error = "Não foi possível conectar ao servidor. A venda não foi registrada."
+            else:
+                self.sale_error = erro.message
             self.sale_success = ""
+            self.is_submitting = False
             return None
         self.cart = []
         self.total_label = "R$ 0,00"
@@ -196,4 +229,5 @@ class SalesState(AuthState):
         self.sale_success = "Venda registrada."
         self.refresh_options()
         self.refresh_history()
+        self.is_submitting = False
         return None

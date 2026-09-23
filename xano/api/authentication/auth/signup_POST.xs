@@ -28,7 +28,7 @@ query "auth/signup" verb=POST {
         name      : $input.name
         email     : $input.email
         password  : $input.password
-        role      : "member"
+        role      : "vendedor"
       }
     } as $user
   

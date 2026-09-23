@@ -1,20 +1,34 @@
 """Estado da tela de Clientes."""
 
+from dataclasses import dataclass
+
 import reflex as rx
 
-from vetements.state import mock_data
+from vetements import xano_client
 from vetements.state.auth import AuthState
+
+
+@dataclass
+class ClienteView:
+    id: int
+    nome: str
+    telefone: str
+    email: str
 
 
 class CustomersState(AuthState):
     search: str = ""
-    customers: list[mock_data.Cliente] = []
+    customers: list[ClienteView] = []
+    load_error: str = ""
+    is_loading_page: bool = True
 
     show_form: bool = False
     form_nome: str = ""
     form_telefone: str = ""
     form_email: str = ""
     form_error: str = ""
+    success: str = ""
+    is_submitting: bool = False
 
     @rx.event
     def load(self):
@@ -22,10 +36,22 @@ class CustomersState(AuthState):
         if redirect is not None:
             return redirect
         self.refresh()
+        self.is_loading_page = False
         return None
 
     def refresh(self):
-        self.customers = mock_data.list_customers(self.search)
+        try:
+            clientes = xano_client.list_customers(self.auth_token, self.search)
+        except xano_client.XanoAPIError:
+            self.load_error = "Não foi possível carregar os clientes."
+            return
+        self.load_error = ""
+        self.customers = [
+            ClienteView(
+                id=c["id"], nome=c["nome"], telefone=c.get("telefone") or "", email=c.get("email") or ""
+            )
+            for c in clientes
+        ]
 
     @rx.event
     def set_search(self, value: str):
@@ -36,6 +62,7 @@ class CustomersState(AuthState):
     def toggle_form(self):
         self.show_form = not self.show_form
         self.form_error = ""
+        self.success = ""
 
     @rx.event
     def set_form_nome(self, value: str):
@@ -51,15 +78,24 @@ class CustomersState(AuthState):
 
     @rx.event
     def create_customer(self):
+        if self.is_submitting:
+            return None
+        self.is_submitting = True
+        self.success = ""
         try:
-            mock_data.create_customer(self.form_nome, self.form_telefone, self.form_email)
-        except mock_data.DomainError as erro:
-            self.form_error = str(erro)
+            xano_client.create_customer(
+                self.auth_token, self.form_nome, self.form_telefone, self.form_email
+            )
+        except xano_client.XanoAPIError as erro:
+            self.form_error = erro.message
+            self.is_submitting = False
             return None
         self.form_nome = ""
         self.form_telefone = ""
         self.form_email = ""
         self.form_error = ""
+        self.success = "Cliente cadastrado."
         self.show_form = False
         self.refresh()
+        self.is_submitting = False
         return None

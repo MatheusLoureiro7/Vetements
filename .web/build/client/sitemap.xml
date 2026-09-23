@@ -1,21 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://localhost:3000/login</loc>
+    <loc>http://localhost:8010/login</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/</loc>
+    <loc>http://localhost:8010/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/produtos</loc>
+    <loc>http://localhost:8010/produtos</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/estoque</loc>
+    <loc>http://localhost:8010/estoque</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/vendas</loc>
+    <loc>http://localhost:8010/vendas</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/clientes</loc>
+    <loc>http://localhost:8010/clientes</loc>
   </url>
 </urlset>

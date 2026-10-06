@@ -1,3 +1,12 @@
+*.db
+*.py[cod]
+__pycache__/
+.venv/
+venv/
+.DS_Store
+.web
+.states
+assets/external/
 .xano-snapshot-pre-integration/
 .web/
 .states/

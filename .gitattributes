@@ -1,0 +1,13 @@
+# Normaliza quebras de linha: o git guarda tudo como LF e converte na
+# ponta de cada sistema, evitando diffs inteiros de arquivo por causa de
+# CRLF (Windows) vs LF (Mac/Linux).
+* text=auto eol=lf
+
+# Binarios: nunca normalizar.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.db binary

@@ -39,6 +39,11 @@ rules:
   proposal:
     - Descrever claramente o problema, objetivo e escopo.
     - Identificar o que está fora do escopo quando necessário.
+    - Nomear a change com prefixo "frontend-" ou "backend-" conforme a
+      camada principal afetada (ex. "frontend-ajusta-dashboard",
+      "backend-cria-tabela-produto"). Evita que trabalho simultâneo em
+      camadas diferentes dispute a mesma change/pasta. Uma change que
+      mistura as duas camadas deve ser dividida em uma change por camada.
   specs:
     - Escrever requisitos verificáveis.
     - Utilizar cenários para comportamentos relevantes (ex. baixa de
@@ -56,3 +61,6 @@ operations:
     guidance:
       - Confirmar que a implementação corresponde à especificação antes de
         arquivar a change.
+      - Preservar o prefixo "frontend-"/"backend-" do nome da change ao
+        mover para archive/ (o prefixo de data fica antes dele, ex.
+        "2026-10-06-frontend-nome-da-change").

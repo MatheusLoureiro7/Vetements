@@ -11,3 +11,4 @@ assets/external/
 .web/
 .states/
 *.log
+.pytest_cache/

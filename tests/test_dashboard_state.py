@@ -7,10 +7,15 @@ produtos. As funções recebem os dados já no formato retornado pela
 API do Xano (dicts, `created_at` em milissegundos desde epoch).
 """
 
+import threading
 from datetime import date, datetime, timedelta
 
+import pytest
+
+from vetements import xano_client
 from vetements.state.dashboard import (
     DIAS_GRAFICO_VENDAS,
+    _buscar_dados,
     _month_trend,
     _products_by_category,
     _sales_by_day,
@@ -119,3 +124,35 @@ def test_month_trend_virada_de_ano_compara_com_dezembro_anterior():
     assert tem_comparacao is True
     assert alta is True
     assert rotulo == "+20%"
+
+
+# --- Carregamento simultâneo -----------------------------------------------
+
+_CONSULTAS = ("list_products", "list_variants", "list_customers", "list_categories", "list_sales")
+
+
+def test_buscar_dados_dispara_as_cinco_consultas_ao_mesmo_tempo(monkeypatch):
+    # Cada consulta só termina quando as 5 estiverem em andamento; se fossem
+    # sequenciais, a barreira estouraria o timeout (BrokenBarrierError).
+    barreira = threading.Barrier(len(_CONSULTAS), timeout=2)
+    for nome in _CONSULTAS:
+        def consulta(token, _nome=nome, **kwargs):
+            barreira.wait()
+            return [_nome]
+
+        monkeypatch.setattr(xano_client, nome, consulta)
+
+    assert _buscar_dados("token") == tuple([nome] for nome in _CONSULTAS)
+
+
+def test_buscar_dados_repropaga_falha_de_qualquer_consulta(monkeypatch):
+    for nome in _CONSULTAS:
+        monkeypatch.setattr(xano_client, nome, lambda token, **kwargs: [])
+
+    def falha(token, **kwargs):
+        raise xano_client.XanoAPIError("Falha de comunicação com o servidor: x")
+
+    monkeypatch.setattr(xano_client, "list_customers", falha)
+
+    with pytest.raises(xano_client.XanoAPIError):
+        _buscar_dados("token")

@@ -1,5 +1,6 @@
 """Estado da tela inicial: números-resumo, gráficos e vendas recentes."""
 
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 
@@ -85,6 +86,21 @@ def _products_by_category(produtos: list[dict], categorias: list[dict]) -> list[
     ]
 
 
+def _buscar_dados(token: str) -> tuple[list[dict], ...]:
+    """Busca produtos, variações, clientes, categorias e vendas ao mesmo
+    tempo — o carregamento leva o tempo da consulta mais lenta, não a
+    soma de todas. Repropaga a `XanoAPIError` de qualquer consulta."""
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futuros = [
+            executor.submit(xano_client.list_products, token),
+            executor.submit(xano_client.list_variants, token),
+            executor.submit(xano_client.list_customers, token),
+            executor.submit(xano_client.list_categories, token),
+            executor.submit(xano_client.list_sales, token, limit=HISTORICO_VENDAS_LIMIT),
+        ]
+        return tuple(futuro.result() for futuro in futuros)
+
+
 class DashboardState(AuthState):
     total_products: int = 0
     low_stock_count: int = 0
@@ -105,11 +121,7 @@ class DashboardState(AuthState):
         if redirect is not None:
             return redirect
         try:
-            produtos = xano_client.list_products(self.auth_token)
-            variacoes = xano_client.list_variants(self.auth_token)
-            clientes = xano_client.list_customers(self.auth_token)
-            categorias = xano_client.list_categories(self.auth_token)
-            vendas = xano_client.list_sales(self.auth_token, limit=HISTORICO_VENDAS_LIMIT)
+            produtos, variacoes, clientes, categorias, vendas = _buscar_dados(self.auth_token)
         except xano_client.XanoAPIError:
             self.load_error = "Não foi possível carregar as métricas do dashboard."
             self.is_loading_page = False

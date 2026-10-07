@@ -10,6 +10,7 @@ Var de UI local" (`add-frontend-mvp-shell`) e `restyle-sidebar-navigation`.
 
 import reflex as rx
 
+from vetements import routes
 from vetements.state.auth import AuthState
 from vetements.styles import (
     BG,
@@ -34,11 +35,11 @@ from vetements.styles import (
 MOBILE_BREAKPOINT = "768px"
 
 NAV_ITEMS = [
-    ("Dashboard", "/", "layout-dashboard"),
-    ("Produtos", "/produtos", "shirt"),
-    ("Estoque", "/estoque", "package"),
-    ("Vendas", "/vendas", "receipt"),
-    ("Clientes", "/clientes", "users"),
+    ("Dashboard", routes.GESTAO_DASHBOARD, "layout-dashboard"),
+    ("Produtos", routes.GESTAO_PRODUTOS, "shirt"),
+    ("Estoque", routes.GESTAO_ESTOQUE, "package"),
+    ("Vendas", routes.GESTAO_VENDAS, "receipt"),
+    ("Clientes", routes.GESTAO_CLIENTES, "users"),
 ]
 
 
@@ -141,7 +142,7 @@ def _nav_link_item(label: str, href: str, icon_tag: str, active: bool) -> rx.Com
 
 def _nav_link(label: str, href: str, icon_tag: str) -> rx.Component:
     # `raw_path` é o caminho da URL no navegador; `path` é o padrão de rota
-    # casado, que na página índice não é "/" (o Dashboard nunca ficava ativo).
+    # casado, que nem sempre é igual ao endereço digitado.
     return rx.cond(
         AuthState.router.page.raw_path == href,
         _nav_link_item(label, href, icon_tag, active=True),

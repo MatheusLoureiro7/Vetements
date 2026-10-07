@@ -4,9 +4,11 @@ schema: spec-driven
 context: |
   Project: Vetements — ERP básico de moda.
 
-  Domain: Sistema interno de gestão para uma loja de roupas, cobrindo
-  produtos (com variações de tamanho/cor), estoque, vendas e clientes.
-  Não inclui, por enquanto, loja online voltada ao cliente final.
+  Domain: Sistema para uma loja de roupas em duas partes. Parte 1:
+  gestão interna (ERP) sob /gestao, cobrindo produtos (com variações de
+  tamanho/cor), estoque, vendas e clientes, com login da equipe. Parte 2:
+  loja virtual pública na raiz do site (/), em construção, com código em
+  vetements/loja/.
 
   Tech stack:
     Reflex (Python) para a aplicação/frontend.
@@ -25,7 +27,8 @@ context: |
   Development:
     Projeto desenvolvido incrementalmente utilizando OpenSpec.
     Escopo do MVP: produtos/catálogo, estoque, vendas/pedidos, clientes e
-    usuários. Funcionalidades fora desse escopo (loja online, pagamentos,
+    usuários, mais a loja virtual (parte 2), construída em changes
+    incrementais. Funcionalidades fora desse escopo (pagamentos,
     nota fiscal, financeiro, múltiplas lojas) devem ser propostas como
     changes futuras, não implementadas antecipadamente.
 

@@ -2,11 +2,14 @@
 
 ## 1. Visão geral
 
-Vetements é um ERP (sistema de gestão) básico para uma loja de roupas. O sistema
-é de uso **interno**: a equipe da loja utiliza o sistema para cadastrar
-produtos, controlar estoque, registrar vendas e manter um cadastro de
-clientes. Não há, nesta fase, uma vitrine online voltada ao consumidor final —
-o cliente compra na loja e é apenas cadastrado/consultado no sistema.
+Vetements é um sistema para uma loja de roupas, dividido em duas partes:
+
+- **Parte 1 — Gestão (ERP)**, de uso **interno**: a equipe da loja cadastra
+  produtos, controla estoque, registra vendas e mantém um cadastro de
+  clientes. Fica sob o endereço `/gestao` e exige login.
+- **Parte 2 — Loja virtual**, pública: vitrine voltada ao consumidor final,
+  na raiz do site (`/`). Está em construção: nesta fase existe apenas a
+  estrutura e uma página inicial provisória.
 
 ## 2. Problema
 
@@ -31,8 +34,8 @@ clientes em um único sistema.
 - **Administrador**: cadastra produtos, categorias e usuários; acompanha
   vendas e estoque.
 - **Vendedor**: consulta produtos/estoque e registra vendas.
-- **Cliente**: não acessa o sistema diretamente; é apenas um cadastro
-  associado às vendas.
+- **Cliente**: não acessa a gestão; é um cadastro associado às vendas.
+- **Visitante da loja**: acessa a loja virtual sem login.
 
 ## 5. Escopo
 
@@ -44,9 +47,14 @@ clientes em um único sistema.
 - Cadastro de clientes.
 - Cadastro de usuários com papéis (administrador, vendedor) e login.
 
+### Parte 2 — Loja virtual (em construção)
+
+- Estrutura e página inicial pública da loja (feito).
+- Próximas changes: vitrine com produtos reais (endpoints públicos de
+  catálogo no Xano), página de produto, carrinho, conta de cliente.
+
 ### Fora do escopo (por enquanto)
 
-- Loja online / vitrine para o cliente final.
 - Integração com meios de pagamento.
 - Emissão de nota fiscal.
 - Controle financeiro (contas a pagar/receber, fluxo de caixa).
@@ -86,6 +94,10 @@ Essas funcionalidades fora do escopo poderão ser propostas como novas
   dados, pelas APIs (REST) e pela autenticação dos usuários.
 - A aplicação Reflex consome a API do Xano para ler e gravar dados; o Reflex
   não acessa banco de dados diretamente.
+- Loja e gestão rodam no mesmo app Reflex: a loja em `vetements/loja/`
+  (rotas públicas na raiz) e a gestão em `vetements/pages`, `state` e
+  `components` (rotas sob `/gestao`). Os caminhos ficam em
+  `vetements/routes.py`.
 - Regras de negócio e de autorização (o que cada papel pode fazer) devem ser
   aplicadas no backend (Xano), nunca apenas no frontend.
 

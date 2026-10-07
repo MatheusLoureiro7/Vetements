@@ -9,7 +9,7 @@ quanto a um reinício do processo do Reflex.
 
 import reflex as rx
 
-from vetements import xano_client
+from vetements import routes, xano_client
 
 
 class AuthState(rx.State):
@@ -90,12 +90,12 @@ class AuthState(rx.State):
         self.login_error = ""
         self.login_senha = ""
         self.is_submitting = False
-        return rx.redirect("/")
+        return rx.redirect(routes.GESTAO_DASHBOARD)
 
     @rx.event
     def logout(self):
         self.reset()
-        return rx.redirect("/login")
+        return rx.redirect(routes.LOGIN)
 
     @rx.event
     def require_auth(self):
@@ -112,5 +112,5 @@ class AuthState(rx.State):
             except xano_client.XanoAPIError:
                 self.auth_token = ""
         if not self.is_authenticated:
-            return rx.redirect("/login")
+            return rx.redirect(routes.LOGIN)
         return None

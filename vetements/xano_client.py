@@ -8,11 +8,18 @@ para popular uma var `error` exibida na tela correspondente.
 A URL base da instância e o alias de cada grupo de API são
 configuráveis por variável de ambiente; os valores padrão são os do
 workspace `vetements` (id 166854) já provisionado.
+
+Para tolerar oscilações de internet, todas as chamadas usam um único
+`httpx.Client` (reaproveita conexões) e falhas transitórias são repetidas
+automaticamente — GETs em qualquer erro de rede ou 429/502/503/504; demais
+métodos só quando a conexão nem chegou a ser estabelecida, para nunca
+duplicar uma escrita.
 """
 
 from __future__ import annotations
 
 import os
+import time
 from typing import Any
 
 import httpx
@@ -27,7 +34,15 @@ _GROUP_CATALOGO = os.environ.get("XANO_GROUP_CATALOGO", "0qUs2gU9")
 _GROUP_CLIENTES = os.environ.get("XANO_GROUP_CLIENTES", "SRU11Lom")
 _GROUP_VENDAS = os.environ.get("XANO_GROUP_VENDAS", "7qxaAH55")
 
-_TIMEOUT = 10.0
+_TIMEOUT = httpx.Timeout(15.0, connect=5.0)
+
+_MAX_TENTATIVAS = 3
+_ESPERA_INICIAL = 0.5  # segundos; dobra a cada nova tentativa
+_STATUS_TRANSITORIOS = {429, 502, 503, 504}
+
+# Cliente compartilhado: mantém as conexões abertas (keep-alive) entre
+# requisições, evitando um handshake TLS novo a cada chamada.
+_client = httpx.Client(timeout=_TIMEOUT)
 
 
 class XanoAPIError(Exception):
@@ -68,17 +83,38 @@ def _request(
     params: dict[str, Any] | None = None,
 ) -> Any:
     headers = {"Authorization": f"Bearer {token}"} if token else {}
-    try:
-        response = httpx.request(
-            method,
-            _url(group_alias, path),
-            headers=headers,
-            json=json_body,
-            params=params,
-            timeout=_TIMEOUT,
-        )
-    except httpx.RequestError as erro:
-        raise XanoAPIError(f"Falha de comunicação com o servidor: {erro}") from erro
+    idempotente = method.upper() == "GET"
+    tentativa = 1
+    while True:
+        try:
+            response = _client.request(
+                method,
+                _url(group_alias, path),
+                headers=headers,
+                json=json_body,
+                params=params,
+            )
+        except httpx.RequestError as erro:
+            # ConnectError/ConnectTimeout garantem que nada foi enviado, então
+            # repetir é seguro até para escritas.
+            pode_repetir = isinstance(erro, (httpx.ConnectError, httpx.ConnectTimeout)) or (
+                idempotente and isinstance(erro, httpx.TransportError)
+            )
+            if pode_repetir and tentativa < _MAX_TENTATIVAS:
+                time.sleep(_ESPERA_INICIAL * 2 ** (tentativa - 1))
+                tentativa += 1
+                continue
+            raise XanoAPIError(f"Falha de comunicação com o servidor: {erro}") from erro
+
+        if (
+            idempotente
+            and response.status_code in _STATUS_TRANSITORIOS
+            and tentativa < _MAX_TENTATIVAS
+        ):
+            time.sleep(_ESPERA_INICIAL * 2 ** (tentativa - 1))
+            tentativa += 1
+            continue
+        break
 
     if response.status_code >= 400:
         raise XanoAPIError(_extract_error_message(response), status_code=response.status_code)

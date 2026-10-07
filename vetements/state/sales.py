@@ -39,9 +39,22 @@ class VendaResumo:
     itens_label: str
 
 
+def filter_sales_by_customer(vendas: list[VendaResumo], termo: str) -> list[VendaResumo]:
+    """Vendas cujo nome do cliente contém `termo` (sem diferenciar
+    maiúsculas); vendas avulsas são encontradas por "Balcão". Termo vazio
+    devolve o histórico inteiro."""
+    termo = termo.strip().casefold()
+    if not termo:
+        return vendas
+    return [venda for venda in vendas if termo in venda.cliente.casefold()]
+
+
 class SalesState(AuthState):
     customers: list[ClienteOption] = []
     variant_options: list[VariantOption] = []
+
+    show_form: bool = False
+    search: str = ""
 
     selected_variant_id: str = ""
     item_quantidade: str = ""
@@ -70,6 +83,7 @@ class SalesState(AuthState):
         redirect = self.require_auth()
         if redirect is not None:
             return redirect
+        self.load_error = ""
         self.refresh_options()
         self.refresh_history()
         self.is_loading_page = False
@@ -82,7 +96,6 @@ class SalesState(AuthState):
         except xano_client.XanoAPIError:
             self.load_error = "Não foi possível carregar clientes e produtos para a venda."
             return
-        self.load_error = ""
         self.customers = [ClienteOption(id=c["id"], nome=c["nome"]) for c in clientes]
         self._variacoes_raw = {v["id"]: v for v in variacoes}
         self.variant_options = [
@@ -99,7 +112,6 @@ class SalesState(AuthState):
         except xano_client.XanoAPIError:
             self.load_error = "Não foi possível carregar o histórico de vendas."
             return
-        self.load_error = ""
         clientes_por_id = {c.id: c.nome for c in self.customers}
         self.history = [
             VendaResumo(
@@ -113,6 +125,39 @@ class SalesState(AuthState):
             )
             for venda in vendas
         ]
+
+    @rx.var
+    def filtered_history(self) -> list[VendaResumo]:
+        return filter_sales_by_customer(self.history, self.search)
+
+    @rx.event
+    def set_search(self, value: str):
+        self.search = value
+
+    def _reset_sale(self):
+        self.cart = []
+        self.total_label = "R$ 0,00"
+        self.selected_variant_id = ""
+        self.item_quantidade = ""
+        self.selected_cliente_id = ""
+        self.item_error = ""
+        self.sale_error = ""
+
+    @rx.event
+    def open_form(self):
+        self._reset_sale()
+        self.sale_success = ""
+        self.show_form = True
+
+    @rx.event
+    def set_show_form(self, open: bool):
+        # Chamado pelo popup (Cancelar, X, Esc, clique fora). Fechar sem
+        # confirmar descarta o carrinho; durante o envio o popup fica aberto.
+        if self.is_submitting:
+            return
+        if not open:
+            self._reset_sale()
+        self.show_form = open
 
     def _qty_in_cart(self, variacao_id: int) -> int:
         return sum(item.quantidade for item in self.cart if item.variacao_id == variacao_id)
@@ -197,7 +242,8 @@ class SalesState(AuthState):
 
     @rx.event
     def confirm_sale(self):
-        if self.is_submitting:
+        # Clique duplo: o segundo chega com o popup já fechado pelo primeiro.
+        if self.is_submitting or not self.show_form:
             return None
         if not self.cart:
             self.sale_error = "Adicione ao menos um item para confirmar a venda."
@@ -222,11 +268,10 @@ class SalesState(AuthState):
             self.sale_success = ""
             self.is_submitting = False
             return None
-        self.cart = []
-        self.total_label = "R$ 0,00"
-        self.selected_cliente_id = ""
-        self.sale_error = ""
+        self._reset_sale()
         self.sale_success = "Venda registrada."
+        self.show_form = False
+        self.load_error = ""
         self.refresh_options()
         self.refresh_history()
         self.is_submitting = False

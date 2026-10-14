@@ -23,6 +23,14 @@ table produto {
       description = "Preço base do produto, antes de variações"
     }
 
+    image[] imagens? {
+      description = "Fotos do produto exibidas na loja virtual, em ordem"
+    }
+
+    bool publicado?=false {
+      description = "Se o produto aparece na loja virtual (padrão: não)"
+    }
+
     timestamp created_at?=now
   }
 
@@ -30,6 +38,7 @@ table produto {
     {type: "primary", field: [{name: "id"}]}
     {type: "btree", field: [{name: "categoria_id", op: "asc"}]}
     {type: "btree", field: [{name: "nome", op: "asc"}]}
+    {type: "btree", field: [{name: "publicado", op: "asc"}]}
   ]
   guid = "7gMJTnD7aj9Z1wIsiSdnpCg75EY"
 }

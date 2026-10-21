@@ -14,6 +14,7 @@ query "clientes" verb=GET {
     db.query cliente {
       where = ($db.cliente.nome|to_lower) includes? ($input.q|to_lower)
       sort = {cliente.nome: "asc"}
+      output = ["id", "nome", "telefone", "email", "created_at"]
       return = {type: "list"}
     } as $clientes
   }

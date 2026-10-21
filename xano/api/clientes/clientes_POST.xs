@@ -32,6 +32,7 @@ query "clientes" verb=POST {
         telefone: $input.telefone
         email: $input.email
       }
+      output = ["id", "nome", "telefone", "email", "created_at"]
     } as $cliente
   }
 

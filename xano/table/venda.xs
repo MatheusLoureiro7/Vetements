@@ -1,6 +1,7 @@
 // Registro de uma venda realizada na loja. Deve conter ao menos um item
 // (garantido pelo endpoint de criação); o total é derivado da soma dos
-// itens no momento da criação.
+// itens no momento da criação. Pedidos da loja virtual também são vendas
+// (origem = loja_virtual, sem usuário da equipe).
 table venda {
   auth = false
 
@@ -11,14 +12,19 @@ table venda {
       description = "Data/hora do registro da venda"
     }
 
-    int usuario_id {
+    int usuario_id? {
       table = "user"
-      description = "Usuário (administrador ou vendedor) que registrou a venda"
+      description = "Usuário (administrador ou vendedor) que registrou a venda; vazio em pedidos da loja virtual"
     }
 
     int cliente_id? {
       table = "cliente"
       description = "Cliente associado (opcional — venda avulsa/balcão quando ausente)"
+    }
+
+    enum origem?=balcao {
+      values = ["balcao", "loja_virtual"]
+      description = "Onde a venda foi feita: balcão (gestão) ou loja virtual (pedido do cliente)"
     }
 
     decimal total?=0 filters=min:0 {

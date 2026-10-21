@@ -61,7 +61,9 @@ BODY_FONT = "'IBM Plex Sans', 'Helvetica Neue', sans-serif"
 GOOGLE_FONTS_STYLESHEET = (
     "https://fonts.googleapis.com/css2?"
     "family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&"
-    "family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    "family=IBM+Plex+Sans:wght@400;500;600&"
+    # Fonte da loja virtual (ver assets/loja/loja.css).
+    "family=Schibsted+Grotesk:wght@400;500;600;700&display=swap"
 )
 
 # --- Layout --------------------------------------------------------

@@ -50,8 +50,10 @@ clientes em um único sistema.
 ### Parte 2 — Loja virtual (em construção)
 
 - Estrutura e página inicial pública da loja (feito).
-- Próximas changes: vitrine com produtos reais (endpoints públicos de
-  catálogo no Xano), página de produto, carrinho, conta de cliente.
+- Vitrine com produtos reais, filtros e busca, página de produto e
+  carrinho salvo no navegador (feito).
+- Próximas changes: conta de cliente e finalização do pedido (criar a
+  venda no Xano a partir do carrinho).
 
 ### Fora do escopo (por enquanto)
 

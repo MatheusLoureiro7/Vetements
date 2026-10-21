@@ -33,6 +33,7 @@ _GROUP_AUTH = os.environ.get("XANO_GROUP_AUTHENTICATION", "nM8-AXX2")
 _GROUP_CATALOGO = os.environ.get("XANO_GROUP_CATALOGO", "0qUs2gU9")
 _GROUP_CLIENTES = os.environ.get("XANO_GROUP_CLIENTES", "SRU11Lom")
 _GROUP_VENDAS = os.environ.get("XANO_GROUP_VENDAS", "7qxaAH55")
+_GROUP_LOJA = os.environ.get("XANO_GROUP_LOJA", "v-znCPQU")
 
 _TIMEOUT = httpx.Timeout(15.0, connect=5.0)
 
@@ -227,3 +228,33 @@ def create_sale(
     if cliente_id is not None:
         body["cliente_id"] = cliente_id
     return _request("POST", _GROUP_VENDAS, "venda", token=token, json_body=body)
+
+
+# --- Loja virtual (API pública, sem token) --------------------------------
+
+
+def instance_url() -> str:
+    """URL base da instância do Xano (usada para montar URLs de arquivos)."""
+    return _INSTANCE
+
+
+def list_public_categories() -> list[dict[str, Any]]:
+    """Retorna `[{"id", "nome"}]` ordenado por nome."""
+    return _request("GET", _GROUP_LOJA, "loja/categorias")
+
+
+def list_public_products(categoria_id: int | None = None, q: str = "") -> list[dict[str, Any]]:
+    """Retorna os produtos publicados, com categoria, imagens e variações
+    públicas (`tamanho`, `cor`, `disponivel`). Filtros vazios não são enviados."""
+    params: dict[str, Any] = {}
+    if categoria_id is not None:
+        params["categoria_id"] = categoria_id
+    if q.strip():
+        params["q"] = q.strip()
+    return _request("GET", _GROUP_LOJA, "loja/produtos", params=params or None)
+
+
+def get_public_product(produto_id: int) -> dict[str, Any]:
+    """Detalhe de um produto publicado; levanta `XanoAPIError` com
+    `status_code == 404` se ele não existir ou não estiver publicado."""
+    return _request("GET", _GROUP_LOJA, f"loja/produtos/{produto_id}")

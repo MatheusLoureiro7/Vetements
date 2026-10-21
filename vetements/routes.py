@@ -7,6 +7,14 @@ fica sob `/gestao`.
 
 # --- Loja virtual (pública) ---------------------------------------------------
 LOJA_HOME = "/"
+LOJA_PRODUTO = "/produto/[produto_id]"
+LOJA_CARRINHO = "/carrinho"
+
+
+def produto_href(produto_id: int) -> str:
+    """Caminho da página de detalhe de um produto da loja."""
+    return LOJA_PRODUTO.replace("[produto_id]", str(produto_id))
+
 
 # --- Acesso da equipe ---------------------------------------------------------
 LOGIN = "/login"

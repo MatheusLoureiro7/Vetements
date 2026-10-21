@@ -4,7 +4,11 @@
 import reflex as rx
 
 from vetements import routes
+from vetements.loja.pages.carrinho import carrinho_page
 from vetements.loja.pages.home import home_page
+from vetements.loja.pages.produto import produto_page
+from vetements.loja.state.catalogo import CatalogoState
+from vetements.loja.state.produto import ProdutoState
 from vetements.pages.customers import customers_page
 from vetements.pages.dashboard import dashboard_page
 from vetements.pages.inventory import inventory_page
@@ -20,11 +24,14 @@ from vetements.styles import GOOGLE_FONTS_STYLESHEET, base_style
 
 app = rx.App(
     style=base_style,
-    stylesheets=[GOOGLE_FONTS_STYLESHEET],
+    # Folha da loja virtual (classes `lj-*`; a gestão não as usa).
+    stylesheets=[GOOGLE_FONTS_STYLESHEET, "/loja/loja.css"],
 )
 
-# --- Loja virtual (pública: sem on_load de autenticação) ---------------------
-app.add_page(home_page, route=routes.LOJA_HOME, title="Vetements")
+# --- Loja virtual (pública: on_load só carrega o catálogo, sem autenticação) --
+app.add_page(home_page, route=routes.LOJA_HOME, title="Vetements", on_load=CatalogoState.load)
+app.add_page(produto_page, route=routes.LOJA_PRODUTO, title="Produto · Vetements", on_load=ProdutoState.load)
+app.add_page(carrinho_page, route=routes.LOJA_CARRINHO, title="Carrinho · Vetements")
 
 # --- Acesso da equipe ---------------------------------------------------------
 app.add_page(login_page, route=routes.LOGIN)

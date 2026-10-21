@@ -151,3 +151,64 @@ def test_post_com_503_nao_repete(monkeypatch, sem_espera):
 def test_cliente_compartilhado_usa_timeouts_separados():
     assert client._client.timeout.connect == 5.0
     assert client._client.timeout.read == 15.0
+
+
+# --- API pública da loja -------------------------------------------------
+
+
+def _captura(monkeypatch, resposta):
+    """Faz `_client.request` devolver `resposta` e registra cada chamada."""
+    chamadas = []
+
+    def fake_request(method, url, **kwargs):
+        chamadas.append({"method": method, "url": url, **kwargs})
+        return resposta
+
+    monkeypatch.setattr(client._client, "request", fake_request)
+    return chamadas
+
+
+def test_produtos_publicos_sem_filtro_nao_envia_parametros_nem_token(monkeypatch):
+    chamadas = _captura(monkeypatch, _FakeResponse(200, []))
+
+    client.list_public_products()
+
+    assert chamadas[0]["method"] == "GET"
+    assert chamadas[0]["url"].endswith(f"/api:{client._GROUP_LOJA}/loja/produtos")
+    assert chamadas[0]["params"] is None
+    assert "Authorization" not in chamadas[0]["headers"]
+
+
+def test_produtos_publicos_repassa_categoria_e_busca(monkeypatch):
+    chamadas = _captura(monkeypatch, _FakeResponse(200, []))
+
+    client.list_public_products(categoria_id=3, q="  basica ")
+
+    assert chamadas[0]["params"] == {"categoria_id": 3, "q": "basica"}
+
+
+def test_produtos_publicos_busca_em_branco_nao_e_enviada(monkeypatch):
+    chamadas = _captura(monkeypatch, _FakeResponse(200, []))
+
+    client.list_public_products(q="   ")
+
+    assert chamadas[0]["params"] is None
+
+
+def test_categorias_publicas_sem_token(monkeypatch):
+    chamadas = _captura(monkeypatch, _FakeResponse(200, [{"id": 1, "nome": "Camisetas"}]))
+
+    assert client.list_public_categories() == [{"id": 1, "nome": "Camisetas"}]
+    assert chamadas[0]["url"].endswith("/loja/categorias")
+    assert "Authorization" not in chamadas[0]["headers"]
+
+
+def test_detalhe_publico_inexistente_vira_erro_404(monkeypatch):
+    chamadas = _captura(monkeypatch, _FakeResponse(404, {"message": "Produto não encontrado."}))
+
+    with pytest.raises(client.XanoAPIError) as exc_info:
+        client.get_public_product(99)
+
+    assert chamadas[0]["url"].endswith("/loja/produtos/99")
+    assert "Authorization" not in chamadas[0]["headers"]
+    assert exc_info.value.status_code == 404

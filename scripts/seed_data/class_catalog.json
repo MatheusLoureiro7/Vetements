@@ -1,0 +1,2113 @@
+[
+  {
+    "handle": "fit-t-shirt-class-cls-master-off-white-3-26",
+    "titulo": "FIT T-SHIRT CLASS CLS MASTER OFF-WHITE",
+    "preco": "R$ 219,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/fit-t-shirt-class-cls-master-off-white-3-26-1.jpg",
+        "alt": "Camiseta ajustada off-white com logo pequeno no peito"
+      },
+      {
+        "arquivo": "products/fit-t-shirt-class-cls-master-off-white-3-26-2.jpg",
+        "alt": "Camiseta off-white com etiqueta interna e logo pequeno no peito"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": false
+      }
+    ]
+  },
+  {
+    "handle": "fit-t-shirt-class-cls-master-black-3-26",
+    "titulo": "FIT T-SHIRT CLASS CLS MASTER BLACK",
+    "preco": "R$ 219,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/fit-t-shirt-class-cls-master-black-3-26-1.jpg",
+        "alt": "Camiseta preta fit de manga curta, gola careca e logo discreto no centro do peito."
+      },
+      {
+        "arquivo": "products/fit-t-shirt-class-cls-master-black-3-26-2.jpg",
+        "alt": "Camiseta preta fit com gola careca e logo no peito, manga curta."
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": false
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-inverso-reggae-off-white-3-26",
+    "titulo": "T-SHIRT CLASS INVERSO REGGAE OFF-WHITE",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-inverso-reggae-off-white-3-26-1.jpg",
+        "alt": "Camiseta off-white com estampa frontal centralizada e etiqueta na gola"
+      },
+      {
+        "arquivo": "products/t-shirt-class-inverso-reggae-off-white-3-26-2.jpg",
+        "alt": "Camiseta off-white com gola canelada e estampa frontal em cores"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-inverso-reggae-navy-3-26",
+    "titulo": "T-SHIRT CLASS INVERSO REGGAE NAVY",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-inverso-reggae-navy-3-26-1.jpg",
+        "alt": "Camiseta azul-marinho lisa com estampa pequena colorida na frente"
+      },
+      {
+        "arquivo": "products/t-shirt-class-inverso-reggae-navy-3-26-2.jpg",
+        "alt": "Camiseta azul-marinho com estampa colorida na altura do peito"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-inverso-gold-black-3-26",
+    "titulo": "T-SHIRT CLASS INVERSO GOLD BLACK",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-inverso-gold-black-3-26-1.jpg",
+        "alt": "Camiseta preta com estampa dourada frontal e etiqueta interna na gola"
+      },
+      {
+        "arquivo": "products/t-shirt-class-inverso-gold-black-3-26-2.jpg",
+        "alt": "Camiseta preta com estampa dourada frontal e gola redonda"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-super-sentai-off-white-3-26",
+    "titulo": "T-SHIRT CLASS SUPER SENTAI OFF-WHITE",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-super-sentai-off-white-3-26-1.gif",
+        "alt": "Camiseta infantil off-white com estampa de capacete no peito"
+      },
+      {
+        "arquivo": "products/t-shirt-class-super-sentai-off-white-3-26-2.jpg",
+        "alt": "Camiseta off-white infantil com estampa de capacete em destaque na frente"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-super-sentai-black-3-26",
+    "titulo": "T-SHIRT CLASS SUPER SENTAI BLACK",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-super-sentai-black-3-26-1.gif",
+        "alt": "Camiseta preta infantil com estampa do super-herói no peito."
+      },
+      {
+        "arquivo": "products/t-shirt-class-super-sentai-black-3-26-2.jpg",
+        "alt": "Camiseta preta com estampa de rosto de robô/capacete no peito, manga curta"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-onyx-cross-mostard-3-26",
+    "titulo": "T-SHIRT CLASS ONYX CROSS MOSTARD",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-onyx-cross-mostard-3-26-1.jpg",
+        "alt": "Camiseta mostarda lisa com estampa central de cruz e inscrição CLASS"
+      },
+      {
+        "arquivo": "products/t-shirt-class-onyx-cross-mostard-3-26-2.jpg",
+        "alt": "Camiseta mostarda com estampa de cruz e texto CLASS na frente"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": false
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-onyx-cross-black-3-26",
+    "titulo": "T-SHIRT CLASS ONYX CROSS BLACK",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-onyx-cross-black-3-26-1.jpg",
+        "alt": "Camiseta preta com estampa central de cruz e “CLASS”, gola careca"
+      },
+      {
+        "arquivo": "products/t-shirt-class-onyx-cross-black-3-26-2.jpg",
+        "alt": "Camiseta preta com estampa de cruz e texto “CLASS” na parte frontal"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-pipa-modernista-brown-3-26",
+    "titulo": "T-SHIRT CLASS PIPA MODERNISTA BROWN",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-pipa-modernista-brown-3-26-1.jpg",
+        "alt": "Camiseta marrom com estampa branca nas costas em forma de símbolo e pinceladas."
+      },
+      {
+        "arquivo": "products/t-shirt-class-pipa-modernista-brown-3-26-2.jpg",
+        "alt": "Camiseta marrom com pequeno desenho branco no peito."
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-pipa-modernista-black-3-26",
+    "titulo": "T-SHIRT CLASS PIPA MODERNISTA BLACK",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-pipa-modernista-black-3-26-1.jpg",
+        "alt": "Camiseta preta com estampa geométrica branca e cinza na frente"
+      },
+      {
+        "arquivo": "products/t-shirt-class-pipa-modernista-black-3-26-2.jpg",
+        "alt": "Camiseta preta lisa com pequena estampa branca no peito"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-simplicity-navy-3-26",
+    "titulo": "T-SHIRT CLASS SIMPLICITY NAVY",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-simplicity-navy-3-26-1.jpg",
+        "alt": "Camiseta azul-marinho de gola careca, manga curta, estampa frontal centralizada"
+      },
+      {
+        "arquivo": "products/t-shirt-class-simplicity-navy-3-26-2.jpg",
+        "alt": "Camiseta azul-marinho de manga curta, gola careca e estampa frontal pequena"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": false
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-key-family-black-3-26",
+    "titulo": "T-SHIRT CLASS KEY FAMILY BLACK",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-key-family-black-3-26-1.jpg",
+        "alt": "Camiseta preta lisa com estampa gráfica central no peito e gola careca"
+      },
+      {
+        "arquivo": "products/t-shirt-class-key-family-black-3-26-2.jpg",
+        "alt": "Camiseta preta com estampa gráfica no peito e gola careca"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-key-family-off-white-3-26",
+    "titulo": "T-SHIRT CLASS KEY FAMILY OFF-WHITE",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-key-family-off-white-3-26-1.jpg",
+        "alt": "Camiseta off-white de manga curta com estampa frontal pequena de personagens"
+      },
+      {
+        "arquivo": "products/t-shirt-class-key-family-off-white-3-26-2.jpg",
+        "alt": "Camiseta off-white infantil com gola careca e estampa frontal de personagens"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-forced-smile-black-3-26",
+    "titulo": "T-SHIRT CLASS FORCED SMILE BLACK",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-forced-smile-black-3-26-1.jpg",
+        "alt": "Camiseta preta com estampa quadrada central e detalhe branco na manga"
+      },
+      {
+        "arquivo": "products/t-shirt-class-forced-smile-black-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-forced-smile-off-white-3-26",
+    "titulo": "T-SHIRT CLASS FORCED SMILE OFF-WHITE",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-forced-smile-off-white-3-26-1.jpg",
+        "alt": "Camiseta off-white com estampa gráfica azul e preta no centro, gola redonda"
+      },
+      {
+        "arquivo": "products/t-shirt-class-forced-smile-off-white-3-26-2.jpg",
+        "alt": "Camiseta off-white com estampa gráfica colorida no peito, gola redonda e manga curta"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-tripping-in-the-4th-dimension-mostard-3-26",
+    "titulo": "T-SHIRT CLASS TRIPPING IN THE 4TH DIMENSION MOSTARD",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-tripping-in-the-4th-dimension-mostard-3-26-1.jpg",
+        "alt": "Camiseta mostarda com estampa central em preto e branco, manga curta, gola redonda"
+      },
+      {
+        "arquivo": "products/t-shirt-class-tripping-in-the-4th-dimension-mostard-3-26-2.jpg",
+        "alt": "Camiseta mostarda com estampa frontal de figura em preto e branco, gola redonda"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": false
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-tripping-in-the-4th-dimensione-brown-3-26",
+    "titulo": "T-SHIRT CLASS TRIPPING IN THE 4TH DIMENSIONE BROWN",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-tripping-in-the-4th-dimensione-brown-3-26-1.jpg",
+        "alt": "Camiseta marrom com estampa central retangular azul e branca; gola careca"
+      },
+      {
+        "arquivo": "products/t-shirt-class-tripping-in-the-4th-dimensione-brown-3-26-2.jpg",
+        "alt": "Camiseta marrom com estampa retangular azul e branco de pessoa; gola careca"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-han-off-white-3-26",
+    "titulo": "T-SHIRT CLASS HAN OFF-WHITE",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-han-off-white-3-26-1.jpg",
+        "alt": "Camiseta off-white com estampa fotográfica central colorida e gola careca"
+      },
+      {
+        "arquivo": "products/t-shirt-class-han-off-white-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-han-black-3-26",
+    "titulo": "T-SHIRT CLASS HAN BLACK",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-han-black-3-26-1.jpg",
+        "alt": "Camiseta preta de manga curta com estampa quadrada colorida no peito"
+      },
+      {
+        "arquivo": "products/t-shirt-class-han-black-3-26-2.jpg",
+        "alt": "Camiseta preta de manga curta com frase estampada na frente"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-erotic-system-off-white-3-26",
+    "titulo": "T-SHIRT CLASS EROTIC SYSTEM OFF-WHITE",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-erotic-system-off-white-3-26-1.jpg",
+        "alt": "Camiseta off-white de manga curta com gola redonda e estampa retangular central"
+      },
+      {
+        "arquivo": "products/t-shirt-class-erotic-system-off-white-3-26-2.jpg",
+        "alt": "Camiseta off-white com estampa retangular no peito e gola redonda"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-erotic-system-brown-3-26",
+    "titulo": "T-SHIRT CLASS EROTIC SYSTEM BROWN",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-erotic-system-brown-3-26-1.jpg",
+        "alt": "Camiseta marrom de manga curta com estampa frontal retangular"
+      },
+      {
+        "arquivo": "products/t-shirt-class-erotic-system-brown-3-26-2.jpg",
+        "alt": "Camiseta marrom com estampa frontal em foto e lettering vermelho"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-embaixador-off-white-3-26",
+    "titulo": "T-SHIRT CLASS EMBAIXADOR OFF-WHITE",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-embaixador-off-white-3-26-1.jpg",
+        "alt": "Camiseta off-white com estampa frontal CLASS em azul e vermelho"
+      },
+      {
+        "arquivo": "products/t-shirt-class-embaixador-off-white-3-26-2.jpg",
+        "alt": "Camiseta off-white com estampa CLASS e figura azul na frente"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-embaixador-brown-3-26",
+    "titulo": "T-SHIRT CLASS EMBAIXADOR BROWN",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-embaixador-brown-3-26-1.jpg",
+        "alt": "Camiseta marrom de manga curta com estampa frontal azul e etiqueta na gola"
+      },
+      {
+        "arquivo": "products/t-shirt-class-embaixador-brown-3-26-2.jpg",
+        "alt": "Camiseta marrom com estampa frontal azul e gola careca"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "t-shirt-class-acai-mostard-3-26",
+    "titulo": "T-SHIRT CLASS AÇAI MOSTARD",
+    "preco": "R$ 239,00",
+    "aba": "Camiseta",
+    "fotos": [
+      {
+        "arquivo": "products/t-shirt-class-acai-mostard-3-26-1.jpg",
+        "alt": "Camiseta amarela com estampa quadrada verde e manga curta"
+      },
+      {
+        "arquivo": "products/t-shirt-class-acai-mostard-3-26-2.jpg",
+        "alt": "Camiseta amarela com gola redonda e estampa quadrada verde na frente"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "4G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-classic-shirt-super-plaid-white-3-26",
+    "titulo": "CLASS CLASSIC SHIRT SUPER PLAID WHITE",
+    "preco": "R$ 449,00",
+    "aba": "Camisa",
+    "fotos": [
+      {
+        "arquivo": "products/class-classic-shirt-super-plaid-white-3-26-1.jpg",
+        "alt": "Camisa xadrez de manga curta, gola abotoada, bordado no peito, visão frontal"
+      },
+      {
+        "arquivo": "products/class-classic-shirt-super-plaid-white-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": false
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": false
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-classic-shirt-chillin-plaid-3-26",
+    "titulo": "CLASS CLASSIC SHIRT CHILLIN PLAID",
+    "preco": "R$ 469,00",
+    "aba": "Camisa",
+    "fotos": [
+      {
+        "arquivo": "products/class-classic-shirt-chillin-plaid-3-26-1.jpg",
+        "alt": "Camisa de manga curta cinza com faixa laranja e verde na frente"
+      },
+      {
+        "arquivo": "products/class-classic-shirt-chillin-plaid-3-26-2.jpg",
+        "alt": "Camisa de manga curta com estampa colorida na frente e tecido xadrez escuro"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": false
+      },
+      {
+        "tamanho": "G",
+        "disponivel": false
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-classic-shirt-super-striped-black-3-26",
+    "titulo": "CLASS CLASSIC SHIRT SUPER STRIPED BLACK",
+    "preco": "R$ 449,00",
+    "aba": "Camisa",
+    "fotos": [
+      {
+        "arquivo": "products/class-classic-shirt-super-striped-black-3-26-1.jpg",
+        "alt": "Camisa clássica escura de manga curta, gola e botões, logo vermelho bordado"
+      },
+      {
+        "arquivo": "products/class-classic-shirt-super-striped-black-3-26-2.jpg",
+        "alt": "Camisa listrada escura, gola e botões, bordado vermelho no peito"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-tailored-jersey-cls-f-c-black-3-26",
+    "titulo": "CLASS TAILORED JERSEY CLS F.C BLACK",
+    "preco": "R$ 569,00",
+    "aba": "Camisa",
+    "fotos": [
+      {
+        "arquivo": "products/class-tailored-jersey-cls-f-c-black-3-26-1.jpg",
+        "alt": "Camiseta jersey preta com logo CLS, brasão circular e faixas verde e branca nas laterais"
+      },
+      {
+        "arquivo": "products/class-tailored-jersey-cls-f-c-black-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-jacket-powell-black-baby-yellow-3-26",
+    "titulo": "CLASS JACKET POWELL BLACK & BABY YELLOW",
+    "preco": "R$ 699,00",
+    "aba": "Jaqueta",
+    "fotos": [
+      {
+        "arquivo": "products/class-jacket-powell-black-baby-yellow-3-26-1.jpg",
+        "alt": "Jaqueta preta com painéis amarelo-claro, zíper e punhos elásticos"
+      },
+      {
+        "arquivo": "products/class-jacket-powell-black-baby-yellow-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-jacket-powell-black-green-3-26",
+    "titulo": "CLASS JACKET POWELL BLACK & GREEN",
+    "preco": "R$ 699,00",
+    "aba": "Jaqueta",
+    "fotos": [
+      {
+        "arquivo": "products/class-jacket-powell-black-green-3-26-1.jpg",
+        "alt": "Jaqueta verde-oliva e preta com painéis vermelhos, zíper frontal e punhos elásticos"
+      },
+      {
+        "arquivo": "products/class-jacket-powell-black-green-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": false
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-biker-nylon-jacket-black-3-26",
+    "titulo": "CLASS BIKER NYLON JACKET BLACK",
+    "preco": "R$ 899,00",
+    "aba": "Jaqueta",
+    "fotos": [
+      {
+        "arquivo": "products/class-biker-nylon-jacket-black-3-26-1.jpg",
+        "alt": "Jaqueta nylon preta estilo biker, zíper frontal e gola alta, punhos ajustáveis."
+      },
+      {
+        "arquivo": "products/class-biker-nylon-jacket-black-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": false
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": false
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "coach-jacket-class-x-castelo-ra-tim-bum-nino-black-2-26",
+    "titulo": "COACH JACKET CLASS X CASTELO RÁ-TIM-BUM \"NINO\" BLACK",
+    "preco": "R$ 699,00",
+    "aba": "Jaqueta",
+    "fotos": [
+      {
+        "arquivo": "products/coach-jacket-class-x-castelo-ra-tim-bum-nino-black-2-26-1.jpg",
+        "alt": "Jaqueta preta infantil com zíper frontal e estampa preto e branco na frente"
+      },
+      {
+        "arquivo": "products/coach-jacket-class-x-castelo-ra-tim-bum-nino-black-2-26-2.jpg",
+        "alt": "Jaqueta preta infantil com estampa nas costas e logo amarelo e vermelho"
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "overcoat-class-x-castelo-ra-tim-bum-intro-gray-2-26",
+    "titulo": "OVERCOAT CLASS X CASTELO RÁ-TIM-BUM \"INTRO\" GRAY",
+    "preco": "R$ 2.999,00",
+    "aba": "Jaqueta",
+    "fotos": [
+      {
+        "arquivo": "products/overcoat-class-x-castelo-ra-tim-bum-intro-gray-2-26-1.jpg",
+        "alt": "Casaco infantil cinza escuro com capuz preto, estampa central colorida e fechamento por botões."
+      },
+      {
+        "arquivo": "products/overcoat-class-x-castelo-ra-tim-bum-intro-gray-2-26-2.jpg",
+        "alt": "Manga/parte superior do casaco com tecido cinza e faixa roxa estampada; capuz preto."
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "tailored-pants-class-x-castelo-ra-tim-bum-nino-brown-2-26",
+    "titulo": "TAILORED PANTS CLASS X CASTELO RÁ-TIM-BUM \"NINO\" BROWN",
+    "preco": "R$ 629,00",
+    "aba": "Calça",
+    "fotos": [
+      {
+        "arquivo": "products/tailored-pants-class-x-castelo-ra-tim-bum-nino-brown-2-26-1.jpg",
+        "alt": "Calça infantil marrom com bolso frontal e etiqueta decorativa no lado direito."
+      },
+      {
+        "arquivo": "products/tailored-pants-class-x-castelo-ra-tim-bum-nino-brown-2-26-2.jpg",
+        "alt": "Calça infantil marrom com cós e dois bolsos frontais."
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": false
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-gabardine-pants-primeline-green-3-26",
+    "titulo": "CLASS GABARDINE PANTS PRIMELINE GREEN",
+    "preco": "R$ 539,00",
+    "aba": "Calça",
+    "fotos": [
+      {
+        "arquivo": "products/class-gabardine-pants-primeline-green-3-26-1.jpg",
+        "alt": "Calça de sarja verde escura com recortes amarelo-alaranjados na parte traseira"
+      },
+      {
+        "arquivo": "products/class-gabardine-pants-primeline-green-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-pants-kisho-jacquard-black-white-3-26",
+    "titulo": "CLASS PANTS KISHO JACQUARD BLACK & WHITE",
+    "preco": "R$ 599,00",
+    "aba": "Calça",
+    "fotos": [
+      {
+        "arquivo": "products/class-pants-kisho-jacquard-black-white-3-26-1.jpg",
+        "alt": "Calça xadrez preta com cós elástico e bolso azul-marinho lateral"
+      },
+      {
+        "arquivo": "products/class-pants-kisho-jacquard-black-white-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": false
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": false
+      }
+    ]
+  },
+  {
+    "handle": "class-wide-jeans-pants-serigraphy-blue-3-26",
+    "titulo": "CLASS WIDE JEANS PANTS SERIGRAPHY BLUE",
+    "preco": "R$ 549,00",
+    "aba": "Calça",
+    "fotos": [
+      {
+        "arquivo": "products/class-wide-jeans-pants-serigraphy-blue-3-26-1.jpg",
+        "alt": "Bermuda jeans azul claro de perna larga com cós e fechamento frontal"
+      },
+      {
+        "arquivo": "products/class-wide-jeans-pants-serigraphy-blue-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "40",
+        "disponivel": true
+      },
+      {
+        "tamanho": "42",
+        "disponivel": true
+      },
+      {
+        "tamanho": "44",
+        "disponivel": true
+      },
+      {
+        "tamanho": "46",
+        "disponivel": true
+      },
+      {
+        "tamanho": "48",
+        "disponivel": true
+      },
+      {
+        "tamanho": "50",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-gabardine-pants-primeline-black-3-26",
+    "titulo": "CLASS GABARDINE PANTS PRIMELINE BLACK",
+    "preco": "R$ 539,00",
+    "aba": "Calça",
+    "fotos": [
+      {
+        "arquivo": "products/class-gabardine-pants-primeline-black-3-26-1.jpg",
+        "alt": "Calça de gabardine preta com faixa azul nas laterais e cós com botão"
+      },
+      {
+        "arquivo": "products/class-gabardine-pants-primeline-black-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": false
+      }
+    ]
+  },
+  {
+    "handle": "class-pants-powell-black-green-3-26",
+    "titulo": "CLASS PANTS POWELL BLACK & GREEN",
+    "preco": "R$ 529,00",
+    "aba": "Calça",
+    "fotos": [
+      {
+        "arquivo": "products/class-pants-powell-black-green-3-26-1.jpg",
+        "alt": "Calça preta com painéis verde e laranja, estampa branca na perna"
+      },
+      {
+        "arquivo": "products/class-pants-powell-black-green-3-26-2.jpg",
+        "alt": "Calça preta com painéis laranja na lateral e cintura elástica com ajuste"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-classic-distressed-jeans-3-26",
+    "titulo": "CLASS CLASSIC DISTRESSED JEANS",
+    "preco": "R$ 549,00",
+    "aba": "Calça",
+    "fotos": [
+      {
+        "arquivo": "products/class-classic-distressed-jeans-3-26-1.jpg",
+        "alt": "Calça jeans azul escuro reta com cintura de botões e efeito desgastado nas pernas"
+      },
+      {
+        "arquivo": "products/class-classic-distressed-jeans-3-26-2.jpg",
+        "alt": "Jeans azul escuro com cintura e bolsos frontais, com desgaste sutil no tecido"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "40",
+        "disponivel": true
+      },
+      {
+        "tamanho": "42",
+        "disponivel": true
+      },
+      {
+        "tamanho": "44",
+        "disponivel": true
+      },
+      {
+        "tamanho": "46",
+        "disponivel": true
+      },
+      {
+        "tamanho": "48",
+        "disponivel": true
+      },
+      {
+        "tamanho": "50",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-pants-powell-black-baby-yellow-3-26",
+    "titulo": "CLASS PANTS POWELL BLACK & BABY YELLOW",
+    "preco": "R$ 529,00",
+    "aba": "Calça",
+    "fotos": [
+      {
+        "arquivo": "products/class-pants-powell-black-baby-yellow-3-26-1.jpg",
+        "alt": "Calça preta com faixa amarela e logo verde bordado na perna"
+      },
+      {
+        "arquivo": "products/class-pants-powell-black-baby-yellow-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-shorts-dynamic-plaid-black-3-26",
+    "titulo": "CLASS SHORTS DYNAMIC PLAID BLACK",
+    "preco": "R$ 359,00",
+    "aba": "Bermuda",
+    "fotos": [
+      {
+        "arquivo": "products/class-shorts-dynamic-plaid-black-3-26-1.jpg",
+        "alt": "Bermuda preta com cós elástico e estampa xadrez na parte interna."
+      },
+      {
+        "arquivo": "products/class-shorts-dynamic-plaid-black-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-classic-shorts-cls-f-c-black-3-26",
+    "titulo": "CLASS CLASSIC SHORTS CLS F.C BLACK",
+    "preco": "R$ 319,00",
+    "aba": "Bermuda",
+    "fotos": [
+      {
+        "arquivo": "products/class-classic-shorts-cls-f-c-black-3-26-1.jpg",
+        "alt": "Shorts preto com cós elástico, cordão e faixa lateral clara; logo oval na perna."
+      },
+      {
+        "arquivo": "products/class-classic-shorts-cls-f-c-black-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-shorts-dynamic-plaid-white-3-26",
+    "titulo": "CLASS SHORTS DYNAMIC PLAID WHITE",
+    "preco": "R$ 359,00",
+    "aba": "Bermuda",
+    "fotos": [
+      {
+        "arquivo": "products/class-shorts-dynamic-plaid-white-3-26-1.jpg",
+        "alt": "Short xadrez branco com laterais pretas, cós elástico e barra reta."
+      },
+      {
+        "arquivo": "products/class-shorts-dynamic-plaid-white-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-classic-shorts-cls-f-c-brown-3-26",
+    "titulo": "CLASS CLASSIC SHORTS CLS F.C BROWN",
+    "preco": "R$ 319,00",
+    "aba": "Bermuda",
+    "fotos": [
+      {
+        "arquivo": "products/class-classic-shorts-cls-f-c-brown-3-26-1.jpg",
+        "alt": "Short marrom com cós elástico, cordão e faixa lateral branca"
+      },
+      {
+        "arquivo": "products/class-classic-shorts-cls-f-c-brown-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-gabardine-shorts-velcro-black-3-26",
+    "titulo": "CLASS GABARDINE SHORTS VELCRO BLACK",
+    "preco": "R$ 499,00",
+    "aba": "Bermuda",
+    "fotos": [
+      {
+        "arquivo": "products/class-gabardine-shorts-velcro-black-3-26-1.jpg",
+        "alt": "Bermuda preta com passantes, fechamento frontal e logo bordado vermelho"
+      },
+      {
+        "arquivo": "products/class-gabardine-shorts-velcro-black-3-26-2.jpg",
+        "alt": "Bermuda preta com cós estruturado, passantes e bolso frontal"
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-classic-shorts-cls-f-c-green-3-26",
+    "titulo": "CLASS CLASSIC SHORTS CLS F.C GREEN",
+    "preco": "R$ 319,00",
+    "aba": "Bermuda",
+    "fotos": [
+      {
+        "arquivo": "products/class-classic-shorts-cls-f-c-green-3-26-1.jpg",
+        "alt": "Bermuda verde escura com cordão no cós, faixa vermelha lateral e patch oval."
+      },
+      {
+        "arquivo": "products/class-classic-shorts-cls-f-c-green-3-26-2.jpg",
+        "alt": "Bermuda verde escura com faixa vermelha e patch oval “CLASS” no lado."
+      }
+    ],
+    "tamanhos": [
+      {
+        "tamanho": "P",
+        "disponivel": true
+      },
+      {
+        "tamanho": "M",
+        "disponivel": true
+      },
+      {
+        "tamanho": "G",
+        "disponivel": true
+      },
+      {
+        "tamanho": "GG",
+        "disponivel": true
+      },
+      {
+        "tamanho": "3G",
+        "disponivel": true
+      }
+    ]
+  },
+  {
+    "handle": "class-classic-sport-hat-primeline-green-mostard-3-26",
+    "titulo": "CLASS CLASSIC SPORT HAT PRIMELINE GREEN & MOSTARD",
+    "preco": "R$ 249,00",
+    "aba": "Boné",
+    "fotos": [
+      {
+        "arquivo": "products/class-classic-sport-hat-primeline-green-mostard-3-26-1.jpg",
+        "alt": "Boné esportivo verde-oliva com logotipo na parte frontal"
+      },
+      {
+        "arquivo": "products/class-classic-sport-hat-primeline-green-mostard-3-26-2.jpg",
+        "alt": "Boné esportivo verde-oliva com aba curva e bordado frontal"
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "class-classic-sport-hat-primeline-black-blue-3-26",
+    "titulo": "CLASS CLASSIC SPORT HAT PRIMELINE BLACK & BLUE",
+    "preco": "R$ 249,00",
+    "aba": "Boné",
+    "fotos": [
+      {
+        "arquivo": "products/class-classic-sport-hat-primeline-black-blue-3-26-1.jpg",
+        "alt": "Boné esportivo preto com copa e aba curva, com logo bordado em laranja"
+      },
+      {
+        "arquivo": "products/class-classic-sport-hat-primeline-black-blue-3-26-2.jpg",
+        "alt": "Boné esportivo preto com aba curva e logo bordado PRIMELINE na lateral"
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "class-3-panel-sport-hat-dynamic-plaid-white-3-26",
+    "titulo": "CLASS 3 PANEL SPORT HAT DYNAMIC PLAID WHITE",
+    "preco": "R$ 249,00",
+    "aba": "Boné",
+    "fotos": [
+      {
+        "arquivo": "products/class-3-panel-sport-hat-dynamic-plaid-white-3-26-1.jpg",
+        "alt": "Boné esportivo xadrez branco e verde com aba preta e detalhe de logo vermelho"
+      },
+      {
+        "arquivo": "products/class-3-panel-sport-hat-dynamic-plaid-white-3-26-2.jpg",
+        "alt": "Boné esportivo com abas pretas e xadrez verde sobre fundo branco, logo vermelho"
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "class-3-panel-sport-hat-dynamic-plaid-black-3-26",
+    "titulo": "CLASS 3 PANEL SPORT HAT DYNAMIC PLAID BLACK",
+    "preco": "R$ 249,00",
+    "aba": "Boné",
+    "fotos": [
+      {
+        "arquivo": "products/class-3-panel-sport-hat-dynamic-plaid-black-3-26-1.jpg",
+        "alt": "Boné esportivo preto com estampa xadrez e bordado verde no topo"
+      },
+      {
+        "arquivo": "products/class-3-panel-sport-hat-dynamic-plaid-black-3-26-2.jpg",
+        "alt": "Boné esportivo preto com painel xadrez e bordado verde na parte frontal"
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "class-3-panel-sport-hat-cls-f-c-black-3-26",
+    "titulo": "CLASS 3 PANEL SPORT HAT CLS F.C BLACK",
+    "preco": "R$ 249,00",
+    "aba": "Boné",
+    "fotos": [
+      {
+        "arquivo": "products/class-3-panel-sport-hat-cls-f-c-black-3-26-1.jpg",
+        "alt": "Boné esportivo listrado preto e visor verde, patch oval frontal"
+      },
+      {
+        "arquivo": "products/class-3-panel-sport-hat-cls-f-c-black-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "class-3-panel-leather-orange-black-3-26",
+    "titulo": "CLASS 3 PANEL LEATHER ORANGE & BLACK",
+    "preco": "R$ 449,00",
+    "aba": "Boné",
+    "fotos": [
+      {
+        "arquivo": "products/class-3-panel-leather-orange-black-3-26-1.jpg",
+        "alt": "Boné de couro laranja e preto com copa arredondada e aba curva"
+      },
+      {
+        "arquivo": "products/class-3-panel-leather-orange-black-3-26-2.jpg",
+        "alt": "Boné de couro laranja com faixa preta e aba curva"
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "class-polo-hat-pipa-corduroy-gray-3-26",
+    "titulo": "CLASS POLO HAT PIPA CORDUROY GRAY",
+    "preco": "R$ 249,00",
+    "aba": "Boné",
+    "fotos": [
+      {
+        "arquivo": "products/class-polo-hat-pipa-corduroy-gray-3-26-1.jpg",
+        "alt": "Boné de corduroy cinza com bordado vermelho de logotipo na parte frontal"
+      },
+      {
+        "arquivo": "products/class-polo-hat-pipa-corduroy-gray-3-26-2.jpg",
+        "alt": "Boné de corduroy cinza com bordado vermelho e logotipo em patch na frente"
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "class-polo-hat-pipa-leather-black-3-26",
+    "titulo": "CLASS POLO HAT PIPA LEATHER BLACK",
+    "preco": "R$ 399,00",
+    "aba": "Boné",
+    "fotos": [
+      {
+        "arquivo": "products/class-polo-hat-pipa-leather-black-3-26-1.jpg",
+        "alt": "Chapéu tipo boné de couro preto com aba verde e bordado frontal"
+      },
+      {
+        "arquivo": "products/class-polo-hat-pipa-leather-black-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "class-classic-sport-hat-c-logo-rose-3-26",
+    "titulo": "CLASS CLASSIC SPORT HAT C LOGO ROSE",
+    "preco": "R$ 249,00",
+    "aba": "Boné",
+    "fotos": [
+      {
+        "arquivo": "products/class-classic-sport-hat-c-logo-rose-3-26-1.jpg",
+        "alt": "Boné esportivo rosa com letra C preta bordada"
+      },
+      {
+        "arquivo": "products/class-classic-sport-hat-c-logo-rose-3-26-2.jpg",
+        "alt": "Boné rosa com logo grande em letra C preta e costuras visíveis"
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "class-classic-sport-hat-c-logo-green-brown-3-26",
+    "titulo": "CLASS CLASSIC SPORT HAT C LOGO GREEN & BROWN",
+    "preco": "R$ 249,00",
+    "aba": "Boné",
+    "fotos": [
+      {
+        "arquivo": "products/class-classic-sport-hat-c-logo-green-brown-3-26-1.jpg",
+        "alt": "Boné esportivo verde escuro e marrom com logo C branco frontal"
+      },
+      {
+        "arquivo": "products/class-classic-sport-hat-c-logo-green-brown-3-26-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "classic-sport-hat-class-x-castelo-ra-tim-bum-la-classe-gray-2-26",
+    "titulo": "CLASSIC SPORT HAT CLASS X CASTELO RÁ-TIM-BUM \"LA CLASSE\" GRAY",
+    "preco": "R$ 409,00",
+    "aba": "Boné",
+    "fotos": [
+      {
+        "arquivo": "products/classic-sport-hat-class-x-castelo-ra-tim-bum-la-classe-gray-2-26-1.jpg",
+        "alt": "Boné esportivo cinza com pala preta e bordado “La classe.”"
+      },
+      {
+        "arquivo": "products/classic-sport-hat-class-x-castelo-ra-tim-bum-la-classe-gray-2-26-2.jpg",
+        "alt": "Boné esportivo cinza com pala preta e patch “Ra-Tim-Bum” na lateral"
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "class-cleoh-bag",
+    "titulo": "CLASS CLEÖH CORDURA BAG",
+    "preco": "R$ 299,00",
+    "aba": "Bolsa",
+    "fotos": [
+      {
+        "arquivo": "products/class-cleoh-bag-1.jpg",
+        "alt": "Bolsa tiracolo preta pequena com alça de cordão e fecho superior tipo saquinho"
+      },
+      {
+        "arquivo": "products/class-cleoh-bag-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": []
+  },
+  {
+    "handle": "class-tocco-bag",
+    "titulo": "CLASS TOCCO CORDURA BAG",
+    "preco": "R$ 399,00",
+    "aba": "Bolsa",
+    "fotos": [
+      {
+        "arquivo": "products/class-tocco-bag-1.jpg",
+        "alt": "Bolsa tote preta com alças longas e botões de pressão nas laterais"
+      },
+      {
+        "arquivo": "products/class-tocco-bag-2.jpg",
+        "alt": ""
+      }
+    ],
+    "tamanhos": []
+  }
+]

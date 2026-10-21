@@ -1,52 +1,67 @@
-// Signup and retrieve an authentication token
+// Cria uma conta da equipe (tabela user). Restrito a administradores —
+// antes era público e qualquer pessoa conseguia criar um vendedor e entrar
+// na gestão (change backend-restrict-staff-signup). Não devolve token nem
+// senha: quem cria a conta não entra como o novo usuário.
 query "auth/signup" verb=POST {
   api_group = "Authentication"
+  description = "Cria uma conta da equipe (somente administrador)"
+  auth = "user"
 
   input {
-    text name?
+    text name? filters=trim
     email email? filters=trim|lower
     text password?
+    enum role?=vendedor {
+      values = ["administrador", "vendedor"]
+    }
   }
 
   stack {
-    // Check if a user record with that email exists
+    db.get user {
+      description = "Carrega o usuário autenticado para checar o papel"
+      field_name = "id"
+      field_value = $auth.id
+      output = ["id", "role"]
+    } as $current_user
+
+    precondition ($current_user.role == "administrador") {
+      description = "Apenas administradores criam contas da equipe"
+      error_type = "accessdenied"
+      error = "Apenas administradores podem criar contas da equipe."
+    }
+
     db.get user {
       field_name = "email"
       field_value = $input.email
-    } as $user
-  
-    // Verify that the email being used to sign up is unique
-    precondition ($user == null) {
-      error_type = "accessdenied"
-      error = "An account with this email already exists."
+      output = ["id"]
+    } as $existente
+
+    precondition ($existente == null) {
+      error_type = "inputerror"
+      error = "Já existe uma conta com este e-mail."
     }
-  
-    // Create a new user record
+
     db.add user {
       data = {
         created_at: "now"
         name      : $input.name
         email     : $input.email
         password  : $input.password
-        role      : "vendedor"
+        role      : $input.role
       }
-    } as $user
-  
-    // Create an authentiction token
-    security.create_auth_token {
-      table = "user"
-      extras = {}
-      expiration = 86400
-      id = $user.id
-    } as $authToken
-  
-    // Create an event log for signup
+      output = ["id", "name", "email", "role"]
+    } as $novo_usuario
+
     function.run "Quick Start/log_event" {
-      input = {user_id: $user.id, action: "signup", metadata: $user}
+      input = {
+        user_id : $auth.id
+        action  : "create_staff_user"
+        metadata: {novo_usuario_id: $novo_usuario.id, role: $novo_usuario.role}
+      }
     } as $event_log
   }
 
-  response = {authToken: $authToken, user_id: $user.id}
+  response = $novo_usuario
   tags = ["xano:quick-start"]
   guid = "7OCMKT9e5dGzNn_WQP6rmLUmP3c"
 }

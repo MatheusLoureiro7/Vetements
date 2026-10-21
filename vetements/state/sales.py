@@ -39,6 +39,21 @@ class VendaResumo:
     itens_label: str
 
 
+ORIGEM_LOJA_VIRTUAL = "loja_virtual"
+
+
+def e_pedido_da_loja(venda: dict) -> bool:
+    """Venda feita por um cliente na loja virtual (sem funcionário)."""
+    return venda.get("origem") == ORIGEM_LOJA_VIRTUAL
+
+
+def rotulo_cliente(venda: dict, clientes_por_id: dict[int, str]) -> str:
+    """Nome do cliente da venda; "Balcão" para venda avulsa, e o sufixo
+    "(loja virtual)" para pedidos feitos pela loja."""
+    nome = clientes_por_id.get(venda.get("cliente_id"), "Cliente") if venda.get("cliente_id") else "Balcão"
+    return f"{nome} (loja virtual)" if e_pedido_da_loja(venda) else nome
+
+
 def filter_sales_by_customer(vendas: list[VendaResumo], termo: str) -> list[VendaResumo]:
     """Vendas cujo nome do cliente contém `termo` (sem diferenciar
     maiúsculas); vendas avulsas são encontradas por "Balcão". Termo vazio
@@ -117,9 +132,7 @@ class SalesState(AuthState):
             VendaResumo(
                 id=venda["id"],
                 data_label=format_datetime(venda["created_at"]),
-                cliente=clientes_por_id.get(venda.get("cliente_id"), "Balcão")
-                if venda.get("cliente_id")
-                else "Balcão",
+                cliente=rotulo_cliente(venda, clientes_por_id),
                 total_label=format_currency(venda["total"]),
                 itens_label=f"{sum(i['quantidade'] for i in venda.get('itens', []))} item(ns)",
             )

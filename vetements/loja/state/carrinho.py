@@ -133,6 +133,10 @@ class CarrinhoState(rx.State):
         """Usado pela página de produto (via `get_state`)."""
         self._gravar(adicionar(ler_itens(self.salvo), novo))
 
+    def esvaziar(self):
+        """Usado depois de o pedido ser criado (via `get_state`)."""
+        self._gravar([])
+
     @rx.event
     def aumentar(self, variacao_id: int, quantidade_atual: int):
         self._gravar(alterar_quantidade(ler_itens(self.salvo), variacao_id, quantidade_atual + 1))

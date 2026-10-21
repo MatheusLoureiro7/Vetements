@@ -258,3 +258,35 @@ def get_public_product(produto_id: int) -> dict[str, Any]:
     """Detalhe de um produto publicado; levanta `XanoAPIError` com
     `status_code == 404` se ele não existir ou não estiver publicado."""
     return _request("GET", _GROUP_LOJA, f"loja/produtos/{produto_id}")
+
+
+# --- Conta de cliente e pedidos da loja (token de cliente) ----------------
+
+
+def customer_signup(nome: str, email: str, senha: str, telefone: str = "") -> dict[str, Any]:
+    """Cria a conta do cliente na loja. Retorna `{"authToken", "cliente"}`."""
+    corpo: dict[str, Any] = {"nome": nome, "email": email, "senha": senha}
+    if telefone.strip():
+        corpo["telefone"] = telefone.strip()
+    return _request("POST", _GROUP_LOJA, "loja/conta/cadastro", json_body=corpo)
+
+
+def customer_login(email: str, senha: str) -> dict[str, Any]:
+    """Login do cliente na loja. Retorna `{"authToken", "cliente"}`."""
+    return _request("POST", _GROUP_LOJA, "loja/conta/login", json_body={"email": email, "senha": senha})
+
+
+def get_customer(token: str) -> dict[str, Any]:
+    """Dados do cliente do token: `{"id", "nome", "email", "telefone"}`."""
+    return _request("GET", _GROUP_LOJA, "loja/conta", token=token)
+
+
+def create_order(token: str, itens: list[dict[str, int]]) -> dict[str, Any]:
+    """Cria o pedido do cliente (`itens = [{variacao_id, quantidade}]`).
+    Retorna `{"id", "created_at", "total", "itens"}`."""
+    return _request("POST", _GROUP_LOJA, "loja/pedidos", token=token, json_body={"itens": itens})
+
+
+def list_orders(token: str) -> list[dict[str, Any]]:
+    """Pedidos do cliente do token, mais recentes primeiro, com itens."""
+    return _request("GET", _GROUP_LOJA, "loja/pedidos", token=token)

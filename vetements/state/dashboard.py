@@ -9,6 +9,7 @@ import reflex as rx
 from vetements import xano_client
 from vetements.format_utils import format_currency, format_datetime
 from vetements.state.auth import AuthState
+from vetements.state.sales import e_pedido_da_loja, rotulo_cliente
 
 DIAS_GRAFICO_VENDAS = 14
 LOW_STOCK_THRESHOLD = 5
@@ -148,11 +149,13 @@ class DashboardState(AuthState):
                 # escopo desta change — ver proposal.md); mostra o nome
                 # quando é o próprio usuário logado, senão o id.
                 responsavel=(
-                    self.nome if venda["usuario_id"] == self.user_id else f"Usuário #{venda['usuario_id']}"
+                    "Loja virtual"
+                    if e_pedido_da_loja(venda) or not venda.get("usuario_id")
+                    else self.nome
+                    if venda["usuario_id"] == self.user_id
+                    else f"Usuário #{venda['usuario_id']}"
                 ),
-                cliente=clientes_por_id.get(venda.get("cliente_id"), "Balcão")
-                if venda.get("cliente_id")
-                else "Balcão",
+                cliente=rotulo_cliente(venda, clientes_por_id),
                 total_label=format_currency(venda["total"]),
             )
             for venda in vendas[:5]

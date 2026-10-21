@@ -9,6 +9,8 @@ fica sob `/gestao`.
 LOJA_HOME = "/"
 LOJA_PRODUTO = "/produto/[produto_id]"
 LOJA_CARRINHO = "/carrinho"
+LOJA_CONTA = "/conta"
+LOJA_ENTRAR = "/conta/entrar"
 
 
 def produto_href(produto_id: int) -> str:

@@ -212,3 +212,37 @@ def test_detalhe_publico_inexistente_vira_erro_404(monkeypatch):
     assert chamadas[0]["url"].endswith("/loja/produtos/99")
     assert "Authorization" not in chamadas[0]["headers"]
     assert exc_info.value.status_code == 404
+
+
+# --- Conta de cliente e pedidos da loja ----------------------------------
+
+
+def test_cadastro_de_cliente_e_publico_e_omite_telefone_vazio(monkeypatch):
+    chamadas = _captura(monkeypatch, _FakeResponse(200, {"authToken": "t", "cliente": {"id": 1}}))
+
+    client.customer_signup("Ana", "ana@exemplo.com", "abcd1234", telefone="  ")
+
+    assert chamadas[0]["method"] == "POST"
+    assert chamadas[0]["url"].endswith(f"/api:{client._GROUP_LOJA}/loja/conta/cadastro")
+    assert chamadas[0]["json"] == {"nome": "Ana", "email": "ana@exemplo.com", "senha": "abcd1234"}
+    assert "Authorization" not in chamadas[0]["headers"]
+
+
+def test_pedido_envia_token_de_cliente_e_itens(monkeypatch):
+    chamadas = _captura(monkeypatch, _FakeResponse(200, {"id": 9, "total": 10, "itens": []}))
+
+    client.create_order("tok", [{"variacao_id": 3, "quantidade": 2}])
+
+    assert chamadas[0]["url"].endswith("/loja/pedidos")
+    assert chamadas[0]["headers"] == {"Authorization": "Bearer tok"}
+    assert chamadas[0]["json"] == {"itens": [{"variacao_id": 3, "quantidade": 2}]}
+
+
+def test_pedido_com_falha_de_leitura_nao_e_repetido(monkeypatch, sem_espera):
+    """Repetir um POST de pedido poderia criar o pedido duas vezes."""
+    chamadas = _sequencia(monkeypatch, httpx.ReadTimeout("lento"))
+
+    with pytest.raises(client.XanoAPIError):
+        client.create_order("tok", [{"variacao_id": 3, "quantidade": 1}])
+
+    assert len(chamadas) == 1

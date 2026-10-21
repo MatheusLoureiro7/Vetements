@@ -1,6 +1,6 @@
 """Página do carrinho da loja (`/carrinho`): itens com quantidade
-(1 a 10), remoção e subtotal. A finalização do pedido ainda não existe
-(depende de conta de cliente e de um endpoint de pedido no Xano)."""
+(1 a 10), remoção, subtotal e finalização do pedido (exige a conta do
+cliente; sem login, leva para entrar e volta ao carrinho)."""
 
 import reflex as rx
 
@@ -8,6 +8,7 @@ from vetements import routes
 from vetements.loja.components.layout import container_loja, store_layout
 from vetements.loja.components.produto import aviso
 from vetements.loja.state.carrinho import MAX_QUANTIDADE, CarrinhoState
+from vetements.loja.state.conta import ContaState
 
 
 def _foto(item) -> rx.Component:
@@ -76,12 +77,32 @@ def _resumo() -> rx.Component:
             rx.el.span(CarrinhoState.subtotal_label),
             class_name="lj-cart__row",
         ),
+        rx.el.button(
+            rx.cond(
+                ContaState.enviando_pedido,
+                "Enviando pedido...",
+                rx.cond(ContaState.logado, "Finalizar pedido", "Entrar para finalizar"),
+            ),
+            type="button",
+            class_name="lj-pill-button lj-pill-button--wide",
+            disabled=ContaState.enviando_pedido,
+            on_click=ContaState.finalizar_pedido,
+        ),
+        rx.cond(
+            ContaState.erro_pedido != "",
+            rx.el.p(
+                ContaState.erro_pedido,
+                class_name="lj-form-message",
+                role="alert",
+                custom_attrs={"data-tone": "error"},
+            ),
+        ),
         rx.el.p(
-            "A finalização do pedido ainda não está disponível na loja virtual. "
-            "Em breve você poderá concluir a compra por aqui.",
+            "O preço e o estoque são conferidos de novo ao finalizar. Pagamento e entrega "
+            "ainda não são feitos pela loja virtual.",
             class_name="lj-cart__note",
         ),
-        rx.link("Continuar comprando", href=routes.LOJA_HOME, class_name="lj-pill-button lj-pill-button--wide"),
+        rx.link("Continuar comprando", href=routes.LOJA_HOME, class_name="lj-link-button lj-cart__meta"),
         class_name="lj-cart__summary",
         aria_label="Resumo do carrinho",
     )

@@ -52,8 +52,8 @@ clientes em um único sistema.
 - Estrutura e página inicial pública da loja (feito).
 - Vitrine com produtos reais, filtros e busca, página de produto e
   carrinho salvo no navegador (feito).
-- Próximas changes: conta de cliente e finalização do pedido (criar a
-  venda no Xano a partir do carrinho).
+- Conta de cliente, finalização do pedido (vira venda de origem "loja
+  virtual", com baixa de estoque) e "Meus pedidos" (feito).
 
 ### Fora do escopo (por enquanto)
 

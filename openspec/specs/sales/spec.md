@@ -183,3 +183,28 @@ vazio, todo o histórico SHALL ser exibido.
 #### Scenario: Nenhuma venda encontrada
 - **WHEN** o termo digitado não corresponde a nenhum cliente do histórico
 - **THEN** a tela exibe o estado vazio "Nenhuma venda encontrada."
+
+### Requirement: Origem da venda
+Toda venda SHALL ter uma origem: `balcao` (registrada por um usuário da
+equipe na gestão) ou `loja_virtual` (pedido feito por um cliente na loja).
+Vendas de balcão SHALL continuar associadas ao usuário que as registrou;
+vendas da loja virtual SHALL ter cliente associado e nenhum usuário da
+equipe. Vendas existentes sem origem registrada SHALL ser tratadas como
+de balcão.
+
+#### Scenario: Venda registrada na gestão
+- **WHEN** um usuário da equipe registra uma venda na gestão
+- **THEN** a venda tem origem `balcao` e o usuário responsável
+
+#### Scenario: Pedido da loja virtual
+- **WHEN** um cliente conclui um pedido na loja virtual
+- **THEN** a venda tem origem `loja_virtual`, o cliente associado e nenhum usuário da equipe
+
+### Requirement: Pedidos da loja na gestão
+A gestão SHALL identificar as vendas de origem loja virtual: na tela de
+Vendas o cliente aparece como "Nome (loja virtual)", e no dashboard o
+responsável aparece como "Loja virtual", em vez de um usuário da equipe.
+
+#### Scenario: Pedido da loja no histórico de vendas
+- **WHEN** existe um pedido feito pela loja virtual e a equipe abre a tela de Vendas
+- **THEN** a venda aparece com o nome do cliente seguido de "(loja virtual)"

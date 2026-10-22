@@ -3,7 +3,7 @@
 O dashboard faz 5 chamadas ao Xano em sequência (produtos, variações,
 clientes, categorias e vendas). Com a internet oscilando, o tempo de
 carregamento é a soma de todas elas — e, com as novas tentativas
-automáticas da change `frontend-add-xano-resilience`, uma chamada lenta
+automáticas da change `frontend-adiciona-resiliencia-xano`, uma chamada lenta
 atrasa todas as que vêm depois.
 
 ## What Changes

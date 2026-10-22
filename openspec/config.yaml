@@ -47,6 +47,9 @@ rules:
       "backend-cria-tabela-produto"). Evita que trabalho simultâneo em
       camadas diferentes dispute a mesma change/pasta. Uma change que
       mistura as duas camadas deve ser dividida em uma change por camada.
+    - Escrever o restante do nome da change em português, com verbo no
+      presente e sem acentos (ex. "frontend-cria-carrinho-loja"), mantendo
+      apenas o prefixo "frontend-"/"backend-".
   specs:
     - Escrever requisitos verificáveis.
     - Utilizar cenários para comportamentos relevantes (ex. baixa de

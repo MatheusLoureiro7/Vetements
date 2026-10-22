@@ -5,7 +5,7 @@
 //
 // Também é a tabela de login da loja virtual (auth = true): só clientes
 // que criaram conta na loja têm senha; os cadastrados pela equipe não
-// (change backend-add-customer-account-orders).
+// (change backend-cria-conta-cliente-pedidos).
 table cliente {
   auth = true
 

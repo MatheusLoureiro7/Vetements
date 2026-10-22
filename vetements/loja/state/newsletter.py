@@ -2,7 +2,7 @@
 
 Só visual: valida o e-mail e confirma na tela. Não há backend de
 newsletter, então nada é gravado (ver change
-`frontend-restyle-storefront-home`).
+`frontend-redesenha-home-loja`).
 """
 
 from __future__ import annotations

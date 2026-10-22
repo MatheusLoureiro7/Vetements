@@ -1,7 +1,7 @@
 ## Why
 
 O backend de conta de cliente e pedidos já está no Xano (change
-`backend-add-customer-account-orders`). Falta a loja usar esses
+`backend-cria-conta-cliente-pedidos`). Falta a loja usar esses
 endpoints para o cliente criar conta, entrar, finalizar o pedido a partir
 do carrinho e acompanhar os pedidos, e a gestão exibir corretamente os
 pedidos que chegam sem funcionário.

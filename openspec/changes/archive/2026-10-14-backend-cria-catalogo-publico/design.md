@@ -4,7 +4,7 @@ O catálogo vive no Xano (`xano/table/produto.xs`, `variacao_produto.xs`,
 `categoria.xs`) e é exposto só pelo grupo `Catalogo`, com `auth = "user"`.
 Mudanças são feitas em XanoScript em `xano/` e aplicadas com
 `xano workspace push` (dry-run mostrado ao usuário antes do push real),
-como na change `backend-add-xano-integration`.
+como na change `backend-integra-xano`.
 
 ## Goals / Non-Goals
 

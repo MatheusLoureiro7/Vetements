@@ -2,7 +2,7 @@
 
 `DashboardState.load` (evento síncrono do Reflex) chama em sequência 5
 funções de `vetements/xano_client.py`. O cliente HTTP é um `httpx.Client`
-compartilhado e thread-safe (change `frontend-add-xano-resilience`).
+compartilhado e thread-safe (change `frontend-adiciona-resiliencia-xano`).
 
 ## Goals / Non-Goals
 

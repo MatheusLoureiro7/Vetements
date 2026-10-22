@@ -1,6 +1,6 @@
 // Cria uma conta da equipe (tabela user). Restrito a administradores —
 // antes era público e qualquer pessoa conseguia criar um vendedor e entrar
-// na gestão (change backend-restrict-staff-signup). Não devolve token nem
+// na gestão (change backend-restringe-cadastro-equipe). Não devolve token nem
 // senha: quem cria a conta não entra como o novo usuário.
 query "auth/signup" verb=POST {
   api_group = "Authentication"

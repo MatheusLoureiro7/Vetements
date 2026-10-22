@@ -2,7 +2,7 @@
 
 A loja virtual (`/`) ainda mostra só a chamada principal e o aviso
 "Coleção em breve", embora a API pública do catálogo já exista no Xano
-(change `backend-add-public-catalog`, grupo `loja`). Agora dá para o
+(change `backend-cria-catalogo-publico`, grupo `loja`). Agora dá para o
 visitante ver de fato as peças publicadas e abrir cada uma.
 
 ## What Changes

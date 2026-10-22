@@ -3,7 +3,7 @@
 O backend não tem como anexar fotos a um produto nem publicá-lo na loja
 virtual: hoje isso só é possível pelo painel do Xano, e a Metadata API
 não aceita upload de arquivos no plano gratuito. Isso bloqueia a carga
-do catálogo de demonstração (`backend-seed-storefront-catalog`) e será
+do catálogo de demonstração (`backend-popula-catalogo-loja`) e será
 necessário quando a gestão passar a cuidar das fotos e da publicação.
 
 ## What Changes

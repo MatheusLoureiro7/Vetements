@@ -109,8 +109,8 @@ contexto do projeto (`docs/project-overview.md` e `docs/domain-model.md`).
 - **Separação frontend/backend (recomendação do professor)**: toda change
   (em `openspec/changes/` e, após arquivar, em `openspec/changes/archive/`)
   deve ter o nome prefixado com `frontend-` ou `backend-`, indicando a
-  qual camada ela pertence (ex.: `frontend-add-mvp-shell`,
-  `backend-add-xano-integration`). Isso evita que pessoas trabalhando em
+  qual camada ela pertence (ex.: `frontend-cria-estrutura-mvp`,
+  `backend-integra-xano`). Isso evita que pessoas trabalhando em
   camadas diferentes editem a mesma change/pasta ao mesmo tempo. A
   ferramenta `openspec` (CLI) não suporta subpastas dentro de
   `changes/`/`archive/` (nome de change não pode conter `/`), por isso a

@@ -1,6 +1,6 @@
 ## Why
 
-A vitrine (`frontend-add-storefront-catalog`) está pronta, mas o Xano tem
+A vitrine (`frontend-cria-catalogo-loja`) está pronta, mas o Xano tem
 um único produto publicado, sem foto. Para demonstrar a loja e validar a
 exibição de fotos, o catálogo precisa de dados realistas: os 61 produtos
 do clone de referência (`ai-website-cloner`, catálogo da Class Official),
@@ -12,7 +12,7 @@ com fotos, preços, categorias e tamanhos.
   próprio app (grupo Catalogo, login de administrador): cria categorias,
   produtos e variações, envia as fotos e publica cada produto. Depende
   dos endpoints de foto e publicação da change
-  `backend-add-product-photo-publish`.
+  `backend-adiciona-foto-publicacao-produto`.
 - Snapshot dos dados do clone em `scripts/seed_data/class_catalog.json`
   (nome, preço, fotos, tamanhos e categoria de cada produto). As fotos
   continuam no repositório do clone e são lidas de lá ao rodar o script.

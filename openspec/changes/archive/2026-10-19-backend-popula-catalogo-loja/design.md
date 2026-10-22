@@ -4,7 +4,7 @@ Os endpoints da gestão criam categorias, produtos e variações. A
 primeira versão deste seed usava a Metadata API do Xano, mas o upload
 de arquivos por ela é bloqueado no plano gratuito ("Please upgrade your
 Xano instance"); por isso foram criados endpoints de administrador para
-foto e publicação (`backend-add-product-photo-publish`), que usam o
+foto e publicação (`backend-adiciona-foto-publicacao-produto`), que usam o
 storage do Xano dentro de um endpoint (permitido no plano gratuito).
 
 ## Decisions

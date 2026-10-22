@@ -14,5 +14,5 @@
 ## 3. Verificação
 
 - [x] 3.1 Sem token: `loja/conta` e `loja/pedidos` → 401; cadastro com senha fraca ou sem e-mail → erro; login com credenciais erradas → 403. Feito com `curl`: 401/401/401 (GET conta, GET e POST pedidos), 400 para senha curta, sem número e sem e-mail, 403 "E-mail ou senha inválidos."; `clientes` da gestão sem token 401; `loja/categorias` segue 200.
-- [x] 3.2 Token de cliente não acessa endpoints da gestão (`clientes`, `vendas`) → 401. Movido para a change `frontend-add-customer-account-checkout` (precisa de uma conta de cliente; contas e pedidos de teste são criados pelo usuário, não automaticamente, por gravarem dados reais).
-- [x] 3.3 Movido para a change `frontend-add-customer-account-checkout`. Fluxo completo (feito pelo usuário pela loja): cadastro, login, pedido baixa o estoque, pedido aparece em "meus pedidos" e na tela de Vendas da gestão; pedido com estoque insuficiente é rejeitado sem baixar nada.
+- [x] 3.2 Token de cliente não acessa endpoints da gestão (`clientes`, `vendas`) → 401. Movido para a change `frontend-cria-conta-cliente-checkout` (precisa de uma conta de cliente; contas e pedidos de teste são criados pelo usuário, não automaticamente, por gravarem dados reais).
+- [x] 3.3 Movido para a change `frontend-cria-conta-cliente-checkout`. Fluxo completo (feito pelo usuário pela loja): cadastro, login, pedido baixa o estoque, pedido aparece em "meus pedidos" e na tela de Vendas da gestão; pedido com estoque insuficiente é rejeitado sem baixar nada.

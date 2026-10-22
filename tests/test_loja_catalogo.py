@@ -187,7 +187,7 @@ def test_falha_de_rede_ou_servidor_e_erro(api_detalhe, status_code):
     assert produto.carregar_produto("1") == (None, produto.ERRO)
 
 
-# --- Busca do cabeçalho e newsletter (frontend-restyle-storefront-home) ---
+# --- Busca do cabeçalho e newsletter (frontend-redesenha-home-loja) ---
 
 from vetements.loja.state.catalogo import href_da_busca  # noqa: E402
 from vetements.loja.state.newsletter import email_valido  # noqa: E402

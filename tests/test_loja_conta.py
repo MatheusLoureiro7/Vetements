@@ -1,5 +1,5 @@
 """Conta do cliente e pedidos da loja (change
-`frontend-add-customer-account-checkout`): conversão da resposta da API,
+`frontend-cria-conta-cliente-checkout`): conversão da resposta da API,
 itens enviados no pedido e destino depois do login."""
 
 from vetements.loja.state.conta import destino_seguro, href_entrar, itens_para_pedido, pedido_da_api

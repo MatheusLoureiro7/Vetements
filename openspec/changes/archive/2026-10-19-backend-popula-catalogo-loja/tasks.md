@@ -5,7 +5,7 @@
 ## 2. Script
 
 - [x] 2.1 Criar `scripts/seed_loja.py` com funções puras (preço "R$ 2.999,00" → 2999.0, cor pelo nome, variações com estoque, SKU) e testes em `tests/test_seed_loja.py`. Verificar com `pytest`.
-- [x] 2.2 Implementar a carga pela API do app (login de administrador; criar categorias/produtos/variações, enviar fotos, publicar; pular existentes; `--dry-run`). Revisado: a 1ª versão usava a Metadata API, mas o upload de arquivo deu 403 no plano gratuito; trocado pelos endpoints de `backend-add-product-photo-publish`. Feito: `--dry-run` mostrou 6 categorias novas, 61 produtos, 272 variações e 122 fotos.
+- [x] 2.2 Implementar a carga pela API do app (login de administrador; criar categorias/produtos/variações, enviar fotos, publicar; pular existentes; `--dry-run`). Revisado: a 1ª versão usava a Metadata API, mas o upload de arquivo deu 403 no plano gratuito; trocado pelos endpoints de `backend-adiciona-foto-publicacao-produto`. Feito: `--dry-run` mostrou 6 categorias novas, 61 produtos, 272 variações e 122 fotos.
 
 ## 3. Carga e verificação
 

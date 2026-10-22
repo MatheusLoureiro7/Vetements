@@ -1,4 +1,4 @@
-"""Regras do carrinho da loja (change `frontend-add-storefront-cart`):
+"""Regras do carrinho da loja (change `frontend-cria-carrinho-loja`):
 somar a mesma variação, limitar a quantidade, remover e ler dados salvos
 no navegador, inclusive inválidos."""
 

@@ -24,7 +24,7 @@ query "loja/conta/cadastro" verb=POST {
   }
 
   stack {
-    precondition (($input.senha|strlen) >= 8 && ($input.senha|regex_matches:"/[A-Za-z]/") && ($input.senha|regex_matches:"/[0-9]/")) {
+    precondition (($input.senha|strlen) >= 8 && ("/[A-Za-z]/"|regex_matches:$input.senha) && ("/[0-9]/"|regex_matches:$input.senha)) {
       error_type = "inputerror"
       error = "A senha deve ter ao menos 8 caracteres, com letras e números."
     }

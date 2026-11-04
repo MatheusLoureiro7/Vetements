@@ -190,6 +190,17 @@ def create_variant(
     )
 
 
+
+def adjust_stock(token: str, variacao_id: int, quantidade: int, motivo: str = "") -> dict[str, Any]:
+    """Ajusta o estoque de uma variação (somente administrador): quantidade
+    positiva soma, negativa subtrai. Retorna a variação atualizada."""
+    corpo: dict[str, Any] = {"quantidade": quantidade}
+    if motivo.strip():
+        corpo["motivo"] = motivo.strip()
+    return _request(
+        "POST", _GROUP_CATALOGO, f"variacoes/{variacao_id}/ajustes", token=token, json_body=corpo
+    )
+
 # --- Clientes --------------------------------------------------------------
 
 

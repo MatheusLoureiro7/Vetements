@@ -246,3 +246,23 @@ def test_pedido_com_falha_de_leitura_nao_e_repetido(monkeypatch, sem_espera):
         client.create_order("tok", [{"variacao_id": 3, "quantidade": 1}])
 
     assert len(chamadas) == 1
+
+
+def test_ajuste_de_estoque_envia_quantidade_e_motivo(monkeypatch):
+    chamadas = _captura(monkeypatch, _FakeResponse(200, {"id": 4, "estoque": 15}))
+
+    resultado = client.adjust_stock("tok", 4, -3, motivo="  Avaria  ")
+
+    assert resultado == {"id": 4, "estoque": 15}
+    assert chamadas[0]["method"] == "POST"
+    assert chamadas[0]["url"].endswith(f"/api:{client._GROUP_CATALOGO}/variacoes/4/ajustes")
+    assert chamadas[0]["headers"] == {"Authorization": "Bearer tok"}
+    assert chamadas[0]["json"] == {"quantidade": -3, "motivo": "Avaria"}
+
+
+def test_ajuste_de_estoque_sem_motivo_nao_envia_o_campo(monkeypatch):
+    chamadas = _captura(monkeypatch, _FakeResponse(200, {"id": 4, "estoque": 15}))
+
+    client.adjust_stock("tok", 4, 10, motivo="   ")
+
+    assert chamadas[0]["json"] == {"quantidade": 10}

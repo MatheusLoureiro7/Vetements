@@ -6,7 +6,7 @@ import reflex as rx
 from vetements import routes
 from vetements.loja.components.layout import container_loja, store_layout
 from vetements.loja.components.produto import aviso, botao_primario
-from vetements.loja.state.conta import ContaState
+from vetements.loja.state.conta import ContaState, href_confirmar
 
 
 def _campo(rotulo: str, nome: str, tipo: str = "text", auto_complete: str = "", obrigatorio: bool = True, dica: str = "") -> rx.Component:
@@ -51,6 +51,7 @@ def _entrar() -> rx.Component:
             on_submit=ContaState.entrar,
             class_name="lj-auth__form",
         ),
+        rx.link("Esqueci minha senha", href=routes.LOJA_RECUPERAR, class_name="lj-link-button lj-cart__meta"),
         class_name="lj-auth__panel",
         aria_label="Entrar",
     )
@@ -177,6 +178,16 @@ def conta_page() -> rx.Component:
                 ),
                 rx.el.button("Sair", type="button", class_name="lj-link-button", on_click=ContaState.sair),
                 class_name="lj-account__header",
+            ),
+            rx.cond(
+                ~ContaState.email_confirmado,
+                rx.el.p(
+                    rx.icon("mail", size=16, aria_hidden="true"),
+                    "Confirme seu e-mail para poder finalizar pedidos. ",
+                    rx.link("Confirmar agora", href=href_confirmar(routes.LOJA_CONTA), class_name="lj-link-button"),
+                    class_name="lj-pay__banner",
+                    role="note",
+                ),
             ),
             _confirmacao(),
             rx.el.h2("Meus pedidos", class_name="lj-auth__title"),

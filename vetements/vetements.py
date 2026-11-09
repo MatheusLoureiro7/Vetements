@@ -5,11 +5,13 @@ import reflex as rx
 
 from vetements import routes
 from vetements.loja.pages.carrinho import carrinho_page
+from vetements.loja.pages.codigos import confirmar_page, recuperar_page
 from vetements.loja.pages.conta import conta_page, entrar_page
 from vetements.loja.pages.home import home_page
 from vetements.loja.pages.pagamento import pagamento_page
 from vetements.loja.pages.produto import produto_page
 from vetements.loja.state.catalogo import CatalogoState
+from vetements.loja.state.codigos import CodigosState
 from vetements.loja.state.conta import ContaState
 from vetements.loja.state.pagamento import PagamentoState
 from vetements.loja.state.produto import ProdutoState
@@ -38,6 +40,8 @@ app.add_page(produto_page, route=routes.LOJA_PRODUTO, title="Produto · Vetement
 app.add_page(carrinho_page, route=routes.LOJA_CARRINHO, title="Carrinho · Vetements")
 app.add_page(pagamento_page, route=routes.LOJA_PAGAMENTO, title="Pagamento · Vetements", on_load=PagamentoState.load_pagamento)
 app.add_page(entrar_page, route=routes.LOJA_ENTRAR, title="Entrar · Vetements", on_load=ContaState.load_entrar)
+app.add_page(confirmar_page, route=routes.LOJA_CONFIRMAR, title="Confirmar e-mail · Vetements", on_load=CodigosState.load_confirmar)
+app.add_page(recuperar_page, route=routes.LOJA_RECUPERAR, title="Recuperar senha · Vetements", on_load=CodigosState.load_recuperar)
 app.add_page(conta_page, route=routes.LOJA_CONTA, title="Minha conta · Vetements", on_load=ContaState.load_conta)
 
 # --- Acesso da equipe ---------------------------------------------------------

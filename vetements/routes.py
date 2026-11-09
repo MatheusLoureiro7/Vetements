@@ -12,6 +12,8 @@ LOJA_CARRINHO = "/carrinho"
 LOJA_PAGAMENTO = "/pagamento"
 LOJA_CONTA = "/conta"
 LOJA_ENTRAR = "/conta/entrar"
+LOJA_CONFIRMAR = "/conta/confirmar"
+LOJA_RECUPERAR = "/conta/recuperar"
 
 
 def produto_href(produto_id: int) -> str:

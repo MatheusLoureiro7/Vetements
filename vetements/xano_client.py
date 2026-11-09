@@ -292,6 +292,31 @@ def get_customer(token: str) -> dict[str, Any]:
     return _request("GET", _GROUP_LOJA, "loja/conta", token=token)
 
 
+def confirm_email(token: str, codigo: str) -> dict[str, Any]:
+    """Confirma o e-mail do cliente logado com o código recebido."""
+    return _request("POST", _GROUP_LOJA, "loja/conta/confirmar-email", token=token, json_body={"codigo": codigo})
+
+
+def resend_code(token: str) -> dict[str, Any]:
+    """Pede um novo código de confirmação (intervalo mínimo de 60 s)."""
+    return _request("POST", _GROUP_LOJA, "loja/conta/reenviar-codigo", token=token, json_body={})
+
+
+def request_password_reset(email: str) -> dict[str, Any]:
+    """Pede o código de redefinição de senha. Resposta sempre igual."""
+    return _request("POST", _GROUP_LOJA, "loja/conta/esqueci-senha", json_body={"email": email})
+
+
+def reset_password(email: str, codigo: str, nova_senha: str) -> dict[str, Any]:
+    """Troca a senha com o código. Retorna `{"authToken", "cliente"}`."""
+    return _request(
+        "POST",
+        _GROUP_LOJA,
+        "loja/conta/redefinir-senha",
+        json_body={"email": email, "codigo": codigo, "nova_senha": nova_senha},
+    )
+
+
 def create_order(
     token: str,
     itens: list[dict[str, int]],

@@ -93,6 +93,15 @@ def href_entrar(proximo: str = "") -> str:
     return f"{routes.LOJA_ENTRAR}?{urlencode({'proximo': proximo})}" if proximo else routes.LOJA_ENTRAR
 
 
+def href_confirmar(proximo: str = "", enviado: bool = True) -> str:
+    """Página de confirmar o e-mail, voltando para `proximo` depois.
+    `enviado=False` avisa que o código não saiu e é preciso reenviar."""
+    parametros = {"proximo": proximo} if proximo else {}
+    if not enviado:
+        parametros["enviado"] = "0"
+    return f"{routes.LOJA_CONFIRMAR}?{urlencode(parametros)}" if parametros else routes.LOJA_CONFIRMAR
+
+
 def destino_seguro(proximo: str) -> str:
     """Só aceita caminhos internos da loja (evita redirecionar para fora)."""
     if proximo.startswith("/") and not proximo.startswith("//"):
@@ -105,6 +114,9 @@ class ContaState(rx.State):
     token: str = rx.Cookie("", name="vetements_cliente", max_age=86400)
     nome: str = ""
     email: str = ""
+    # Contas antigas e login sem informação contam como confirmadas; o
+    # backend é quem barra o pedido de conta não confirmada.
+    email_confirmado: bool = True
 
     erro_entrar: str = ""
     erro_cadastro: str = ""
@@ -132,11 +144,13 @@ class ContaState(rx.State):
         cliente = resposta.get("cliente") or {}
         self.nome = cliente.get("nome") or ""
         self.email = cliente.get("email") or ""
+        self.email_confirmado = cliente.get("email_confirmado") is not False
 
     def _sair(self):
         self.token = ""
         self.nome = ""
         self.email = ""
+        self.email_confirmado = True
         self.pedidos = []
 
     # --- Entrar / criar conta -------------------------------------------------
@@ -181,13 +195,15 @@ class ContaState(rx.State):
         self.erro_cadastro = ""
         yield
         try:
-            self._entrar_com(xano_client.customer_signup(nome, email, senha, telefone))
+            resposta = xano_client.customer_signup(nome, email, senha, telefone)
         except xano_client.XanoAPIError as erro:
             self.enviando = False
             self.erro_cadastro = MENSAGEM_FALHA if erro.is_network_error or (erro.status_code or 0) >= 500 else erro.message
             return
+        self._entrar_com(resposta)
         self.enviando = False
-        yield rx.redirect(self._proximo())
+        # Conta nova confirma o e-mail antes de seguir para onde ia.
+        yield rx.redirect(href_confirmar(self._proximo(), enviado=resposta.get("codigo_enviado") is not False))
 
     @rx.event
     def sair(self):
@@ -209,6 +225,7 @@ class ContaState(rx.State):
             cliente = xano_client.get_customer(self.token)
             self.nome = cliente.get("nome") or ""
             self.email = cliente.get("email") or ""
+            self.email_confirmado = cliente.get("email_confirmado") is not False
             self.pedidos = [pedido_da_api(p) for p in xano_client.list_orders(self.token) or []]
         except xano_client.XanoAPIError as erro:
             self.carregando_pedidos = False

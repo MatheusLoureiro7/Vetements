@@ -19,7 +19,7 @@ import reflex as rx
 
 from vetements import routes, xano_client
 from vetements.loja.state.carrinho import CarrinhoState, ler_itens
-from vetements.loja.state.conta import ContaState, href_entrar, itens_para_pedido
+from vetements.loja.state.conta import ContaState, href_confirmar, href_entrar, itens_para_pedido
 
 FORMAS = ("pix", "cartao", "boleto")
 MAX_PARCELAS = 6
@@ -95,6 +95,19 @@ class PagamentoState(rx.State):
         carrinho = await self.get_state(CarrinhoState)
         if not ler_itens(carrinho.salvo):
             return rx.redirect(routes.LOJA_CARRINHO)
+        # Conta nova precisa confirmar o e-mail antes de pagar (o backend
+        # também recusa o pedido; aqui é para não deixar o cliente preencher
+        # o pagamento à toa).
+        try:
+            cliente = xano_client.get_customer(conta.token)
+        except xano_client.XanoAPIError as erro:
+            if erro.status_code == 401:
+                conta._sair()
+                return rx.redirect(href_entrar(routes.LOJA_PAGAMENTO))
+            return None
+        conta.email_confirmado = cliente.get("email_confirmado") is not False
+        if not conta.email_confirmado:
+            return rx.redirect(href_confirmar(routes.LOJA_PAGAMENTO))
         return None
 
     @rx.event

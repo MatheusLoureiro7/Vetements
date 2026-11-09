@@ -38,6 +38,17 @@ query "loja/pedidos" verb=POST {
   }
 
   stack {
+    db.get cliente {
+      field_name = "id"
+      field_value = $auth.id
+      output = ["id", "email_confirmado"]
+    } as $conta
+
+    precondition ($conta.email_confirmado == true) {
+      error_type = "inputerror"
+      error = "Confirme seu e-mail para finalizar o pedido."
+    }
+
     precondition (($input.itens|count) > 0) {
       error_type = "inputerror"
       error = "O pedido deve ter ao menos um item."

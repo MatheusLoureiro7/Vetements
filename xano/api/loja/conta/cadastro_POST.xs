@@ -46,6 +46,7 @@ query "loja/conta/cadastro" verb=POST {
         email   : $input.email
         telefone: $input.telefone
         password: $input.senha
+        email_confirmado: false
       }
       output = ["id", "nome", "email", "telefone"]
     } as $cliente
@@ -56,8 +57,13 @@ query "loja/conta/cadastro" verb=POST {
       expiration = 86400
       id = $cliente.id
     } as $authToken
+
+    function.run "Loja/enviar_codigo" {
+      description = "Código de confirmação do e-mail; se o envio falhar, o cliente usa o reenvio"
+      input = {cliente_id: $cliente.id, tipo: "confirmacao"}
+    } as $codigo_enviado
   }
 
-  response = {authToken: $authToken, cliente: $cliente}
+  response = {authToken: $authToken, cliente: $cliente|set:"email_confirmado":false, codigo_enviado: $codigo_enviado}
   guid = "UM2WqGokiTEAvQSxAPvJG9Sav7o"
 }

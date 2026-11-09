@@ -11,7 +11,7 @@ query "loja/conta" verb=GET {
     db.get cliente {
       field_name = "id"
       field_value = $auth.id
-      output = ["id", "nome", "email", "telefone"]
+      output = ["id", "nome", "email", "telefone", "email_confirmado"]
     } as $cliente
   }
 

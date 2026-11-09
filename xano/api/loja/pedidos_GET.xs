@@ -1,5 +1,6 @@
 // Pedidos do cliente logado na loja virtual, mais recentes primeiro, com
-// os itens no formato público (sem SKU nem estoque).
+// os itens no formato público (sem SKU nem estoque) e os dados do
+// pagamento simulado.
 query "loja/pedidos" verb=GET {
   api_group = "Loja"
   description = "Pedidos do cliente logado, com itens"
@@ -12,7 +13,7 @@ query "loja/pedidos" verb=GET {
     db.query venda {
       where = $db.venda.cliente_id == $auth.id && $db.venda.origem == "loja_virtual"
       sort = {venda.created_at: "desc"}
-      output = ["id", "created_at", "total"]
+      output = ["id", "created_at", "total", "forma_pagamento", "parcelas", "cartao_final", "pago_em"]
       return = {type: "list"}
     } as $vendas
 

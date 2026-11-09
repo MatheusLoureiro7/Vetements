@@ -5,6 +5,12 @@
 // insuficiente), nada é gravado. O cliente vem do token, nunca do input,
 // e o preço é lido do produto (o preço guardado no carrinho é ignorado).
 //
+// Pagamento SIMULADO (sem cobrança real): o pedido já nasce pago. Para
+// cartão chegam só parcelas e os 4 últimos dígitos — nunca número
+// completo, nome, validade ou CVV. Final 0000 simula recusa. Toda a
+// validação do pagamento vem antes da transação: pagamento inválido ou
+// recusado não cria venda nem baixa estoque.
+//
 // Mesma LIMITAÇÃO CONHECIDA de venda_POST: checagem e baixa de estoque não
 // são uma única operação atômica no plano atual do Xano.
 query "loja/pedidos" verb=POST {
@@ -15,6 +21,19 @@ query "loja/pedidos" verb=POST {
   input {
     json itens {
       description = "Itens do pedido: [{variacao_id, quantidade}, ...]"
+    }
+
+    enum forma_pagamento {
+      values = ["pix", "cartao", "boleto"]
+      description = "Forma do pagamento simulado"
+    }
+
+    int parcelas? {
+      description = "Parcelas (1 a 6), obrigatório para cartão"
+    }
+
+    text cartao_final? filters=trim {
+      description = "Somente os 4 últimos dígitos do cartão, obrigatório para cartão"
     }
   }
 
@@ -29,6 +48,43 @@ query "loja/pedidos" verb=POST {
       error = "O pedido pode ter no máximo 20 itens."
     }
 
+    var $parcelas {
+      value = null
+    }
+
+    var $cartao_final {
+      value = null
+    }
+
+    conditional {
+      description = "Valida o cartão simulado; Pix e boleto não usam parcelas nem final"
+      if ($input.forma_pagamento == "cartao") {
+        precondition ($input.parcelas != null && $input.parcelas >= 1 && $input.parcelas <= 6) {
+          error_type = "inputerror"
+          error = "Escolha de 1 a 6 parcelas."
+        }
+
+        precondition ("/^[0-9]{4}$/"|regex_matches:($input.cartao_final ?? "")) {
+          error_type = "inputerror"
+          error = "Informe os 4 últimos dígitos do cartão."
+        }
+
+        precondition ($input.cartao_final != "0000") {
+          description = "Simulação de recusa da operadora"
+          error_type = "inputerror"
+          error = "Pagamento recusado pela operadora (simulação)."
+        }
+
+        var.update $parcelas {
+          value = $input.parcelas
+        }
+
+        var.update $cartao_final {
+          value = $input.cartao_final
+        }
+      }
+    }
+
     db.transaction {
       description = "Cria a venda e os itens; se qualquer item falhar, nada é persistido"
       stack {
@@ -38,6 +94,10 @@ query "loja/pedidos" verb=POST {
             cliente_id: $auth.id
             origem    : "loja_virtual"
             total     : 0
+            forma_pagamento: $input.forma_pagamento
+            parcelas       : $parcelas
+            cartao_final   : $cartao_final
+            pago_em        : "now"
           }
         } as $venda
 
@@ -107,7 +167,7 @@ query "loja/pedidos" verb=POST {
           data = {
             total: $total_calculado
           }
-          output = ["id", "created_at", "total"]
+          output = ["id", "created_at", "total", "forma_pagamento", "parcelas", "cartao_final", "pago_em"]
         } as $venda_final
       }
     }

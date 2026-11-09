@@ -7,8 +7,8 @@ context: |
   Domain: Sistema para uma loja de roupas em duas partes. Parte 1:
   gestão interna (ERP) sob /gestao, cobrindo produtos (com variações de
   tamanho/cor), estoque, vendas e clientes, com login da equipe. Parte 2:
-  loja virtual pública na raiz do site (/), em construção, com código em
-  vetements/loja/.
+  loja virtual pública na raiz do site (/), com código em vetements/loja/
+  (catálogo, carrinho, conta de cliente e pagamento simulado).
 
   Tech stack:
     Reflex (Python) para a aplicação/frontend.

@@ -231,11 +231,33 @@ def test_cadastro_de_cliente_e_publico_e_omite_telefone_vazio(monkeypatch):
 def test_pedido_envia_token_de_cliente_e_itens(monkeypatch):
     chamadas = _captura(monkeypatch, _FakeResponse(200, {"id": 9, "total": 10, "itens": []}))
 
-    client.create_order("tok", [{"variacao_id": 3, "quantidade": 2}])
+    client.create_order("tok", [{"variacao_id": 3, "quantidade": 2}], "pix")
 
     assert chamadas[0]["url"].endswith("/loja/pedidos")
     assert chamadas[0]["headers"] == {"Authorization": "Bearer tok"}
-    assert chamadas[0]["json"] == {"itens": [{"variacao_id": 3, "quantidade": 2}]}
+    assert chamadas[0]["json"] == {"itens": [{"variacao_id": 3, "quantidade": 2}], "forma_pagamento": "pix"}
+
+
+def test_pedido_com_cartao_envia_so_parcelas_e_final(monkeypatch):
+    chamadas = _captura(monkeypatch, _FakeResponse(200, {"id": 9, "total": 10, "itens": []}))
+
+    client.create_order("tok", [{"variacao_id": 3, "quantidade": 1}], "cartao", parcelas=3, cartao_final="4242")
+
+    assert chamadas[0]["json"] == {
+        "itens": [{"variacao_id": 3, "quantidade": 1}],
+        "forma_pagamento": "cartao",
+        "parcelas": 3,
+        "cartao_final": "4242",
+    }
+
+
+def test_pedido_com_boleto_ignora_dados_de_cartao(monkeypatch):
+    chamadas = _captura(monkeypatch, _FakeResponse(200, {"id": 9, "total": 10, "itens": []}))
+
+    client.create_order("tok", [{"variacao_id": 3, "quantidade": 1}], "boleto", parcelas=3, cartao_final="4242")
+
+    assert "parcelas" not in chamadas[0]["json"]
+    assert "cartao_final" not in chamadas[0]["json"]
 
 
 def test_pedido_com_falha_de_leitura_nao_e_repetido(monkeypatch, sem_espera):
@@ -243,7 +265,7 @@ def test_pedido_com_falha_de_leitura_nao_e_repetido(monkeypatch, sem_espera):
     chamadas = _sequencia(monkeypatch, httpx.ReadTimeout("lento"))
 
     with pytest.raises(client.XanoAPIError):
-        client.create_order("tok", [{"variacao_id": 3, "quantidade": 1}])
+        client.create_order("tok", [{"variacao_id": 3, "quantidade": 1}], "pix")
 
     assert len(chamadas) == 1
 

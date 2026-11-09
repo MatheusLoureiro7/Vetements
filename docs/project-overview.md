@@ -8,8 +8,8 @@ Vetements é um sistema para uma loja de roupas, dividido em duas partes:
   produtos, controla estoque, registra vendas e mantém um cadastro de
   clientes. Fica sob o endereço `/gestao` e exige login.
 - **Parte 2 — Loja virtual**, pública: vitrine voltada ao consumidor final,
-  na raiz do site (`/`). Está em construção: nesta fase existe apenas a
-  estrutura e uma página inicial provisória.
+  na raiz do site (`/`), com catálogo, carrinho, conta de cliente e
+  finalização do pedido com pagamento simulado.
 
 ## 2. Problema
 
@@ -47,17 +47,22 @@ clientes em um único sistema.
 - Cadastro de clientes.
 - Cadastro de usuários com papéis (administrador, vendedor) e login.
 
-### Parte 2 — Loja virtual (em construção)
+### Parte 2 — Loja virtual
 
 - Estrutura e página inicial pública da loja (feito).
 - Vitrine com produtos reais, filtros e busca, página de produto e
   carrinho salvo no navegador (feito).
 - Conta de cliente, finalização do pedido (vira venda de origem "loja
   virtual", com baixa de estoque) e "Meus pedidos" (feito).
+- Pagamento **simulado** no checkout: Pix, cartão ou boleto fictícios,
+  sem cobrança real; o pedido é criado já pago e o cartão de final 0000
+  simula recusa. Só os 4 últimos dígitos do cartão chegam ao backend
+  (feito).
 
 ### Fora do escopo (por enquanto)
 
-- Integração com meios de pagamento.
+- Integração com meios de pagamento reais (operadoras, gateways). O
+  pagamento da loja é apenas simulado, para demonstração.
 - Emissão de nota fiscal.
 - Controle financeiro (contas a pagar/receber, fluxo de caixa).
 - Múltiplas lojas/filiais.

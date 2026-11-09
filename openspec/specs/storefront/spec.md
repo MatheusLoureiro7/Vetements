@@ -244,17 +244,37 @@ nenhuma resposta MUST conter a senha ou seu hash.
 
 ### Requirement: Pedido pela loja virtual
 O backend SHALL permitir que um cliente logado faça um pedido com um ou
-mais itens (variação e quantidade). O pedido SHALL ser registrado como
-venda de origem "loja virtual", associada ao cliente logado e sem
-funcionário, com o preço unitário de cada item lido do produto no
-momento do pedido. O backend SHALL rejeitar o pedido inteiro, sem baixar
-estoque, se algum item for de produto não publicado, tiver quantidade
-fora de 1 a 10 ou exceder o estoque disponível; caso contrário SHALL
-baixar o estoque como numa venda de balcão.
+mais itens (variação e quantidade) e uma forma de pagamento simulada:
+Pix, cartão ou boleto. Para cartão, o pedido SHALL informar o número de
+parcelas (1 a 6) e somente os 4 últimos dígitos do cartão; o backend
+MUST NOT receber nem guardar número completo, nome impresso, validade
+ou código de segurança. Um cartão com final 0000 SHALL ser tratado como
+pagamento recusado: o backend SHALL rejeitar o pedido inteiro, sem
+criar venda nem baixar estoque. O pedido aceito SHALL ser registrado
+como venda de origem "loja virtual", associada ao cliente logado e sem
+funcionário, já com pagamento aprovado (forma, parcelas, final do
+cartão quando houver e data/hora do pagamento), com o preço unitário de
+cada item lido do produto no momento do pedido. O backend SHALL
+rejeitar o pedido inteiro, sem baixar estoque, se algum item for de
+produto não publicado, tiver quantidade fora de 1 a 10 ou exceder o
+estoque disponível; caso contrário SHALL baixar o estoque como numa
+venda de balcão.
 
 #### Scenario: Pedido válido
-- **WHEN** um cliente logado envia itens de produtos publicados com estoque suficiente
-- **THEN** uma venda de origem "loja virtual" é criada para ele, o estoque de cada variação é reduzido e a resposta traz o número, o total e os itens do pedido
+- **WHEN** um cliente logado envia itens de produtos publicados com estoque suficiente e uma forma de pagamento válida
+- **THEN** uma venda de origem "loja virtual" é criada para ele já paga, o estoque de cada variação é reduzido e a resposta traz o número, o total, os itens e os dados do pagamento
+
+#### Scenario: Pagamento com cartão em parcelas
+- **WHEN** um cliente logado paga com cartão em 3 parcelas e final 4242
+- **THEN** o pedido é criado com forma "cartao", 3 parcelas e final "4242"
+
+#### Scenario: Cartão recusado (simulação)
+- **WHEN** um cliente logado paga com cartão de final 0000
+- **THEN** o backend responde "Pagamento recusado pela operadora (simulação).", nenhuma venda é criada e nenhum estoque é alterado
+
+#### Scenario: Forma de pagamento ausente ou inválida
+- **WHEN** o pedido não informa forma de pagamento, informa uma forma desconhecida, ou é cartão sem parcelas de 1 a 6 ou sem final de 4 dígitos
+- **THEN** o backend recusa o pedido com erro de entrada e nada é gravado
 
 #### Scenario: Estoque insuficiente
 - **WHEN** algum item pede mais unidades do que o estoque disponível
@@ -267,12 +287,13 @@ baixar o estoque como numa venda de balcão.
 ### Requirement: Meus pedidos
 O backend SHALL listar, para o cliente logado, somente os pedidos feitos
 por ele na loja virtual, do mais recente para o mais antigo, com data,
-total e itens (nome do produto, tamanho, cor, quantidade e preço
-unitário), sem SKU nem estoque.
+total, dados do pagamento (forma, parcelas, final do cartão quando
+houver e data/hora do pagamento) e itens (nome do produto, tamanho, cor,
+quantidade e preço unitário), sem SKU nem estoque.
 
 #### Scenario: Cliente vê os próprios pedidos
 - **WHEN** um cliente logado pede a lista de pedidos
-- **THEN** recebe apenas os pedidos dele, mais recentes primeiro
+- **THEN** recebe apenas os pedidos dele, mais recentes primeiro, cada um com os dados do pagamento
 
 ### Requirement: Entrar e criar conta na loja
 A loja SHALL oferecer uma página para o cliente entrar (e-mail e senha) ou
@@ -291,29 +312,68 @@ carrinho) ou, sem origem, ir para "Minha conta".
 - **THEN** a página mostra "E-mail ou senha inválidos." e ele continua deslogado
 
 ### Requirement: Finalizar pedido pelo carrinho
-O carrinho SHALL oferecer "Finalizar pedido" ao cliente logado. Ao
-finalizar com sucesso, o carrinho SHALL ser esvaziado e o cliente levado
-à confirmação com o número do pedido. Se o backend recusar o pedido (por
-exemplo, estoque insuficiente), o carrinho SHALL manter os itens e mostrar
-o motivo.
+O carrinho SHALL oferecer "Finalizar pedido" ao cliente logado, que
+leva à página de pagamento simulado; o pedido só é criado quando o
+pagamento é confirmado nessa página. Ao concluir com sucesso, o
+carrinho SHALL ser esvaziado e o cliente levado à confirmação com o
+número do pedido. Se o backend recusar o pedido (por exemplo, estoque
+insuficiente ou pagamento recusado), o carrinho SHALL manter os itens e
+a página de pagamento SHALL mostrar o motivo.
 
 #### Scenario: Pedido concluído
-- **WHEN** o cliente logado finaliza um carrinho com itens disponíveis
+- **WHEN** o cliente logado finaliza um carrinho com itens disponíveis e confirma o pagamento
 - **THEN** vê a confirmação com o número do pedido e o carrinho fica vazio
 
 #### Scenario: Pedido recusado
 - **WHEN** o backend recusa o pedido por estoque insuficiente
-- **THEN** o carrinho continua com os itens e mostra a mensagem do backend
+- **THEN** o carrinho continua com os itens e a página de pagamento mostra a mensagem do backend
 
 ### Requirement: Minha conta
 A loja SHALL oferecer, ao cliente logado, uma página com seus dados, a
-opção de sair e a lista dos seus pedidos (número, data, total e itens).
-Sem login, a página SHALL levar para entrar e voltar a ela depois.
+opção de sair e a lista dos seus pedidos (número, data, total, forma de
+pagamento e itens). Pedidos antigos sem dados de pagamento SHALL
+aparecer como "Pagamento não informado". Sem login, a página SHALL
+levar para entrar e voltar a ela depois.
 
 #### Scenario: Ver meus pedidos
 - **WHEN** o cliente logado abre "Minha conta"
-- **THEN** vê seus pedidos, mais recentes primeiro, com itens e total
+- **THEN** vê seus pedidos, mais recentes primeiro, com itens, total e forma de pagamento (ex.: "Cartão 3x · final 4242")
 
 #### Scenario: Sair
 - **WHEN** o cliente usa "Sair"
 - **THEN** a sessão do cliente é encerrada e ele volta à página inicial da loja
+
+### Requirement: Pagamento simulado na loja
+A loja SHALL oferecer uma página de pagamento ao cliente logado com
+carrinho não vazio, mostrando os itens, o total e a escolha entre Pix,
+cartão e boleto, com o aviso permanente de que o pagamento é simulado e
+nenhum valor é cobrado. Pix SHALL mostrar um QR code ilustrativo e um
+código "copia e cola" fictício; boleto SHALL mostrar uma linha
+digitável fictícia; cartão SHALL pedir número, nome, validade (MM/AA),
+código de segurança e parcelas de 1 a 6. A página SHALL validar o
+cartão antes de enviar (número de 13 a 19 dígitos, validade não
+vencida, código de 3 ou 4 dígitos, nome preenchido), mostrando o erro
+junto ao campo, e SHALL enviar ao backend somente a forma de pagamento,
+as parcelas e os 4 últimos dígitos do cartão. Sem login, a página SHALL
+levar para entrar e voltar a ela; com o carrinho vazio, SHALL levar ao
+carrinho.
+
+#### Scenario: Pagar com Pix
+- **WHEN** o cliente escolhe Pix e confirma o pagamento
+- **THEN** o pedido é criado já pago, o carrinho é esvaziado e ele vê a confirmação com o número do pedido e "Pagamento aprovado"
+
+#### Scenario: Pagar com cartão parcelado
+- **WHEN** o cliente preenche um cartão válido, escolhe 3 parcelas e confirma
+- **THEN** o pedido é criado com cartão em 3x, e só o final do cartão é enviado ao backend
+
+#### Scenario: Cartão com dados inválidos
+- **WHEN** o cliente confirma com validade vencida ou código de segurança de 2 dígitos
+- **THEN** a página mostra o erro no campo e nada é enviado ao backend
+
+#### Scenario: Pagamento recusado (simulação)
+- **WHEN** o cliente paga com um cartão de final 0000
+- **THEN** continua na página de pagamento com a mensagem de recusa, e o carrinho mantém os itens
+
+#### Scenario: Página sem login
+- **WHEN** um visitante sem login abre a página de pagamento
+- **THEN** é levado para entrar e, depois de entrar, volta à página de pagamento

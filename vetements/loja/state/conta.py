@@ -1,11 +1,12 @@
-"""Conta do cliente na loja virtual e finalização do pedido.
+"""Conta do cliente na loja virtual e "Minha conta" (pedidos).
 
 O token de cliente (emitido por `loja/conta/login` ou `/cadastro`) fica
 num cookie próprio, separado do token da equipe (`AuthState`): os dois
 nunca se misturam, e o backend não aceita token de cliente na gestão.
 
 Os formulários de entrar/criar conta usam campos não controlados (lidos no
-envio), para não perder letras ao digitar rápido.
+envio), para não perder letras ao digitar rápido. A criação do pedido fica
+na página de pagamento simulado (`state/pagamento.py`).
 """
 
 from __future__ import annotations
@@ -18,7 +19,6 @@ import reflex as rx
 
 from vetements import routes, xano_client
 from vetements.format_utils import format_currency, format_datetime
-from vetements.loja.state.carrinho import CarrinhoState, ler_itens
 
 MENSAGEM_FALHA = "Não foi possível falar com a loja agora. Tente novamente em instantes."
 
@@ -36,6 +36,7 @@ class PedidoLoja:
     id: int
     data_label: str
     total_label: str
+    pagamento_label: str = "Pagamento não informado"
     itens: list[ItemPedido] = field(default_factory=list)
 
 
@@ -51,11 +52,30 @@ def item_pedido_da_api(dados: dict[str, Any]) -> ItemPedido:
     )
 
 
+def pagamento_label(forma: str | None, parcelas: int | None, final: str | None) -> str:
+    """Texto do pagamento de um pedido em "Minha conta"."""
+    if forma == "pix":
+        return "Pix"
+    if forma == "boleto":
+        return "Boleto"
+    if forma == "cartao":
+        partes = ["Cartão"]
+        if parcelas:
+            partes[0] += f" {parcelas}x"
+        if final:
+            partes.append(f"final {final}")
+        return " · ".join(partes)
+    return "Pagamento não informado"
+
+
 def pedido_da_api(dados: dict[str, Any]) -> PedidoLoja:
     return PedidoLoja(
         id=int(dados["id"]),
         data_label=format_datetime(dados["created_at"]) if dados.get("created_at") else "",
         total_label=format_currency(float(dados.get("total") or 0)),
+        pagamento_label=pagamento_label(
+            dados.get("forma_pagamento"), dados.get("parcelas"), dados.get("cartao_final")
+        ),
         itens=[item_pedido_da_api(i) for i in dados.get("itens") or []],
     )
 
@@ -95,9 +115,6 @@ class ContaState(rx.State):
     erro_pedidos: str = ""
     # Número do pedido recém-criado (mostra a confirmação em /conta).
     pedido_confirmado: int = 0
-
-    erro_pedido: str = ""
-    enviando_pedido: bool = False
 
     @rx.var
     def logado(self) -> bool:
@@ -203,45 +220,3 @@ class ContaState(rx.State):
             self.erro_pedidos = "Não foi possível carregar seus pedidos agora."
             return
         self.carregando_pedidos = False
-
-    # --- Finalizar pedido (página do carrinho) -------------------------------
-
-    @rx.event
-    def load_carrinho(self):
-        self.erro_pedido = ""
-        self.enviando_pedido = False
-
-    @rx.event
-    async def finalizar_pedido(self):
-        if not self.token:
-            yield rx.redirect(href_entrar(routes.LOJA_CARRINHO))
-            return
-        carrinho = await self.get_state(CarrinhoState)
-        itens = ler_itens(carrinho.salvo)
-        if not itens:
-            return
-        self.enviando_pedido = True
-        self.erro_pedido = ""
-        yield
-        try:
-            pedido = xano_client.create_order(self.token, itens_para_pedido(itens))
-        except xano_client.XanoAPIError as erro:
-            self.enviando_pedido = False
-            if erro.status_code == 401:
-                self._sair()
-                yield rx.redirect(href_entrar(routes.LOJA_CARRINHO))
-                return
-            if erro.is_network_error:
-                # O pedido pode ter sido criado mesmo sem resposta: não repetir
-                # às cegas.
-                self.erro_pedido = (
-                    "A conexão caiu antes da confirmação. Confira em Minha conta se o pedido "
-                    "foi registrado antes de tentar de novo."
-                )
-            else:
-                self.erro_pedido = erro.message
-            return
-        carrinho = await self.get_state(CarrinhoState)
-        carrinho.esvaziar()
-        self.enviando_pedido = False
-        yield rx.redirect(f"{routes.LOJA_CONTA}?{urlencode({'pedido': pedido['id']})}")

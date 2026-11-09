@@ -292,10 +292,22 @@ def get_customer(token: str) -> dict[str, Any]:
     return _request("GET", _GROUP_LOJA, "loja/conta", token=token)
 
 
-def create_order(token: str, itens: list[dict[str, int]]) -> dict[str, Any]:
-    """Cria o pedido do cliente (`itens = [{variacao_id, quantidade}]`).
-    Retorna `{"id", "created_at", "total", "itens"}`."""
-    return _request("POST", _GROUP_LOJA, "loja/pedidos", token=token, json_body={"itens": itens})
+def create_order(
+    token: str,
+    itens: list[dict[str, int]],
+    forma_pagamento: str,
+    parcelas: int | None = None,
+    cartao_final: str | None = None,
+) -> dict[str, Any]:
+    """Cria o pedido do cliente já com o pagamento simulado
+    (`itens = [{variacao_id, quantidade}]`). Parcelas e os 4 últimos
+    dígitos só vão para cartão. Retorna `{"id", "created_at", "total",
+    "forma_pagamento", "parcelas", "cartao_final", "pago_em", "itens"}`."""
+    corpo: dict[str, Any] = {"itens": itens, "forma_pagamento": forma_pagamento}
+    if forma_pagamento == "cartao":
+        corpo["parcelas"] = parcelas
+        corpo["cartao_final"] = cartao_final
+    return _request("POST", _GROUP_LOJA, "loja/pedidos", token=token, json_body=corpo)
 
 
 def list_orders(token: str) -> list[dict[str, Any]]:

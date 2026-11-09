@@ -110,6 +110,7 @@ def _pedido(pedido) -> rx.Component:
             rx.el.strong(pedido.total_label, class_name="lj-order__total"),
             class_name="lj-order__header",
         ),
+        rx.el.p("Pagamento: " + pedido.pagamento_label, class_name="lj-cart__meta lj-order__payment"),
         rx.el.ul(rx.foreach(pedido.itens, _item_pedido), class_name="lj-order__items"),
         class_name="lj-order",
     )
@@ -121,9 +122,12 @@ def _confirmacao() -> rx.Component:
         rx.el.div(
             rx.icon("circle-check", size=22, stroke_width=1.5, aria_hidden="true"),
             rx.el.div(
-                rx.el.p("Pedido nº " + ContaState.pedido_confirmado.to_string() + " registrado!", class_name="lj-notice__title"),
                 rx.el.p(
-                    "O estoque já foi reservado. Você acompanha seus pedidos aqui.",
+                    "Pagamento aprovado · Pedido nº " + ContaState.pedido_confirmado.to_string() + " registrado!",
+                    class_name="lj-notice__title",
+                ),
+                rx.el.p(
+                    "Pagamento simulado aprovado e estoque reservado. Você acompanha seus pedidos aqui.",
                     class_name="lj-notice__text",
                 ),
             ),

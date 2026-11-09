@@ -1447,3 +1447,89 @@
   display: inline-block;
   margin-top: 12px;
 }
+
+/* --- Pagamento simulado (/pagamento) ------------------------------------- */
+
+.lj-pay__banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #f4f1ea;
+  color: #161615;
+  font-size: 14px;
+}
+
+.lj-pay__tabs {
+  margin-bottom: 24px;
+}
+
+.lj-pay__method {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lj-pay__qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px;
+  border: 1px dashed rgba(var(--lj-fg), 0.35);
+  border-radius: 16px;
+}
+
+.lj-pay__code {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #f8f8f8;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.lj-pay__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.lj-pay__select select {
+  width: 100%;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 50px;
+  background: transparent;
+  font: inherit;
+  appearance: none;
+}
+
+.lj-pay__error {
+  color: #b42318;
+  font-size: 13px;
+}
+
+.lj-pay__items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(var(--lj-fg), 0.12);
+}
+
+.lj-pay__item {
+  font-size: 14px;
+  gap: 12px;
+}
+
+.lj-order__payment {
+  margin: 4px 0 8px;
+}
+
+.lj-pay__item span:last-child {
+  white-space: nowrap;
+}

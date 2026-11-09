@@ -8,8 +8,9 @@ Vetements é um sistema para uma loja de roupas, dividido em duas partes:
   produtos, controla estoque, registra vendas e mantém um cadastro de
   clientes. Fica sob o endereço `/gestao` e exige login.
 - **Parte 2 — Loja virtual**, pública: vitrine voltada ao consumidor final,
-  na raiz do site (`/`), com catálogo, carrinho, conta de cliente e
-  finalização do pedido com pagamento simulado.
+  na raiz do site (`/`), com catálogo, carrinho, conta de cliente (com
+  confirmação de e-mail e recuperação de senha), finalização do pedido com
+  pagamento simulado e acompanhamento do status do pedido.
 
 ## 2. Problema
 
@@ -31,10 +32,13 @@ clientes em um único sistema.
 
 ## 4. Público-alvo / usuários
 
-- **Administrador**: cadastra produtos, categorias e usuários; acompanha
-  vendas e estoque.
-- **Vendedor**: consulta produtos/estoque e registra vendas.
-- **Cliente**: não acessa a gestão; é um cadastro associado às vendas.
+- **Administrador**: cadastra produtos, categorias e usuários da equipe;
+  ajusta estoque; acompanha vendas e avança o status dos pedidos da loja.
+- **Vendedor**: consulta produtos/estoque, registra vendas e avança o
+  status dos pedidos da loja.
+- **Cliente**: não acessa a gestão. Pode ser só um cadastro associado às
+  vendas de balcão ou ter conta na loja virtual (e-mail e senha), com a
+  qual faz pedidos e acompanha o status deles.
 - **Visitante da loja**: acessa a loja virtual sem login.
 
 ## 5. Escopo
@@ -58,11 +62,21 @@ clientes em um único sistema.
   sem cobrança real; o pedido é criado já pago e o cartão de final 0000
   simula recusa. Só os 4 últimos dígitos do cartão chegam ao backend
   (feito).
+- Códigos de 6 dígitos por e-mail (enviados pelo Xano via Brevo):
+  confirmação do e-mail na criação da conta — o pedido só é aceito com o
+  e-mail confirmado — e recuperação de senha (feito).
+- Status do pedido depois do pagamento: **pago → enviado → entregue**. A
+  equipe avança na tela de Vendas, um passo por vez; o cliente vê o status
+  e as datas em "Minha conta" (feito).
+- O catálogo da loja (nomes, preços, descrições, fotos e categorias) fica
+  como está: decisão do usuário em 2026-11-09. Não há edição de catálogo,
+  envio de fotos nem desativação de produtos/categorias no escopo.
 
 ### Fora do escopo (por enquanto)
 
 - Integração com meios de pagamento reais (operadoras, gateways). O
   pagamento da loja é apenas simulado, para demonstração.
+- Endereço de entrega, frete, rastreio e cancelamento/estorno de pedidos.
 - Emissão de nota fiscal.
 - Controle financeiro (contas a pagar/receber, fluxo de caixa).
 - Múltiplas lojas/filiais.
@@ -75,10 +89,13 @@ Essas funcionalidades fora do escopo poderão ser propostas como novas
 
 - **Produtos**: cadastrar, editar e listar produtos e suas variações
   (tamanho/cor), organizados por categoria.
-- **Estoque**: visualizar e atualizar a quantidade disponível de cada
-  variação de produto.
+- **Estoque**: visualizar a quantidade disponível de cada variação e,
+  para administradores, ajustá-la (entrada, saída ou contagem), com
+  registro de quem ajustou.
 - **Vendas**: registrar uma venda com um ou mais itens, associá-la
-  opcionalmente a um cliente e dar baixa automática no estoque.
+  opcionalmente a um cliente e dar baixa automática no estoque. Os pedidos
+  da loja aparecem no mesmo histórico, com o status do pedido e o botão
+  para avançá-lo.
 - **Clientes**: cadastrar e consultar clientes.
 - **Usuários e acesso**: autenticação de funcionários e controle de
   permissões por papel (administrador / vendedor).
@@ -87,7 +104,10 @@ Essas funcionalidades fora do escopo poderão ser propostas como novas
 
 - Uma venda não pode reduzir o estoque de uma variação para um valor
   negativo.
-- Toda venda deve registrar quem a realizou (usuário logado).
+- Toda venda de balcão deve registrar quem a realizou (usuário logado);
+  pedidos da loja registram o cliente e nenhum usuário da equipe.
+- O status de um pedido da loja só avança um passo por vez (pago →
+  enviado → entregue), nunca volta.
 - Apenas administradores podem cadastrar/editar produtos, categorias e
   usuários.
 - Vendedores podem registrar vendas e consultar produtos/estoque, mas não
@@ -107,6 +127,11 @@ Essas funcionalidades fora do escopo poderão ser propostas como novas
   `vetements/routes.py`.
 - Regras de negócio e de autorização (o que cada papel pode fazer) devem ser
   aplicadas no backend (Xano), nunca apenas no frontend.
+- E-mails transacionais (códigos de confirmação e de recuperação de senha)
+  são enviados pelo Xano pela API do Brevo. A chave e o remetente ficam em
+  variáveis de ambiente do Xano (`BREVO_API_KEY`, `BREVO_SENDER_EMAIL`),
+  nunca no repositório; a conta do Brevo só aceita os IPs de saída do Xano
+  liberados na lista de IPs autorizados.
 
 ## 9. Princípios de desenvolvimento
 
@@ -122,7 +147,11 @@ Essas funcionalidades fora do escopo poderão ser propostas como novas
 - Autenticação de usuários e verificação de papel (administrador/vendedor)
   devem ocorrer no backend (Xano), não apenas na interface.
 - Senhas de usuários e de clientes (quando existirem) nunca devem ser
-  expostas ou armazenadas em texto puro.
+  expostas ou armazenadas em texto puro. Os códigos enviados por e-mail
+  também são guardados só como hash, valem 15 minutos e aceitam até 5
+  tentativas.
+- Ações sensíveis da equipe (criação de usuário, ajuste de estoque, avanço
+  de status) ficam registradas no histórico de eventos.
 - Operações de venda que alteram estoque devem ser tratadas de forma
   consistente, evitando estoque negativo.
 

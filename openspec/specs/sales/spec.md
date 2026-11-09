@@ -208,3 +208,70 @@ responsável aparece como "Loja virtual", em vez de um usuário da equipe.
 #### Scenario: Pedido da loja no histórico de vendas
 - **WHEN** existe um pedido feito pela loja virtual e a equipe abre a tela de Vendas
 - **THEN** a venda aparece com o nome do cliente seguido de "(loja virtual)"
+
+### Requirement: Status do pedido da loja
+Todo pedido de origem loja virtual SHALL ter um status: `pago`,
+`enviado` ou `entregue`. O pedido SHALL nascer `pago`; pedidos antigos
+sem status SHALL ser tratados como `pago`. Vendas de balcão MUST NOT
+ter status. Um usuário da equipe (administrador ou vendedor) SHALL
+poder avançar o status um passo por vez — de `pago` para `enviado` e de
+`enviado` para `entregue` — e o backend SHALL guardar a data/hora de
+envio e de entrega. O backend SHALL recusar, sem alterar nada, pular
+etapa, voltar etapa, repetir o status atual ou mudar o status de uma
+venda de balcão. Cada avanço aceito SHALL ser registrado no histórico
+de eventos com o usuário, o pedido e os status anterior e novo.
+
+#### Scenario: Marcar pedido como enviado
+- **WHEN** um vendedor marca como enviado um pedido da loja com status `pago`
+- **THEN** o pedido passa a `enviado`, com a data/hora do envio, e o avanço fica registrado no histórico de eventos
+
+#### Scenario: Marcar pedido como entregue
+- **WHEN** um administrador marca como entregue um pedido com status `enviado`
+- **THEN** o pedido passa a `entregue`, com a data/hora da entrega
+
+#### Scenario: Pedido antigo sem status
+- **WHEN** a equipe marca como enviado um pedido da loja criado antes desta regra, sem status gravado
+- **THEN** ele é tratado como `pago` e passa a `enviado`
+
+#### Scenario: Pular ou voltar etapa
+- **WHEN** a equipe tenta marcar como entregue um pedido `pago`, ou como enviado um pedido `entregue`
+- **THEN** o backend recusa com uma mensagem explicando o status atual e nada é alterado
+
+#### Scenario: Venda de balcão
+- **WHEN** a equipe tenta mudar o status de uma venda de balcão
+- **THEN** o backend recusa com "Somente pedidos da loja virtual têm status." e nada é alterado
+
+#### Scenario: Sem login da equipe
+- **WHEN** uma requisição sem token da equipe (ou com token de cliente da loja) tenta mudar o status
+- **THEN** o backend responde com erro de autenticação
+
+### Requirement: Status do pedido na tela de Vendas
+A tela de Vendas SHALL mostrar uma coluna "Status": "Pago", "Enviado"
+ou "Entregue" para pedidos da loja virtual (pedido sem status aparece
+como "Pago") e "—" para vendas de balcão. Para pedidos da loja ainda
+não entregues, a tela SHALL oferecer o botão do próximo passo ("Marcar
+como enviado" ou "Marcar como entregue") a administradores e
+vendedores. O avanço SHALL pedir confirmação antes de ser enviado,
+indicar carregamento e bloquear um segundo clique enquanto envia; em
+caso de sucesso SHALL mostrar um aviso e atualizar o histórico; em caso
+de erro SHALL mostrar a mensagem sem alterar a linha.
+
+#### Scenario: Ver status no histórico
+- **WHEN** a equipe abre a tela de Vendas com um pedido da loja pago e uma venda de balcão
+- **THEN** o pedido mostra "Pago" com o botão "Marcar como enviado" e a venda de balcão mostra "—" sem botão
+
+#### Scenario: Marcar como enviado
+- **WHEN** um vendedor usa "Marcar como enviado" e confirma
+- **THEN** o pedido passa a "Enviado", aparece o aviso "Pedido #N marcado como enviado." e o botão vira "Marcar como entregue"
+
+#### Scenario: Cancelar a confirmação
+- **WHEN** a equipe usa "Marcar como enviado" e cancela a confirmação
+- **THEN** nada é enviado e o pedido continua "Pago"
+
+#### Scenario: Pedido entregue
+- **WHEN** um pedido está "Entregue"
+- **THEN** a linha não mostra botão de avanço
+
+#### Scenario: Erro ao avançar
+- **WHEN** o backend recusa o avanço (ex.: outra pessoa já avançou o pedido)
+- **THEN** a tela mostra a mensagem do backend e recarrega o histórico

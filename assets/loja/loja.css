@@ -1527,7 +1527,13 @@
 }
 
 .lj-order__payment {
-  margin: 4px 0 8px;
+  margin: 4px 0 2px;
+}
+
+.lj-order__status {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .lj-pay__item span:last-child {

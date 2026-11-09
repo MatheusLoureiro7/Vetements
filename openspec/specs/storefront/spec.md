@@ -288,12 +288,18 @@ venda de balcão.
 O backend SHALL listar, para o cliente logado, somente os pedidos feitos
 por ele na loja virtual, do mais recente para o mais antigo, com data,
 total, dados do pagamento (forma, parcelas, final do cartão quando
-houver e data/hora do pagamento) e itens (nome do produto, tamanho, cor,
-quantidade e preço unitário), sem SKU nem estoque.
+houver e data/hora do pagamento), status do pedido (`pago`, `enviado`
+ou `entregue`, com as datas de envio e entrega quando houver) e itens
+(nome do produto, tamanho, cor, quantidade e preço unitário), sem SKU
+nem estoque.
 
 #### Scenario: Cliente vê os próprios pedidos
 - **WHEN** um cliente logado pede a lista de pedidos
-- **THEN** recebe apenas os pedidos dele, mais recentes primeiro, cada um com os dados do pagamento
+- **THEN** recebe apenas os pedidos dele, mais recentes primeiro, cada um com os dados do pagamento e o status
+
+#### Scenario: Pedido enviado
+- **WHEN** a equipe marcou um pedido do cliente como enviado
+- **THEN** a lista traz esse pedido com status `enviado` e a data/hora do envio
 
 ### Requirement: Entrar e criar conta na loja
 A loja SHALL oferecer uma página para o cliente entrar (e-mail e senha) ou
@@ -331,13 +337,19 @@ a página de pagamento SHALL mostrar o motivo.
 ### Requirement: Minha conta
 A loja SHALL oferecer, ao cliente logado, uma página com seus dados, a
 opção de sair e a lista dos seus pedidos (número, data, total, forma de
-pagamento e itens). Pedidos antigos sem dados de pagamento SHALL
-aparecer como "Pagamento não informado". Sem login, a página SHALL
-levar para entrar e voltar a ela depois.
+pagamento, status e itens). Pedidos antigos sem dados de pagamento SHALL
+aparecer como "Pagamento não informado". O status SHALL aparecer como
+"Pago", "Enviado em <data>" ou "Entregue em <data>"; pedido sem status
+SHALL aparecer como "Pago". Sem login, a página SHALL levar para entrar
+e voltar a ela depois.
 
 #### Scenario: Ver meus pedidos
 - **WHEN** o cliente logado abre "Minha conta"
-- **THEN** vê seus pedidos, mais recentes primeiro, com itens, total e forma de pagamento (ex.: "Cartão 3x · final 4242")
+- **THEN** vê seus pedidos, mais recentes primeiro, com itens, total, forma de pagamento (ex.: "Cartão 3x · final 4242") e status
+
+#### Scenario: Pedido enviado
+- **WHEN** a equipe marcou o pedido como enviado em 10/11/2026
+- **THEN** o pedido aparece em "Minha conta" com "Enviado em 10/11/2026"
 
 #### Scenario: Sair
 - **WHEN** o cliente usa "Sair"

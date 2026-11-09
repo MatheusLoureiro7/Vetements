@@ -232,6 +232,15 @@ def list_sales(token: str, limit: int = 50) -> list[dict[str, Any]]:
     return resultado.get("items", []) if isinstance(resultado, dict) else resultado
 
 
+def update_order_status(token: str, venda_id: int, status: str) -> dict[str, Any]:
+    """Avança o status de um pedido da loja (`enviado` ou `entregue`, um
+    passo por vez). Retorna a venda com `status_pedido`, `enviado_em` e
+    `entregue_em`."""
+    return _request(
+        "POST", _GROUP_VENDAS, f"vendas/{venda_id}/status", token=token, json_body={"status": status}
+    )
+
+
 def create_sale(
     token: str, cliente_id: int | None, itens: list[dict[str, Any]]
 ) -> dict[str, Any]:

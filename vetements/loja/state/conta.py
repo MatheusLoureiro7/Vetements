@@ -18,7 +18,7 @@ from urllib.parse import urlencode
 import reflex as rx
 
 from vetements import routes, xano_client
-from vetements.format_utils import format_currency, format_datetime
+from vetements.format_utils import format_currency, format_date, format_datetime
 
 MENSAGEM_FALHA = "Não foi possível falar com a loja agora. Tente novamente em instantes."
 
@@ -37,6 +37,7 @@ class PedidoLoja:
     data_label: str
     total_label: str
     pagamento_label: str = "Pagamento não informado"
+    status_label: str = "Pago"
     itens: list[ItemPedido] = field(default_factory=list)
 
 
@@ -68,6 +69,16 @@ def pagamento_label(forma: str | None, parcelas: int | None, final: str | None) 
     return "Pagamento não informado"
 
 
+def status_pedido_label(status: str | None, enviado_em: Any = None, entregue_em: Any = None) -> str:
+    """Status do pedido em "Minha conta". Pedido sem status conta como
+    pago; datas não preenchidas chegam do Xano como 0."""
+    if status == "entregue":
+        return f"Entregue em {format_date(entregue_em)}" if entregue_em else "Entregue"
+    if status == "enviado":
+        return f"Enviado em {format_date(enviado_em)}" if enviado_em else "Enviado"
+    return "Pago"
+
+
 def pedido_da_api(dados: dict[str, Any]) -> PedidoLoja:
     return PedidoLoja(
         id=int(dados["id"]),
@@ -75,6 +86,9 @@ def pedido_da_api(dados: dict[str, Any]) -> PedidoLoja:
         total_label=format_currency(float(dados.get("total") or 0)),
         pagamento_label=pagamento_label(
             dados.get("forma_pagamento"), dados.get("parcelas"), dados.get("cartao_final")
+        ),
+        status_label=status_pedido_label(
+            dados.get("status_pedido"), dados.get("enviado_em"), dados.get("entregue_em")
         ),
         itens=[item_pedido_da_api(i) for i in dados.get("itens") or []],
     )

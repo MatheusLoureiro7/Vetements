@@ -37,14 +37,43 @@ class VendaResumo:
     cliente: str
     total_label: str
     itens_label: str
+    status_label: str = "—"
+    proximo_status: str = ""
+    acao_label: str = ""
 
 
 ORIGEM_LOJA_VIRTUAL = "loja_virtual"
+
+_ROTULOS_STATUS = {"pago": "Pago", "enviado": "Enviado", "entregue": "Entregue"}
+_PROXIMO_STATUS = {"pago": "enviado", "enviado": "entregue"}
+_ROTULOS_ACAO = {"enviado": "Marcar como enviado", "entregue": "Marcar como entregue"}
 
 
 def e_pedido_da_loja(venda: dict) -> bool:
     """Venda feita por um cliente na loja virtual (sem funcionário)."""
     return venda.get("origem") == ORIGEM_LOJA_VIRTUAL
+
+
+def status_efetivo(venda: dict) -> str:
+    """Status do pedido da loja; pedido antigo sem status conta como
+    "pago". Venda de balcão não tem status (texto vazio)."""
+    if not e_pedido_da_loja(venda):
+        return ""
+    return venda.get("status_pedido") or "pago"
+
+
+def rotulo_status(status: str) -> str:
+    return _ROTULOS_STATUS.get(status, "—")
+
+
+def proximo_status(status: str) -> str:
+    """Próximo passo possível (pago → enviado → entregue); vazio quando
+    não há (entregue ou balcão)."""
+    return _PROXIMO_STATUS.get(status, "")
+
+
+def rotulo_acao(proximo: str) -> str:
+    return _ROTULOS_ACAO.get(proximo, "")
 
 
 def rotulo_cliente(venda: dict, clientes_por_id: dict[int, str]) -> str:
@@ -86,6 +115,13 @@ class SalesState(AuthState):
 
     history: list[VendaResumo] = []
     load_error: str = ""
+
+    # Avanço do status de um pedido da loja: o pedido e o passo em
+    # confirmação (0 = nenhum diálogo aberto).
+    confirmar_venda_id: int = 0
+    confirmar_status: str = ""
+    is_updating_status: bool = False
+    status_error: str = ""
     is_loading_page: bool = True
 
     # Cache local das variações cruas do Xano (id -> dict), para validar
@@ -135,6 +171,9 @@ class SalesState(AuthState):
                 cliente=rotulo_cliente(venda, clientes_por_id),
                 total_label=format_currency(venda["total"]),
                 itens_label=f"{sum(i['quantidade'] for i in venda.get('itens', []))} item(ns)",
+                status_label=rotulo_status(status_efetivo(venda)),
+                proximo_status=proximo_status(status_efetivo(venda)),
+                acao_label=rotulo_acao(proximo_status(status_efetivo(venda))),
             )
             for venda in vendas
         ]
@@ -289,3 +328,53 @@ class SalesState(AuthState):
         self.refresh_history()
         self.is_submitting = False
         return None
+
+    # --- Status do pedido da loja ------------------------------------------
+
+    @rx.var
+    def confirmacao_status_aberta(self) -> bool:
+        return self.confirmar_venda_id > 0
+
+    @rx.var
+    def confirmacao_status_texto(self) -> str:
+        if not self.confirmar_venda_id:
+            return ""
+        return f"Marcar o pedido #{self.confirmar_venda_id} como {self.confirmar_status}? Não é possível desfazer."
+
+    @rx.event
+    def abrir_confirmacao_status(self, venda_id: int, status: str):
+        if self.is_updating_status or status not in _ROTULOS_ACAO:
+            return
+        self.confirmar_venda_id = int(venda_id)
+        self.confirmar_status = status
+        self.status_error = ""
+        self.sale_success = ""
+
+    @rx.event
+    def set_confirmacao_status_aberta(self, open: bool):
+        # Cancelar, Esc ou clique fora fecham sem enviar; durante o envio o
+        # diálogo fica aberto.
+        if not open and not self.is_updating_status:
+            self.confirmar_venda_id = 0
+            self.confirmar_status = ""
+
+    @rx.event
+    def avancar_status(self):
+        if self.is_updating_status or not self.confirmar_venda_id:
+            return
+        venda_id, status = self.confirmar_venda_id, self.confirmar_status
+        self.is_updating_status = True
+        yield
+        try:
+            xano_client.update_order_status(self.auth_token, venda_id, status)
+        except xano_client.XanoAPIError as erro:
+            if erro.is_network_error:
+                self.status_error = "Não foi possível conectar ao servidor. O status não foi alterado."
+            else:
+                self.status_error = erro.message
+        else:
+            self.sale_success = f"Pedido #{venda_id} marcado como {status}."
+        self.is_updating_status = False
+        self.confirmar_venda_id = 0
+        self.confirmar_status = ""
+        self.refresh_history()

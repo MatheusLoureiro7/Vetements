@@ -112,6 +112,7 @@ def _pedido(pedido) -> rx.Component:
             class_name="lj-order__header",
         ),
         rx.el.p("Pagamento: " + pedido.pagamento_label, class_name="lj-cart__meta lj-order__payment"),
+        rx.el.p("Status: " + pedido.status_label, class_name="lj-order__status"),
         rx.el.ul(rx.foreach(pedido.itens, _item_pedido), class_name="lj-order__items"),
         class_name="lj-order",
     )

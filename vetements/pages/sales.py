@@ -170,6 +170,54 @@ def _new_sale_dialog() -> rx.Component:
     )
 
 
+def _status_action(venda) -> rx.Component:
+    """Botão do próximo passo do pedido da loja (vazio no balcão e em
+    pedido entregue)."""
+    return rx.cond(
+        venda.proximo_status != "",
+        rx.button(
+            venda.acao_label,
+            variant="soft",
+            color_scheme="gray",
+            size="1",
+            on_click=SalesState.abrir_confirmacao_status(venda.id, venda.proximo_status),
+        ),
+    )
+
+
+def _status_dialog() -> rx.Component:
+    """Confirmação antes de avançar o status (não há desfazer)."""
+    return rx.alert_dialog.root(
+        rx.alert_dialog.content(
+            rx.alert_dialog.title("Atualizar status do pedido"),
+            rx.alert_dialog.description(SalesState.confirmacao_status_texto, size="2"),
+            rx.flex(
+                rx.button(
+                    "Cancelar",
+                    variant="soft",
+                    color_scheme="gray",
+                    type="button",
+                    disabled=SalesState.is_updating_status,
+                    on_click=SalesState.set_confirmacao_status_aberta(False),
+                ),
+                rx.button(
+                    rx.cond(SalesState.is_updating_status, "Salvando...", "Confirmar"),
+                    on_click=SalesState.avancar_status,
+                    disabled=SalesState.is_updating_status,
+                    loading=SalesState.is_updating_status,
+                    style=primary_button_style(),
+                ),
+                spacing="3",
+                justify="end",
+                margin_top="1.5rem",
+            ),
+            max_width="440px",
+        ),
+        open=SalesState.confirmacao_status_aberta,
+        on_open_change=SalesState.set_confirmacao_status_aberta,
+    )
+
+
 def _history_table() -> rx.Component:
     rows = rx.foreach(
         SalesState.filtered_history,
@@ -178,6 +226,8 @@ def _history_table() -> rx.Component:
             ui.data_cell(venda.cliente),
             ui.data_cell(venda.itens_label),
             ui.data_cell(venda.total_label),
+            ui.data_cell(venda.status_label),
+            ui.data_cell(_status_action(venda)),
         ),
     )
     return rx.cond(
@@ -185,7 +235,7 @@ def _history_table() -> rx.Component:
         ui.loading_state("Carregando vendas..."),
         rx.cond(
             SalesState.filtered_history.length() > 0,
-            ui.data_table(["Data", "Cliente", "Itens", "Total"], rows),
+            ui.data_table(["Data", "Cliente", "Itens", "Total", "Status", ""], rows),
             rx.cond(
                 SalesState.history.length() > 0,
                 ui.empty_state("Nenhuma venda encontrada."),
@@ -206,6 +256,10 @@ def sales_page() -> rx.Component:
             rx.text(SalesState.load_error, style={"color": BORDEAUX}, size="2", margin_bottom="1rem"),
         ),
         rx.cond(
+            SalesState.status_error != "",
+            rx.text(SalesState.status_error, style={"color": BORDEAUX}, size="2", margin_bottom="1rem"),
+        ),
+        rx.cond(
             SalesState.sale_success != "",
             rx.box(ui.success_message(SalesState.sale_success), margin_bottom="1rem"),
         ),
@@ -217,5 +271,6 @@ def sales_page() -> rx.Component:
             margin_bottom="1.5rem",
         ),
         _new_sale_dialog(),
+        _status_dialog(),
         _history_table(),
     )

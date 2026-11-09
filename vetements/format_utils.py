@@ -18,3 +18,8 @@ def format_datetime(value: str | int | float) -> str:
     else:
         dt = datetime.fromisoformat(value)
     return dt.strftime("%d/%m/%Y %H:%M")
+
+
+def format_date(value: str | int | float) -> str:
+    """Só a data (dd/mm/aaaa) de um valor aceito por `format_datetime`."""
+    return format_datetime(value)[:10]

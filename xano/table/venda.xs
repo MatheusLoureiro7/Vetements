@@ -2,7 +2,8 @@
 // (garantido pelo endpoint de criação); o total é derivado da soma dos
 // itens no momento da criação. Pedidos da loja virtual também são vendas
 // (origem = loja_virtual, sem usuário da equipe) e já nascem pagos, com
-// os dados do pagamento simulado.
+// os dados do pagamento simulado; depois a equipe avança o status do
+// pedido (pago → enviado → entregue).
 table venda {
   auth = false
 
@@ -47,6 +48,19 @@ table venda {
 
     timestamp pago_em? {
       description = "Data/hora em que o pagamento simulado foi aprovado"
+    }
+
+    enum status_pedido? {
+      values = ["pago", "enviado", "entregue"]
+      description = "Status do pedido da loja (pago → enviado → entregue); vazio no balcão e em pedidos antigos (contam como pago)"
+    }
+
+    timestamp enviado_em? {
+      description = "Data/hora em que a equipe marcou o pedido como enviado"
+    }
+
+    timestamp entregue_em? {
+      description = "Data/hora em que a equipe marcou o pedido como entregue"
     }
   }
 

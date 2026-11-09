@@ -109,6 +109,7 @@ query "loja/pedidos" verb=POST {
             parcelas       : $parcelas
             cartao_final   : $cartao_final
             pago_em        : "now"
+            status_pedido  : "pago"
           }
         } as $venda
 
@@ -178,7 +179,7 @@ query "loja/pedidos" verb=POST {
           data = {
             total: $total_calculado
           }
-          output = ["id", "created_at", "total", "forma_pagamento", "parcelas", "cartao_final", "pago_em"]
+          output = ["id", "created_at", "total", "forma_pagamento", "parcelas", "cartao_final", "pago_em", "status_pedido", "enviado_em", "entregue_em"]
         } as $venda_final
       }
     }

@@ -13,7 +13,7 @@ query "loja/pedidos" verb=GET {
     db.query venda {
       where = $db.venda.cliente_id == $auth.id && $db.venda.origem == "loja_virtual"
       sort = {venda.created_at: "desc"}
-      output = ["id", "created_at", "total", "forma_pagamento", "parcelas", "cartao_final", "pago_em"]
+      output = ["id", "created_at", "total", "forma_pagamento", "parcelas", "cartao_final", "pago_em", "status_pedido", "enviado_em", "entregue_em"]
       return = {type: "list"}
     } as $vendas
 

@@ -41,9 +41,9 @@ query "auth/login" verb=POST {
       id = $user.id
     } as $authToken
   
-    // Create an event log for login
+    // Create an event log for login (só dados seguros: nunca senha nem hash)
     function.run "Quick Start/log_event" {
-      input = {user_id: $user.id, action: "login", metadata: $user}
+      input = {user_id: $user.id, action: "login", metadata: {id: $user.id, name: $user.name, email: $user.email, role: $user.role}}
     } as $event_log
   }
 

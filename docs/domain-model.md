@@ -225,7 +225,7 @@ Um usuário pode ter vários eventos registrados.
 
 - Ajuste de estoque e avanço de status gravam o evento junto com a
   alteração: se a alteração for recusada, nenhum evento é criado.
-- Os detalhes não devem guardar senhas nem códigos. Problema conhecido
-  (2026-11-09): o evento de login (herdado do modelo do Xano) grava o
-  registro do usuário com o hash da senha; a correção fica para uma change
-  de backend futura.
+- Os detalhes nunca guardam senhas, hashes nem códigos: os eventos de
+  login e de redefinição de senha gravam só id, nome, e-mail e papel do
+  usuário (corrigido em 2026-11-11). Registros anteriores a essa data
+  podem conter o hash da senha e foram mantidos por decisão do usuário.

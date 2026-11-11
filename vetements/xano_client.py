@@ -219,6 +219,19 @@ def create_customer(token: str, nome: str, telefone: str = "", email: str = "") 
     return _request("POST", _GROUP_CLIENTES, "clientes", token=token, json_body=body)
 
 
+
+def update_customer(token: str, cliente_id: int, nome: str, telefone: str = "", email: str = "") -> dict[str, Any]:
+    """Edita um cliente (substituição completa: campo vazio apaga o valor).
+    A resposta traz `reconfirmar_email` = True quando o cliente tem conta
+    na loja e o e-mail mudou."""
+    return _request(
+        "PATCH",
+        _GROUP_CLIENTES,
+        f"clientes/{cliente_id}",
+        token=token,
+        json_body={"nome": nome.strip(), "telefone": telefone.strip(), "email": email.strip()},
+    )
+
 # --- Vendas ------------------------------------------------------------
 
 

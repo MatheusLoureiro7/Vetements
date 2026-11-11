@@ -41,6 +41,63 @@ def _new_customer_form() -> rx.Component:
     )
 
 
+def _edit_dialog() -> rx.Component:
+    """Popup de edição, controlado por `show_edit`. Todo fechamento passa
+    por `set_show_edit`, que descarta o que foi digitado."""
+    return rx.dialog.root(
+        rx.dialog.content(
+            rx.hstack(
+                rx.dialog.title("Editar cliente", margin_bottom="0"),
+                rx.spacer(),
+                rx.dialog.close(
+                    rx.icon_button(rx.icon("x", size=16), variant="ghost", color_scheme="gray", size="1", type="button"),
+                ),
+                width="100%",
+                align_items="center",
+            ),
+            rx.dialog.description(
+                "Nome e ao menos um contato (telefone ou e-mail). Se o cliente tiver conta na loja, o e-mail é o login dele.",
+                size="2",
+                margin_bottom="1rem",
+            ),
+            rx.vstack(
+                rx.cond(
+                    CustomersState.edit_error != "",
+                    rx.text(CustomersState.edit_error, style={"color": BORDEAUX}, size="2"),
+                ),
+                ui.field("Nome", rx.input(value=CustomersState.edit_nome, on_change=CustomersState.set_edit_nome, width="100%")),
+                ui.field("Telefone", rx.input(value=CustomersState.edit_telefone, on_change=CustomersState.set_edit_telefone, width="100%")),
+                ui.field("E-mail", rx.input(value=CustomersState.edit_email, on_change=CustomersState.set_edit_email, type="email", width="100%")),
+                spacing="3",
+                width="100%",
+            ),
+            rx.flex(
+                rx.button(
+                    "Cancelar",
+                    variant="soft",
+                    color_scheme="gray",
+                    type="button",
+                    disabled=CustomersState.is_saving_edit,
+                    on_click=CustomersState.set_show_edit(False),
+                ),
+                rx.button(
+                    rx.cond(CustomersState.is_saving_edit, "Salvando...", "Salvar alterações"),
+                    on_click=CustomersState.save_edit,
+                    disabled=CustomersState.is_saving_edit,
+                    loading=CustomersState.is_saving_edit,
+                    style=primary_button_style(),
+                ),
+                spacing="3",
+                justify="end",
+                margin_top="1.5rem",
+            ),
+            max_width="480px",
+        ),
+        open=CustomersState.show_edit,
+        on_open_change=CustomersState.set_show_edit,
+    )
+
+
 def _customers_table() -> rx.Component:
     rows = rx.foreach(
         CustomersState.customers,
@@ -48,6 +105,16 @@ def _customers_table() -> rx.Component:
             ui.data_cell(c.nome),
             ui.data_cell(c.telefone),
             ui.data_cell(c.email),
+            ui.data_cell(
+                rx.button(
+                    rx.icon("pencil", size=14),
+                    "Editar",
+                    variant="soft",
+                    color_scheme="gray",
+                    size="1",
+                    on_click=CustomersState.open_edit(c.id),
+                )
+            ),
         ),
     )
     return rx.cond(
@@ -55,7 +122,7 @@ def _customers_table() -> rx.Component:
         ui.loading_state("Carregando clientes..."),
         rx.cond(
             CustomersState.customers.length() > 0,
-            ui.data_table(["Nome", "Telefone", "E-mail"], rows),
+            ui.data_table(["Nome", "Telefone", "E-mail", "Ações"], rows),
             ui.empty_state("Nenhum cliente encontrado."),
         ),
     )
@@ -79,5 +146,6 @@ def customers_page() -> rx.Component:
             margin_bottom="1.5rem",
         ),
         _new_customer_form(),
+        _edit_dialog(),
         _customers_table(),
     )

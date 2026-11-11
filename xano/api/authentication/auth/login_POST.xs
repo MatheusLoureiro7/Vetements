@@ -32,6 +32,12 @@ query "auth/login" verb=POST {
       error_type = "accessdenied"
       error = "Invalid Credentials."
     }
+
+    // Usuário desativado não entra (checado depois da senha, para não
+    // revelar quais e-mails existem).
+    function.run "Equipe/exigir_ativo" {
+      input = {user_id: $user.id}
+    } as $equipe_ativo
   
     // Create an authentication token
     security.create_auth_token {

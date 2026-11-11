@@ -17,6 +17,10 @@ query "auth/signup" verb=POST {
   }
 
   stack {
+    function.run "Equipe/exigir_ativo" {
+      input = {user_id: $auth.id}
+    } as $equipe_ativo
+
     db.get user {
       description = "Carrega o usuário autenticado para checar o papel"
       field_name = "id"
@@ -28,6 +32,11 @@ query "auth/signup" verb=POST {
       description = "Apenas administradores criam contas da equipe"
       error_type = "accessdenied"
       error = "Apenas administradores podem criar contas da equipe."
+    }
+
+    precondition ((($input.password ?? "")|strlen) >= 8 && ("/[A-Za-z]/"|regex_matches:($input.password ?? "")) && ("/[0-9]/"|regex_matches:($input.password ?? ""))) {
+      error_type = "inputerror"
+      error = "A senha precisa ter ao menos 8 caracteres, com letras e números."
     }
 
     db.get user {
@@ -48,6 +57,7 @@ query "auth/signup" verb=POST {
         email     : $input.email
         password  : $input.password
         role      : $input.role
+        ativo     : true
       }
       output = ["id", "name", "email", "role"]
     } as $novo_usuario

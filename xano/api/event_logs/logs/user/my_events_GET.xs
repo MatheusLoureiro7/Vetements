@@ -7,6 +7,10 @@ query "logs/user/my_events" verb=GET {
   }
 
   stack {
+    function.run "Equipe/exigir_ativo" {
+      input = {user_id: $auth.id}
+    } as $equipe_ativo
+
     // Retrieve event logs for the authenticated user
     db.query event_log {
       where = $db.event_log.user_id == $auth.id

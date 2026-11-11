@@ -20,6 +20,10 @@ query "clientes" verb=POST {
   }
 
   stack {
+    function.run "Equipe/exigir_ativo" {
+      input = {user_id: $auth.id}
+    } as $equipe_ativo
+
     precondition (($input.telefone != null && ($input.telefone|strlen) > 0) || $input.email != null) {
       description = "Exige ao menos um contato: telefone ou e-mail"
       error_type = "inputerror"

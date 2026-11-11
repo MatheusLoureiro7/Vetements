@@ -10,6 +10,10 @@ query "variacoes" verb=GET {
   }
 
   stack {
+    function.run "Equipe/exigir_ativo" {
+      input = {user_id: $auth.id}
+    } as $equipe_ativo
+
     db.query variacao_produto {
       join = {
         produto: {

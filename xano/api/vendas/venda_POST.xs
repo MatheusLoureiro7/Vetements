@@ -32,6 +32,10 @@ query "venda" verb=POST {
   }
 
   stack {
+    function.run "Equipe/exigir_ativo" {
+      input = {user_id: $auth.id}
+    } as $equipe_ativo
+
     precondition (($input.itens|count) > 0) {
       description = "Uma venda deve conter ao menos um item"
       error_type = "inputerror"

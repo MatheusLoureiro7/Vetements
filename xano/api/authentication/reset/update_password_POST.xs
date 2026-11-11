@@ -9,6 +9,10 @@ query "reset/update_password" verb=POST {
   }
 
   stack {
+    function.run "Equipe/exigir_ativo" {
+      input = {user_id: $auth.id}
+    } as $equipe_ativo
+
     // Check that the password inputs are matching
     precondition ($input.password == $input.confirm_password) {
       error = "Passwords do not match!"

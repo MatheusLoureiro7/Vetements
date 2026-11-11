@@ -11,6 +11,10 @@ query "clientes" verb=GET {
   }
 
   stack {
+    function.run "Equipe/exigir_ativo" {
+      input = {user_id: $auth.id}
+    } as $equipe_ativo
+
     db.query cliente {
       where = ($db.cliente.nome|to_lower) includes? ($input.q|to_lower)
       sort = {cliente.nome: "asc"}

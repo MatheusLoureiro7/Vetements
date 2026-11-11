@@ -13,6 +13,10 @@ table user {
     enum role? {
       values = ["administrador", "vendedor"]
     }
+
+    // Acesso à gestão. Desativado não entra e os tokens já emitidos param
+    // de valer (checado por Equipe/exigir_ativo). Vazio conta como ativo.
+    bool ativo?=true
   
     object password_reset? {
       schema {

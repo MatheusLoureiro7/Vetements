@@ -33,6 +33,10 @@ query "clientes/{cliente_id}" verb=PATCH {
   }
 
   stack {
+    function.run "Equipe/exigir_ativo" {
+      input = {user_id: $auth.id}
+    } as $equipe_ativo
+
     db.get "user" {
       description = "Carrega o usuário autenticado para checar o papel"
       field_name = "id"

@@ -7,6 +7,10 @@ query "auth/me" verb=GET {
   }
 
   stack {
+    function.run "Equipe/exigir_ativo" {
+      input = {user_id: $auth.id}
+    } as $equipe_ativo
+
     // Get the user record based on the auth ID
     db.get user {
       field_name = "id"

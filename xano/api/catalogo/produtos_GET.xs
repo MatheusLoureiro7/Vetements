@@ -12,6 +12,10 @@ query "produtos" verb=GET {
   }
 
   stack {
+    function.run "Equipe/exigir_ativo" {
+      input = {user_id: $auth.id}
+    } as $equipe_ativo
+
     db.query produto {
       where = ($db.produto.nome|to_lower) includes? ($input.q|to_lower)
       join = {

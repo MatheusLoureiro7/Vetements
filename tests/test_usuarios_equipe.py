@@ -66,3 +66,19 @@ def test_chamadas_de_usuarios(chamadas):
     assert chamadas[2]["url"].endswith("/usuarios/5/senha") and chamadas[2]["json"] == {"senha": "novaSenha1"}
     assert chamadas[3]["url"].endswith("/usuarios/5/ativo") and chamadas[3]["json"] == {"ativo": False}
     assert all(c["headers"] == {"Authorization": "Bearer tok"} for c in chamadas)
+
+
+def test_limite_do_xano_vira_mensagem_em_portugues(monkeypatch):
+    class _Limite:
+        status_code = 429
+        content = b'{"message": "Whoa there! Your plan only supports 10 requests per 20 seconds."}'
+
+        def json(self):
+            return {"message": "Whoa there! Your plan only supports 10 requests per 20 seconds."}
+
+    monkeypatch.setattr(client._client, "request", lambda *a, **k: _Limite())
+    monkeypatch.setattr(client.time, "sleep", lambda s: None)
+    with pytest.raises(client.XanoAPIError) as erro:
+        client.list_users("tok")
+    assert erro.value.status_code == 429
+    assert erro.value.message == client.MENSAGEM_LIMITE

@@ -64,7 +64,17 @@ def _url(group_alias: str, path: str) -> str:
     return f"{_INSTANCE}/api:{group_alias}/{path.lstrip('/')}"
 
 
+MENSAGEM_LIMITE = (
+    "O servidor está recebendo muitas requisições agora (limite do plano gratuito do Xano). "
+    "Aguarde alguns segundos e tente de novo."
+)
+
+
 def _extract_error_message(response: httpx.Response) -> str:
+    # O plano gratuito do Xano limita o servidor inteiro a 10 requisições
+    # por 20 s; o texto original vem em inglês.
+    if response.status_code == 429:
+        return MENSAGEM_LIMITE
     try:
         data = response.json()
     except ValueError:

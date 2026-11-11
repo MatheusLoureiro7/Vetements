@@ -235,6 +235,8 @@ def sidebar() -> rx.Component:
         ),
         rx.vstack(
             *[_nav_link(label, href, icon) for label, href, icon in NAV_ITEMS],
+            # Só administradores gerenciam a equipe (o backend também recusa).
+            rx.cond(AuthState.is_admin, _nav_link("Usuários", routes.GESTAO_USUARIOS, "user-cog")),
             spacing="1",
             width="100%",
         ),

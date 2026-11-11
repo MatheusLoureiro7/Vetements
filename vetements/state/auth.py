@@ -11,6 +11,9 @@ import reflex as rx
 
 from vetements import routes, xano_client
 
+# Começo da mensagem do backend para usuário da equipe desativado.
+MENSAGEM_DESATIVADO = "Seu acesso foi desativado"
+
 
 class AuthState(rx.State):
     # Token emitido pelo Xano. Guardado em cookie (não só em memória) para
@@ -73,6 +76,8 @@ class AuthState(rx.State):
         except xano_client.XanoAPIError as erro:
             if erro.is_network_error:
                 self.login_error = "Não foi possível conectar ao servidor. Tente novamente."
+            elif erro.message.startswith(MENSAGEM_DESATIVADO):
+                self.login_error = erro.message
             else:
                 self.login_error = "E-mail ou senha inválidos"
             self.is_submitting = False

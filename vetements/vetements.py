@@ -21,11 +21,13 @@ from vetements.pages.inventory import inventory_page
 from vetements.pages.login import login_page
 from vetements.pages.products import products_page
 from vetements.pages.sales import sales_page
+from vetements.pages.users import users_page
 from vetements.state.customers import CustomersState
 from vetements.state.dashboard import DashboardState
 from vetements.state.inventory import InventoryState
 from vetements.state.products import ProductsState
 from vetements.state.sales import SalesState
+from vetements.state.users import UsersState
 from vetements.styles import GOOGLE_FONTS_STYLESHEET, base_style
 
 app = rx.App(
@@ -53,3 +55,4 @@ app.add_page(products_page, route=routes.GESTAO_PRODUTOS, on_load=ProductsState.
 app.add_page(inventory_page, route=routes.GESTAO_ESTOQUE, on_load=InventoryState.load)
 app.add_page(sales_page, route=routes.GESTAO_VENDAS, on_load=SalesState.load)
 app.add_page(customers_page, route=routes.GESTAO_CLIENTES, on_load=CustomersState.load)
+app.add_page(users_page, route=routes.GESTAO_USUARIOS, on_load=UsersState.load)

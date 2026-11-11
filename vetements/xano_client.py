@@ -140,6 +140,43 @@ def me(token: str) -> dict[str, Any]:
     return _request("GET", _GROUP_AUTH, "auth/me", token=token)
 
 
+# --- Usuários da equipe (somente administrador) ---------------------------
+
+
+def list_users(token: str) -> list[dict[str, Any]]:
+    """Equipe com `role`, `ativo` e `ultimo_login_em` (ms ou vazio)."""
+    return _request("GET", _GROUP_AUTH, "usuarios", token=token)
+
+
+def create_user(token: str, nome: str, email: str, senha: str, papel: str) -> dict[str, Any]:
+    """Cria uma conta da equipe (`auth/signup`, só administrador)."""
+    return _request(
+        "POST",
+        _GROUP_AUTH,
+        "auth/signup",
+        token=token,
+        json_body={"name": nome.strip(), "email": email.strip(), "password": senha, "role": papel},
+    )
+
+
+def update_user(token: str, user_id: int, nome: str, email: str, papel: str) -> dict[str, Any]:
+    return _request(
+        "PATCH",
+        _GROUP_AUTH,
+        f"usuarios/{user_id}",
+        token=token,
+        json_body={"name": nome.strip(), "email": email.strip(), "role": papel},
+    )
+
+
+def set_user_password(token: str, user_id: int, senha: str) -> dict[str, Any]:
+    return _request("POST", _GROUP_AUTH, f"usuarios/{user_id}/senha", token=token, json_body={"senha": senha})
+
+
+def set_user_active(token: str, user_id: int, ativo: bool) -> dict[str, Any]:
+    return _request("POST", _GROUP_AUTH, f"usuarios/{user_id}/ativo", token=token, json_body={"ativo": ativo})
+
+
 # --- Categorias / Produtos / Variações ------------------------------------
 
 

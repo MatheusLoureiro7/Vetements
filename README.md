@@ -72,12 +72,13 @@ Na parte de baixo da loja existe o link **"Área da equipe"**, que leva ao `/log
 
 A loja pode ser usada criando uma conta de cliente (veja o [Manual](#5-manual-de-utilização)). Já a gestão exige um usuário da equipe, que só um administrador cria.
 
->
-> | Perfil | E-mail | Senha |
+| Perfil | E-mail | Senha |
+| --- | --- | --- |
+| Administrador | `admin@vetements.com` | `admin123` |
+| Vendedor | `vendedor-qa@vetements.local` | `vendedor123` |
+| Cliente da loja | `cliente.teste@vetements.local` | `12345678V` |
 
-> | Administrador | `cliente.teste@vetements.local` | `12345678V` |
-> | Administrador | `admin@vetements.com` | `admin123` |
-> | Vendedor | `vendedor-qa@vetements.local` | `vendedor123` |
+> Contas criadas apenas para teste.
 
 ### Rodando no seu computador
 
@@ -242,7 +243,7 @@ O sistema envia um **código de 6 números** para o e-mail informado. Ele vale p
 
 <img width="965" height="417" alt="image" src="https://github.com/user-attachments/assets/0a275166-6696-4c1b-980a-b622f9189b24" />
 
-Se o serviço de e-mail estiver indisponível no momento, aparece o aviso abaixo. Basta aguardar e usar **Reenviar código**.
+Se o serviço de e-mail estiver indisponível no momento, basta aguardar e usar **Reenviar código**.
 
 #### A6. Recuperar a senha
 
@@ -262,6 +263,11 @@ Se o serviço de e-mail estiver indisponível no momento, aparece o aviso abaixo
 3. Clique em **Confirmar pagamento**.
 
 **Resultado esperado:** o pedido é criado já como pago, o estoque é reservado, o carrinho é esvaziado e você vê **"Pagamento aprovado · Pedido nº N registrado!"**.
+
+<img width="1362" height="629" alt="image" src="https://github.com/user-attachments/assets/fda05440-8f6c-4d42-b45b-6e5fbea7d908" />
+
+<img width="1364" height="560" alt="image" src="https://github.com/user-attachments/assets/1f15dd05-fafa-47f5-87e5-9f42ca5d01c2" />
+
 
 > **Importante:** o pagamento é **só uma simulação**, e nenhum valor é cobrado. Por segurança, o sistema nunca envia o número completo do cartão ao servidor, apenas os 4 últimos dígitos. Para testar um **pagamento recusado**, use um cartão que termine em **0000**: o pedido não é criado e o carrinho continua com os itens.
 
@@ -541,8 +547,6 @@ pytest
 - [`openspec/specs/`](openspec/specs/): requisitos detalhados de cada módulo.
 
 ---
-
-## Autores
 
 ## Autores
 

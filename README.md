@@ -72,14 +72,12 @@ Na parte de baixo da loja existe o link **"Área da equipe"**, que leva ao `/log
 
 A loja pode ser usada criando uma conta de cliente (veja o [Manual](#5-manual-de-utilização)). Já a gestão exige um usuário da equipe, que só um administrador cria.
 
-> **[A CONFIRMAR]** Informe aqui um e-mail e uma senha de **demonstração** para cada perfil, por exemplo:
 >
 > | Perfil | E-mail | Senha |
-> | --- | --- | --- |
-> | Administrador | `...` | `...` |
-> | Vendedor | `...` | `...` |
->
-> Use apenas contas criadas para teste. Nunca publique a senha de uma conta real.
+
+> | Administrador | `cliente.teste@vetements.local` | `12345678V` |
+> | Administrador | `admin@vetements.com` | `admin123` |
+> | Vendedor | `vendedor-qa@vetements.local` | `vendedor123` |
 
 ### Rodando no seu computador
 
@@ -196,7 +194,7 @@ O manual está dividido em duas jornadas: **A) quem compra na loja** e **B) a eq
 
 **Resultado esperado:** a lista de peças muda conforme o filtro. Se nada combinar com o filtro, aparece **"Nenhuma peça encontrada"** com o botão **Limpar filtros**.
 
-![Página inicial da loja](assets/prints/loja-home.png)
+<img width="1365" height="632" alt="image" src="https://github.com/user-attachments/assets/05f8dc9e-5385-4cd6-a1cf-92d856c46ae8" />
 
 #### A2. Ver um produto e adicionar ao carrinho
 
@@ -206,7 +204,7 @@ O manual está dividido em duas jornadas: **A) quem compra na loja** e **B) a eq
 
 **Resultado esperado:** aparece a confirmação **"Adicionado ao carrinho"** com um link **Ver carrinho**, e o ícone do carrinho no topo mostra a quantidade de itens. Se você adicionar a mesma variação de novo, a quantidade aumenta em vez de criar outra linha.
 
-![Página de um produto](assets/prints/loja-produto.png)
+<img width="1364" height="549" alt="image" src="https://github.com/user-attachments/assets/2222aecf-268b-425b-a8d0-4d17e746ea04" />
 
 #### A3. Conferir o carrinho
 
@@ -216,7 +214,7 @@ O manual está dividido em duas jornadas: **A) quem compra na loja** e **B) a eq
 
 **Resultado esperado:** o subtotal é recalculado a cada mudança. Com o carrinho vazio, aparece "Seu carrinho está vazio" com um link para a vitrine.
 
-![Carrinho de compras](assets/prints/loja-carrinho.png)
+<img width="1345" height="526" alt="image" src="https://github.com/user-attachments/assets/cd838c38-c380-4c4b-9bde-9123bcfa5f11" />
 
 #### A4. Criar uma conta ou entrar
 
@@ -228,7 +226,7 @@ Para finalizar um pedido é preciso ter conta.
 
 **Resultado esperado:** ao criar a conta, você vai para a confirmação de e-mail (próximo passo). Ao entrar, volta para a página de onde veio (por exemplo, o carrinho, com os mesmos itens). Se errar a senha, aparece **"E-mail ou senha inválidos."**
 
-![Entrar e criar conta](assets/prints/loja-entrar-criar-conta.png)
+<img width="1363" height="633" alt="image" src="https://github.com/user-attachments/assets/5133fbc1-e865-49bd-a927-902dd17ce865" />
 
 #### A5. Confirmar o e-mail
 
@@ -240,11 +238,11 @@ O sistema envia um **código de 6 números** para o e-mail informado. Ele vale p
 
 **Resultado esperado:** o e-mail fica confirmado e você segue para onde estava indo (por exemplo, o pagamento). Depois de 5 códigos errados, o código deixa de valer e é preciso pedir outro. Sem e-mail confirmado **não é possível finalizar pedidos**.
 
-![Confirmação de e-mail](assets/prints/loja-confirmar-email.png)
+<img width="900" height="629" alt="image" src="https://github.com/user-attachments/assets/98c8571a-07c9-4829-baf8-4894b01c83f4" />
+
+<img width="965" height="417" alt="image" src="https://github.com/user-attachments/assets/0a275166-6696-4c1b-980a-b622f9189b24" />
 
 Se o serviço de e-mail estiver indisponível no momento, aparece o aviso abaixo. Basta aguardar e usar **Reenviar código**.
-
-![Aviso de falha ao enviar o código](assets/prints/loja-confirmar-email-erro.png)
 
 #### A6. Recuperar a senha
 
@@ -282,7 +280,7 @@ Se o serviço de e-mail estiver indisponível no momento, aparece o aviso abaixo
 
 Se você ainda não comprou nada, aparece "Você ainda não fez pedidos". Para sair da conta, use o botão **Sair**.
 
-![Minha conta e meus pedidos](assets/prints/loja-minha-conta-pedidos.png)
+<img width="1365" height="631" alt="image" src="https://github.com/user-attachments/assets/1093cd7d-2074-41c3-a003-729ba86a82a5" />
 
 ---
 
@@ -546,8 +544,10 @@ pytest
 
 ## Autores
 
-> **Matheus Loureireo
-> **Bruno Onishi
-> **Denis Santana
->
-> **Grupo Vetements.
+## Autores
+
+- **Matheus Loureiro**
+- **Bruno Onishi**
+- **Denis Santana**
+
+Grupo Vetements.
